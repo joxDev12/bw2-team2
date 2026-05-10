@@ -1,0 +1,41 @@
+@use "colors" as *;
+
+// qui selezione il bottone -primary e gli dico che voglio lo sfondo green1 e all'hover dovra' essere viola1.... i colori green1 e viola1 sono presenti in colors.scss
+
+// andate qui per vedere dove ho preso le variabili per i bottoni.....
+// https://getbootstrap.com/docs/5.3/components/buttons/#variables
+
+
+// buttons
+
+.btn-primary {
+    --bs-btn-color: white;
+    --bs-btn-bg: #{$green1};
+    --bs-btn-border-color: #{$green1};
+
+    --bs-btn-hover-color: red;
+    --bs-btn-hover-bg: yellow;
+    --bs-btn-hover-border-color: darkgreen;
+
+    --bs-btn-active-color: white;
+    --bs-btn-active-bg: limegreen;
+    --bs-btn-active-border-color: limegreen;
+
+}
+
+// qui modifica un bottone che ha la nostra nuova classe personale "custom-color"
+.btn-custom_color {
+    --bs-btn-color: white;
+    --bs-btn-bg: #{$red1};
+    --bs-btn-border-color: #{$green1};
+
+    --bs-btn-hover-color: blue;
+    --bs-btn-hover-bg: violet;
+    --bs-btn-hover-border-color: darkgreen;
+
+    --bs-btn-active-color: white;
+    --bs-btn-active-bg: limegreen;
+    --bs-btn-active-border-color: limegreen;
+
+}
+
