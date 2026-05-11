@@ -40,7 +40,17 @@ const getById = async (id) => {
 };
 
 const getAllByEventId = async (id) => {
-  const result = await eventsModel.findById(id);
+  const result = await eventsModel.findByEventId(id);
+  if (!result.rows.length) {
+    const err = new Error('Registrazione non trovata');
+    err.statusCode = 404;
+    throw err;
+  }
+  return result.rows;
+};
+
+const getAllByUserId = async (id) => {
+  const result = await eventsModel.findByUserId(id);
   if (!result.rows.length) {
     const err = new Error('Registrazione non trovata');
     err.statusCode = 404;
@@ -57,4 +67,4 @@ const elimina = async (id) => {
 };
 
 // ── Esportazione ──────────────────────────────────────────────
-module.exports = { getAll, getById, getAllByEventId, crea, elimina };
+module.exports = { getAll, getById, getAllByEventId, getAllByUserId, crea, elimina };

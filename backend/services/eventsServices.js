@@ -22,6 +22,26 @@ const getById = async (id) => {
   return result.rows[0];
 };
 
+const getAllByCategory = async (category) => {
+  const result = await eventsModel.findByCategory(category);
+  if (!result.rows.length) {
+    const err = new Error('Evento non trovato');
+    err.statusCode = 404;
+    throw err;
+  }
+  return result.rows;
+};
+
+const getAllByOrganizerId = async (id) => {
+  const result = await eventsModel.findByOrganizerId(id);
+  if (!result.rows.length) {
+    const err = new Error('Evento non trovato');
+    err.statusCode = 404;
+    throw err;
+  }
+  return result.rows;
+};
+
 
 const aggiorna = async (id, dati) => {
   await getById(id); 
@@ -36,4 +56,4 @@ const elimina = async (id) => {
 };
 
 // ── Esportazione ──────────────────────────────────────────────
-module.exports = { getAll, getById, crea, aggiorna, elimina };
+module.exports = { getAll, getById, getAllByCategory, getAllByOrganizerId, crea, aggiorna, elimina };

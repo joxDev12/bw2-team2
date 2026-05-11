@@ -29,6 +29,9 @@ const findById = (id) =>
 const findByCategory = (category) =>
   pool.query('SELECT * FROM events WHERE category = $1', [category]);
 
+const findByOrganizerId = (id) =>
+  pool.query('SELECT * FROM events WHERE organizer_id = $1', [id]);
+
 
 const create = (id,{ title, description, date, location, max_seats, category }) =>
   pool.query(
@@ -80,7 +83,7 @@ const remove = (id) =>
 
 // ── Esportazione ──────────────────────────────────────────────
 module.exports = {
-  init, findAll, findById, findByCategory,
+  init, findAll, findById, findByCategory, findByOrganizerId,
   create, update, remove,
   incrementa, decrementa
 };
