@@ -1,0 +1,13 @@
+const router = require('express').Router();
+const controller = require('../controllers/eventsControllers');
+const { autenticato, soloAdmin, soloSéOAdmin, soloSéAdminOrOrganizer } = require('../middlewares/auth');
+
+router.post('/', autenticato, soloSéAdminOrOrganizer, controller.crea);
+router.get('/', controller.getAll);
+router.get('/:id', controller.getById);
+router.get('/category/:category', controller.getAllByCategory);
+router.get('/organizer/:id', controller.getAllByOrganizerId);
+router.patch('/:id', autenticato, soloSéAdminOrOrganizer, controller.aggiorna);
+router.delete('/:id', autenticato, soloSéAdminOrOrganizer, controller.elimina);
+
+module.exports = router;

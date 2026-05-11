@@ -26,7 +26,7 @@ const getById = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-// GET /:id/event
+// GET /event/:id
 const getAllByEventId = async (req, res, next) => {
     try {
     const id = parseInt(req.params.id);
@@ -36,7 +36,7 @@ const getAllByEventId = async (req, res, next) => {
 };
 
 
-// GET /:id/user
+// GET /user/:id
 const getAllByUserId = async (req, res, next) => {
     try {
     const id = parseInt(req.params.id);

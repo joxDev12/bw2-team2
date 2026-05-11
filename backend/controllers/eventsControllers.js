@@ -26,7 +26,7 @@ const getById = async (req, res, next) => {
 };
 
 
-// GET /:category/category
+// GET /category/:category
 const getAllByCategory = async (req, res, next) => {
   try {
     const event = await eventsService.getAllByCategory(req.params.category);
@@ -34,7 +34,7 @@ const getAllByCategory = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-// GET /:id/organizer
+// GET /organizer/:id
 const getAllByOrganizerId = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);

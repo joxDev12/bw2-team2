@@ -4,13 +4,15 @@ const pool = require('../config/db');
 
 const CREATE_TABLE = `
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL NOT NULL,
+    id SERIAL NOT NULL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     username VARCHAR(255) UNIQUE NOT NULL,
-    role VARCHAR(25) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    surname VARCHAR(255) NOT NULL,
+    role         VARCHAR(20)   NOT NULL DEFAULT 'partecipant'
+                  CHECK (role IN ('admin', 'partecipant', 'organizer')),
+    token_version INTEGER       NOT NULL DEFAULT 0,
     created_at date DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 `;
@@ -37,9 +39,9 @@ const findByUsername = (username) =>
 
 const create = ({ name, surname, email, username, password_hash, role }) =>
   pool.query(
-    `INSERT INTO utenti (name, surname, email, username, password_hash, role)
+    `INSERT INTO users (name, surname, email, username, password_hash, role)
      VALUES ($1, $2, $3, $4, $5, $6)
-     RETURNING id, name, surname, email, username, ruolo`,
+     RETURNING id, name, surname, email, username, role`,
     [name, surname, email, username, password_hash, role]
   );
 
