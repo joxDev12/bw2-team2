@@ -1,0 +1,25 @@
+.hero-section {
+    background-image: url('../assets/img/ChatGPT\ Image\ 11\ mag\ 2026\,\ 17_30_12.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+@media screen and (min-width: 576px) {
+    .custom-rounded {
+        border-radius: 0 !important;
+    }
+
+    .custom-border {
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 13px;
+
+    box-shadow:
+        0 0 10px rgba(255,255,255,0.4),
+        0 0 25px rgba(255,255,255,0.2),
+        0 0 40px rgba(255,255,255,0.1);
+}
+
+}
