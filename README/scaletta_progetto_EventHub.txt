@@ -1,0 +1,92 @@
+DB
+
+3 tabelle
+
+nome database EventHub
+
+users, events, registration
+
+
+2 ruoli: organizer, partecipant
+
+in tabella eventi organizer_id puo essere solo un id di un user con ruolo organizer,
+invece in tabella registrations user_id puo essere solo user con ruolo partecipant
+
+in max_seats sara in integer che quando un partecipant si iscrive allora quel integer decrementa e
+se annulla l'iscrizione aumenta. se l'integer e' 0 allora non e' possibile creare una registrazione a
+quell'evento.
+location sara' un varchar(500) per contenere indirizzo, citta, cap.
+
+organizer_id e' FK di ID in tabella users.
+
+anche user_id di registrations sara' Fk di ID in tabella users,
+event_id sara' FK di ID in tabella events
+
+un user puo prendere SOLO 1 posto per ogni evento!
+quindi ID di registrations sara' la combinazione di user_id + event_id. quindi non ammettiamo duplicati
+
+capisce dove mettere le UNIQUE
+
+in tabella users role deve essere impostato con enum(organizer, partecipant)
+
+
+IL BACKEND
+
+dobbiamo fare la login e la register e la dashboard cambiera' in base al ruolo (roba frontend)
+prima far funzionare un backend senza una login
+
+quindi intanto vedere se le route rispondono al get al post al delete.
+aggiunta di una route di getByLocation
+
+POI implementare una restrizione di usare le rotte solo ad user con un certo ruolo
+poi implementiamo la registrazione
+poi implementiamo il login
+
+e infine aggiungiamo la validazione degli input da backend, quindi se la password ha almeno una Maiuscola ecc...
+
+si potrebbe fare un server basico in una giornata e poi nei giorni successivi fare il refactoring e suddividere
+il backend in models, controllers, services, routes.
+senno inziamo da subito a farlo completo e suddiviso.
+
+
+
+
+
+Feature se c'e tempo si puo creare un ulteriore tabella in cui solo user registrato ad un evento
+puo recensire quell'evento
+
+
+
+FRONTEND
+
+struttura delle pagine
+Homepage
+Chi Siamo
+Assistenza
+Pagina con form registrazione
+Pagina dettaglio evento?
+Pagina Eventi con filtraggio per categoria
+
+Ma nella home c'e comunque un filtro che ti mostra nel componente sottostante 5 card di quella categoria.
+Nel componente della home di eventi filtrato c'e un bottone Vedi tutti che ci porta alla Pagina Eventi
+
+Dashboard con componenti dinamici in base al login ruolo.
+
+
+quando clicco sul pulsante Iscriviti all-evento (nella card evento) se non c' il login vado alla pagin login
+se solo gia loggato entro direttamente in dashboard con quell evento (componente react) gia visualizzato.
+
+Prima cosa da fare nel frontend e' creare delle route e della pagina standard che vedete nell elecon sopra.
+quindi creare la BrowserRoute
+
+Per il DB
+creare db e struttura tabelle
+
+
+Per Backend inizializzare il server express.
+
+
+
+
+
+
