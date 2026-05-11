@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* ============================================================
+   BUILD WEEK — Standalone CSS
+   Da usare insieme al file HTML scaricato.
+
+   ISTRUZIONI:
+   Aggiungi nel <head> del tuo HTML:
+
+   <link rel="stylesheet"
+     href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+   <link rel="stylesheet" href="style.css">
+   ============================================================ */
+
+/* ---------- RESET & BASE ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #1a1a18;
+  background-color: #f5f3ec;
+  padding: 2rem;
+}
+
+/* ---------- TOKENS ---------- */
+:root {
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f5f3ec;
+  --bg-tertiary:   #eceae2;
+  --bg-info:       #e6f1fb;
+
+  --text-primary:   #1a1a18;
+  --text-secondary: #6b6b66;
+  --text-tertiary:  #9b9b96;
+  --text-info:      #185fa5;
+
+  --border-light:  rgba(0, 0, 0, 0.12);
+  --border-mid:    rgba(0, 0, 0, 0.22);
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+/* ---------- HEADER ---------- */
+.header {
+  padding: 2rem 0 1.5rem;
+  border-bottom: 0.5px solid var(--border-light);
+  margin-bottom: 2rem;
+}
+
+.header-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--bg-info);
+  color: var(--text-info);
+  padding: 3px 10px;
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+
+.header h1 {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ---------- BADGES ---------- */
+.stack-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 10px 0 14px;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: var(--radius-md);
+  border: 0.5px solid var(--border-mid);
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+}
+
+.badge.react { background: #e6f1fb; color: #0c447c; border-color: #b5d4f4; }
+.badge.node  { background: #eaf3de; color: #27500a; border-color: #c0dd97; }
+.badge.pg    { background: #eeedfe; color: #3c3489; border-color: #cecbf6; }
+.badge.jwt   { background: #faeeda; color: #633806; border-color: #fac775; }
+.badge.rbac  { background: #faece7; color: #712b13; border-color: #f5c4b3; }
+
+/* ---------- TABS ---------- */
+.tabs {
+  display: flex;
+  border-bottom: 0.5px solid var(--border-light);
+  margin-bottom: 0;
+}
+
+.tab-btn {
+  padding: 9px 16px;
+  font-size: 13px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.tab-btn.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--text-primary);
+}
+
+.tab-content {
+  display: none;
+  padding-top: 1.5rem;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ---------- OVERVIEW GRID ---------- */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 720px) {
+  .project-grid,
+  .teams-row,
+  .two-col { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: var(--bg-primary);
+  border: 0.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  padding: 16px 18px 14px;
+  border-bottom: 0.5px solid var(--border-light);
+}
+
+.card-num {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.card-title i { font-size: 20px; }
+
+.card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.card-body {
+  padding: 14px 18px;
+  flex: 1;
+}
+
+/* ---------- COLORED ICONS PER CARD ---------- */
+.card-1 .card-title i { color: #185fa5; }
+.card-2 .card-title i { color: #0f6e56; }
+.card-3 .card-title i { color: #993c1d; }
+.card-4 .card-title i { color: #534ab7; }
+
+/* ---------- FEATURE LIST ---------- */
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 8px;
+  margin-top: 14px;
+}
+
+.section-label:first-child { margin-top: 0; }
+
+.feature-list {
+  list-style: none;
+}
+
+.feature-list li {
+  font-size: 13px;
+  color: var(--text-primary);
+  padding: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  line-height: 1.45;
+}
+
+.feature-list li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+/* ---------- BONUS BOX ---------- */
+.bonus-box {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  margin-top: 6px;
+}
+
+.bonus-box p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.bonus-box strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ---------- DIFFICULTY BAR ---------- */
+.diff-bar {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.diff-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.diff-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-left: 4px;
+}
+
+.color-1     { background: #378add; }
+.color-2     { background: #1d9e75; }
+.color-3     { background: #d85a30; }
+.color-4     { background: #7f77dd; }
+.color-empty { background: #d3d1c7; }
+
+/* ---------- TEAMS ROW ---------- */
+.teams-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+.team-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  border: 0.5px solid var(--border-light);
+}
+
+.team-card h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.team-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ---------- FULL CARD (TAB DETTAGLIO) ---------- */
+.full-card {
+  background: var(--bg-primary);
+  border: 0.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.full-card-header {
+  padding: 18px 22px 16px;
+  border-bottom: 0.5px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.project-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.icon-1 { background: #e6f1fb; }
+.icon-2 { background: #e1f5ee; }
+.icon-3 { background: #faece7; }
+.icon-4 { background: #eeedfe; }
+
+.icon-1 i { color: #185fa5; }
+.icon-2 i { color: #0f6e56; }
+.icon-3 i { color: #993c1d; }
+.icon-4 i { color: #534ab7; }
+
+.full-card-body {
+  padding: 18px 22px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ---------- SCHEMA TABLE ---------- */
+.schema-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.schema-table th {
+  text-align: left;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  font-size: 11px;
+  padding: 4px 6px;
+  border-bottom: 0.5px solid var(--border-light);
+}
+
+.schema-table td {
+  padding: 3px 6px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border-bottom: 0.5px solid var(--border-light);
+}
+
+.schema-table tr:last-child td {
+  border-bottom: none;
+}
+
+.schema-table .pk { color: #185fa5; }
+.schema-table .fk { color: #3b6d11; }
+
+/* ---------- DELIVERABLES / BONUS BOX FULL ---------- */
+.deliverables-box {
+  background: #eaf3de;
+  border: 0.5px solid #c0dd97;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-top: 1rem;
+}
+
+.bonus-box-full {
+  background: #faeeda;
+  border: 0.5px solid #fac775;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-top: 16px;
+}
+
+.bonus-box-full .dlabel {
+  font-size: 11px;
+  font-weight: 500;
+  color: #633806;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+}
+
+.bonus-box-full p {
+  font-size: 13px;
+  color: #633806;
+  line-height: 1.6;
+}
+
+/* ---------- DESCRIPTION PARAGRAPH ---------- */
+.card-description {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.card-description strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ---------- DARK MODE ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary:    #1e1e1c;
+    --bg-secondary:  #252522;
+    --bg-tertiary:   #2e2e2b;
+    --bg-info:       #0c2d4a;
+
+    --text-primary:   #f0ede6;
+    --text-secondary: #9b9b96;
+    --text-tertiary:  #6b6b66;
+    --text-info:      #85b7eb;
+
+    --border-light: rgba(255, 255, 255, 0.10);
+    --border-mid:   rgba(255, 255, 255, 0.18);
+  }
+
+  body { background-color: #181816; }
+
+  .badge.react { background: #042c53; color: #85b7eb; border-color: #185fa5; }
+  .badge.node  { background: #173404; color: #97c459; border-color: #3b6d11; }
+  .badge.pg    { background: #26215c; color: #afa9ec; border-color: #534ab7; }
+  .badge.jwt   { background: #412402; color: #fac775; border-color: #854f0b; }
+  .badge.rbac  { background: #4a1b0c; color: #f09575; border-color: #993c1d; }
+
+  .color-empty { background: #444441; }
+
+  .schema-table .pk { color: #85b7eb; }
+  .schema-table .fk { color: #97c459; }
+
+  .icon-1 { background: #042c53; }
+  .icon-2 { background: #04342c; }
+  .icon-3 { background: #4a1b0c; }
+  .icon-4 { background: #26215c; }
+
+  .icon-1 i { color: #85b7eb; }
+  .icon-2 i { color: #5dcaa5; }
+  .icon-3 i { color: #f0997b; }
+  .icon-4 i { color: #afa9ec; }
+
+  .deliverables-box { background: #173404; border-color: #3b6d11; }
+  .bonus-box-full   { background: #412402; border-color: #854f0b; }
+  .bonus-box-full .dlabel,
+  .bonus-box-full p { color: #fac775; }
+}
+  </style>
+</head>
+<body>
+  <h2 class="sr-only">Build week — 4 tracce di progetto full-stack per i team</h2>
+
+<div class="header">
+  <span class="header-tag">BUILD WEEK</span>
+  <h1>Scegli il tuo progetto</h1>
+  <p>4 tracce complete · 2 team · React + Express.js + PostgreSQL</p>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('overview')">Panoramica</button>
+  <button class="tab-btn" onclick="switchTab('detail')">Tracce dettagliate</button>
+</div>
+
+<div id="tab-overview" class="tab-content active">
+
+  <div class="project-grid">
+    
+    <div class="card card-1">
+      <div class="card-header">
+        <div class="card-num">Progetto 01</div>
+        <div class="card-title"><i class="ti ti-movie" aria-hidden="true"></i> CineTrack</div>
+        <div class="card-desc">Piattaforma per tracciare film visti, aggiungere recensioni e costruire watchlist personali.</div>
+        <div class="stack-row">
+          <span class="badge react">React</span>
+          <span class="badge node">Express</span>
+          <span class="badge pg">PostgreSQL</span>
+          <span class="badge jwt">JWT Auth</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Funzionalità MVP</div>
+        <ul class="feature-list">
+          <li>Registrazione e login utente</li>
+          <li>Cerca film (titolo, genere)</li>
+          <li>Aggiungi film a "visto" o "watchlist"</li>
+          <li>Scrivi recensioni con voto 1–5</li>
+          <li>Pagina profilo con statistiche</li>
+        </ul>
+        <div class="bonus-box" style="margin-top:12px">
+          <p><strong>Bonus:</strong> feed globale delle ultime recensioni, filtri per genere, media voti per film</p>
+        </div>
+        <div class="diff-bar">
+          <div class="diff-dot color-1"></div>
+          <div class="diff-dot color-1"></div>
+          <div class="diff-dot color-1"></div>
+          <div class="diff-dot color-empty"></div>
+          <div class="diff-dot color-empty"></div>
+          <span class="diff-label">Media</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-2">
+      <div class="card-header">
+        <div class="card-num">Progetto 02</div>
+        <div class="card-title"><i class="ti ti-calendar-event" aria-hidden="true"></i> EventHub</div>
+        <div class="card-desc">App per creare eventi pubblici o privati, gestire iscrizioni e inviare promemoria.</div>
+        <div class="stack-row">
+          <span class="badge react">React</span>
+          <span class="badge node">Express</span>
+          <span class="badge pg">PostgreSQL</span>
+          <span class="badge jwt">JWT Auth</span>
+          <span class="badge rbac">Role-based</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Funzionalità MVP</div>
+        <ul class="feature-list">
+          <li>Organizzatore vs partecipante (ruoli)</li>
+          <li>Crea eventi con data, luogo, capienza max</li>
+          <li>Iscriviti / cancella iscrizione</li>
+          <li>Lista dei propri eventi e iscrizioni</li>
+          <li>Dashboard organizzatore con lista iscritti</li>
+        </ul>
+        <div class="bonus-box" style="margin-top:12px">
+          <p><strong>Bonus:</strong> ricerca per categoria, eventi in evidenza, countdown timer</p>
+        </div>
+        <div class="diff-bar">
+          <div class="diff-dot color-2"></div>
+          <div class="diff-dot color-2"></div>
+          <div class="diff-dot color-2"></div>
+          <div class="diff-dot color-2"></div>
+          <div class="diff-dot color-empty"></div>
+          <span class="diff-label">Medio-alta</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-3">
+      <div class="card-header">
+        <div class="card-num">Progetto 03</div>
+        <div class="card-title"><i class="ti ti-briefcase" aria-hidden="true"></i> JobBoard</div>
+        <div class="card-desc">Bacheca offerte di lavoro: le aziende pubblicano annunci, i candidati si candidano.</div>
+        <div class="stack-row">
+          <span class="badge react">React</span>
+          <span class="badge node">Express</span>
+          <span class="badge pg">PostgreSQL</span>
+          <span class="badge jwt">JWT Auth</span>
+          <span class="badge rbac">Role-based</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Funzionalità MVP</div>
+        <ul class="feature-list">
+          <li>Azienda vs candidato (ruoli distinti)</li>
+          <li>Pubblica, modifica, elimina annunci</li>
+          <li>Candidatura con messaggio di presentazione</li>
+          <li>Azienda vede lista candidati per annuncio</li>
+          <li>Candidato vede stato delle candidature</li>
+        </ul>
+        <div class="bonus-box" style="margin-top:12px">
+          <p><strong>Bonus:</strong> filtri per tipo contratto / città, salva annunci preferiti, ricerca full-text</p>
+        </div>
+        <div class="diff-bar">
+          <div class="diff-dot color-3"></div>
+          <div class="diff-dot color-3"></div>
+          <div class="diff-dot color-3"></div>
+          <div class="diff-dot color-3"></div>
+          <div class="diff-dot color-3"></div>
+          <span class="diff-label">Alta</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-4">
+      <div class="card-header">
+        <div class="card-num">Progetto 04</div>
+        <div class="card-title"><i class="ti ti-chef-hat" aria-hidden="true"></i> RecipeBook</div>
+        <div class="card-desc">Community di ricette condivise: pubblica le tue, salva quelle degli altri, filtra per ingredienti.</div>
+        <div class="stack-row">
+          <span class="badge react">React</span>
+          <span class="badge node">Express</span>
+          <span class="badge pg">PostgreSQL</span>
+          <span class="badge jwt">JWT Auth</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Funzionalità MVP</div>
+        <ul class="feature-list">
+          <li>Crea / modifica / elimina ricette</li>
+          <li>Ingredienti con quantità e unità</li>
+          <li>Filtra per categoria (dolce, salato, vegano…)</li>
+          <li>Salva ricette di altri utenti nei preferiti</li>
+          <li>Pagina dettaglio con passi della ricetta</li>
+        </ul>
+        <div class="bonus-box" style="margin-top:12px">
+          <p><strong>Bonus:</strong> commenti e valutazioni, ricerca per ingrediente, calcolo porzioni dinamico</p>
+        </div>
+        <div class="diff-bar">
+          <div class="diff-dot color-4"></div>
+          <div class="diff-dot color-4"></div>
+          <div class="diff-dot color-4"></div>
+          <div class="diff-dot color-empty"></div>
+          <div class="diff-dot color-empty"></div>
+          <span class="diff-label">Media</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="teams-row">
+    <div class="team-card">
+      <h3><i class="ti ti-users" aria-hidden="true"></i> Come funzionano i team</h3>
+      <p>2 team, ognuno sceglie una traccia. Ogni team divide il lavoro in backend (API + DB) e frontend (React + UI), poi integra.</p>
+    </div>
+    <div class="team-card">
+      <h3><i class="ti ti-checklist" aria-hidden="true"></i> Deliverable finale</h3>
+      <p>App funzionante · README con istruzioni di avvio · Schema del database · Presentazione del progetto (5 min)</p>
+    </div>
+  </div>
+
+</div>
+
+<div id="tab-detail" class="tab-content">
+
+  <div class="full-card">
+    <div class="full-card-header">
+      <div class="project-icon icon-1"><i class="ti ti-movie" aria-hidden="true"></i></div>
+      <div>
+        <div class="card-num">Progetto 01</div>
+        <div class="card-title" style="margin-bottom:4px">CineTrack — Film Tracker</div>
+        <div class="stack-row" style="margin:0">
+          <span class="badge react">React</span>
+          <span class="badge node">Express</span>
+          <span class="badge pg">PostgreSQL</span>
+          <span class="badge jwt">JWT</span>
+        </div>
+      </div>
+    </div>
+    <div class="full-card-body">
+      <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:16px">
+        Gli utenti si registrano e costruiscono il proprio diario cinematografico: segnano i film visti, scrivono recensioni con un voto e tengono una watchlist di titoli da vedere. Tutti i dati dei film sono inseriti manualmente (non è necessaria un'API esterna).
+      </p>
+      <div class="two-col">
+        <div>
+          <div class="section-label">Funzionalità richieste</div>
+          <ul class="feature-list">
+            <li>Registrazione e login con JWT</li>
+            <li>CRUD completo sui film (titolo, anno, genere, regista, poster URL)</li>
+            <li>Aggiungi un film a "visto" o "watchlist"</li>
+            <li>Scrivi una recensione con voto 1–5 ⭐</li>
+            <li>Pagina profilo: film visti, media voti dati, watchlist</li>
+            <li>Lista pubblica di tutti i film con media voti</li>
+            <li>Pagina dettaglio film con tutte le recensioni</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-label">Schema database</div>
+          <table class="schema-table">
+            <thead><tr><th>Tabella</th><th>Campi principali</th></tr></thead>
+            <tbody>
+              <tr><td class="pk">users</td><td>id, email, password_hash, username</td></tr>
+              <tr><td class="pk">movies</td><td>id, title, year, genre, director, poster_url</td></tr>
+              <tr><td class="fk">reviews</td><td>id, user_id→, movie_id→, rating, body</td></tr>
+              <tr><td class="fk">watchlist</td><td>id, user_id→, movie_id→, status (watched/to_watch)</td></tr>
+            </tbody>
+          </table>
+          <div class="section-label" style="margin-top:14px">Route backend minime</div>
+          <ul class="feature-list">
+            <li>POST /auth/register · POST /auth/login</li>
+            <li>GET/POST/PUT/DELETE /movies</li>
+            <li>GET/POST/DELETE /reviews</li>
+            <li>GET/POST/DELETE /watchlist</li>
+            <li>GET /users/:id/profile</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bonus-box" style="margin-top:16px">
+        <div class="dlabel" style="font-size:11px;font-weight:500;color:#633806;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Bonus challenge</div>
+        <p style="color:#633806">Feed globale "ultime recensioni" · Filtro per genere nella lista film · Statistiche globali (film più visti, meglio votati) · Paginazione dei risultati</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-card">
+    <div class="full-card-header">
+      <div class="project-icon icon-2"><i class="ti ti-calendar-event" aria-hidden="true"></i></div>
+      <div>
+        <div class="card-num">Progetto 02</div>
+        <div class="card-title" style="margin-bottom:4px">EventHub — Gestione eventi</div>
+        <div class="stack-row" style="margin:0">
+          <span class="badge react">React</span>
+          <span class="badge node">Express</span>
+          <span class="badge pg">PostgreSQL</span>
+          <span class="badge jwt">JWT</span>
+          <span class="badge rbac">Ruoli</span>
+        </div>
+      </div>
+    </div>
+    <div class="full-card-body">
+      <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:16px">
+        Due tipologie di utenti: <strong style="color:var(--color-text-primary)">Organizzatori</strong> che creano e gestiscono eventi, e <strong style="color:var(--color-text-primary)">Partecipanti</strong> che sfogliano il catalogo e si iscrivono. L'organizzatore vede chi si è iscritto; il partecipante vede lo stato delle proprie iscrizioni.
+      </p>
+      <div class="two-col">
+        <div>
+          <div class="section-label">Funzionalità richieste</div>
+          <ul class="feature-list">
+            <li>Registrazione con scelta del ruolo</li>
+            <li>Organizzatore: crea / modifica / cancella eventi</li>
+            <li>Evento: titolo, descrizione, data, luogo, capienza max, categoria</li>
+            <li>Partecipante: iscriviti a un evento (max capienza)</li>
+            <li>Partecipante: cancella la propria iscrizione</li>
+            <li>Organizzatore: lista iscritti per ogni evento</li>
+            <li>Dashboard personale differente per ruolo</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-label">Schema database</div>
+          <table class="schema-table">
+            <thead><tr><th>Tabella</th><th>Campi principali</th></tr></thead>
+            <tbody>
+              <tr><td class="pk">users</td><td>id, email, password_hash, username, role</td></tr>
+              <tr><td class="pk">events</td><td>id, organizer_id→, title, date, location, max_seats, category</td></tr>
+              <tr><td class="fk">registrations</td><td>id, user_id→, event_id→, registered_at</td></tr>
+            </tbody>
+          </table>
+          <div class="section-label" style="margin-top:14px">Route backend minime</div>
+          <ul class="feature-list">
+            <li>POST /auth/register · POST /auth/login</li>
+            <li>GET /events · GET /events/:id</li>
+            <li>POST/PUT/DELETE /events (solo organizzatori)</li>
+            <li>POST/DELETE /registrations</li>
+            <li>GET /events/:id/registrations (solo organizzatori)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bonus-box" style="margin-top:16px">
+        <div class="dlabel" style="font-size:11px;font-weight:500;color:#633806;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Bonus challenge</div>
+        <p style="color:#633806">Filtro per categoria e data · Countdown all'evento · Evento "completo" quando si raggiunge la capienza · Admin panel per moderare eventi</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-card">
+    <div class="full-card-header">
+      <div class="project-icon icon-3"><i class="ti ti-briefcase" aria-hidden="true"></i></div>
+      <div>
+        <div class="card-num">Progetto 03</div>
+        <div class="card-title" style="margin-bottom:4px">JobBoard — Bacheca offerte lavoro</div>
+        <div class="stack-row" style="margin:0">
+          <span class="badge react">React</span>
+          <span class="badge node">Express</span>
+          <span class="badge pg">PostgreSQL</span>
+          <span class="badge jwt">JWT</span>
+          <span class="badge rbac">Ruoli</span>
+        </div>
+      </div>
+    </div>
+    <div class="full-card-body">
+      <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:16px">
+        Piattaforma per il mercato del lavoro con due attori: <strong style="color:var(--color-text-primary)">Aziende</strong> che pubblicano offerte, e <strong style="color:var(--color-text-primary)">Candidati</strong> che si candidano con un messaggio di presentazione. Le aziende gestiscono le candidature ricevute.
+      </p>
+      <div class="two-col">
+        <div>
+          <div class="section-label">Funzionalità richieste</div>
+          <ul class="feature-list">
+            <li>Registrazione con scelta del ruolo (azienda / candidato)</li>
+            <li>Azienda: crea / modifica / elimina annunci</li>
+            <li>Annuncio: titolo, descrizione, tipo contratto, città, stipendio</li>
+            <li>Candidato: invia candidatura con lettera di presentazione</li>
+            <li>Candidato: vede la lista delle proprie candidature e stato</li>
+            <li>Azienda: vede lista candidati per ogni offerta</li>
+            <li>Azienda: aggiorna stato candidatura (in revisione / accettata / rifiutata)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-label">Schema database</div>
+          <table class="schema-table">
+            <thead><tr><th>Tabella</th><th>Campi principali</th></tr></thead>
+            <tbody>
+              <tr><td class="pk">users</td><td>id, email, password_hash, name, role</td></tr>
+              <tr><td class="pk">job_listings</td><td>id, company_id→, title, description, contract_type, city, salary</td></tr>
+              <tr><td class="fk">applications</td><td>id, candidate_id→, job_id→, cover_letter, status</td></tr>
+            </tbody>
+          </table>
+          <div class="section-label" style="margin-top:14px">Route backend minime</div>
+          <ul class="feature-list">
+            <li>POST /auth/register · POST /auth/login</li>
+            <li>GET /jobs · GET /jobs/:id</li>
+            <li>POST/PUT/DELETE /jobs (solo aziende)</li>
+            <li>POST /applications · GET /applications/mine</li>
+            <li>GET /jobs/:id/applications (solo aziende)</li>
+            <li>PATCH /applications/:id/status (solo aziende)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bonus-box" style="margin-top:16px">
+        <div class="dlabel" style="font-size:11px;font-weight:500;color:#633806;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Bonus challenge</div>
+        <p style="color:#633806">Filtri per città e tipo contratto · Salva offerta nei preferiti · Ricerca per parola chiave nel titolo · Profilo azienda con tutte le offerte attive</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-card">
+    <div class="full-card-header">
+      <div class="project-icon icon-4"><i class="ti ti-chef-hat" aria-hidden="true"></i></div>
+      <div>
+        <div class="card-num">Progetto 04</div>
+        <div class="card-title" style="margin-bottom:4px">RecipeBook — Community di ricette</div>
+        <div class="stack-row" style="margin:0">
+          <span class="badge react">React</span>
+          <span class="badge node">Express</span>
+          <span class="badge pg">PostgreSQL</span>
+          <span class="badge jwt">JWT</span>
+        </div>
+      </div>
+    </div>
+    <div class="full-card-body">
+      <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:16px">
+        Piattaforma dove gli utenti condividono le proprie ricette di cucina. Ogni ricetta ha una lista strutturata di ingredienti con quantità, e passi di preparazione ordinati. Gli altri utenti possono salvarle nei preferiti.
+      </p>
+      <div class="two-col">
+        <div>
+          <div class="section-label">Funzionalità richieste</div>
+          <ul class="feature-list">
+            <li>Registrazione e login con JWT</li>
+            <li>Crea / modifica / elimina le proprie ricette</li>
+            <li>Ricetta: titolo, descrizione, categoria, tempo prep, difficoltà</li>
+            <li>Ingredienti con quantità e unità (relazione separata)</li>
+            <li>Passi di preparazione ordinati (step 1, 2, 3…)</li>
+            <li>Salva / rimuovi ricette dai preferiti</li>
+            <li>Filtra ricette per categoria</li>
+            <li>Pagina profilo con le proprie ricette e i preferiti</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-label">Schema database</div>
+          <table class="schema-table">
+            <thead><tr><th>Tabella</th><th>Campi principali</th></tr></thead>
+            <tbody>
+              <tr><td class="pk">users</td><td>id, email, password_hash, username</td></tr>
+              <tr><td class="pk">recipes</td><td>id, author_id→, title, category, prep_time, difficulty</td></tr>
+              <tr><td class="fk">ingredients</td><td>id, recipe_id→, name, quantity, unit</td></tr>
+              <tr><td class="fk">steps</td><td>id, recipe_id→, step_number, description</td></tr>
+              <tr><td class="fk">favorites</td><td>id, user_id→, recipe_id→</td></tr>
+            </tbody>
+          </table>
+          <div class="section-label" style="margin-top:14px">Route backend minime</div>
+          <ul class="feature-list">
+            <li>POST /auth/register · POST /auth/login</li>
+            <li>GET /recipes · GET /recipes/:id</li>
+            <li>POST/PUT/DELETE /recipes (solo autore)</li>
+            <li>GET/POST/DELETE /favorites</li>
+            <li>GET /users/:id/profile</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bonus-box" style="margin-top:16px">
+        <div class="dlabel" style="font-size:11px;font-weight:500;color:#633806;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Bonus challenge</div>
+        <p style="color:#633806">Commenti sulle ricette · Voto medio per ricetta · Ricerca per ingrediente · Upload immagine copertina (multer) · Calcolo porzioni dinamico nel frontend</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
+
