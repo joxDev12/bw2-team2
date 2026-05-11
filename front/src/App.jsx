@@ -1,19 +1,21 @@
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 function App() {
-
-
   return (
-    <>
-      <div className="d-flex flex-column justify-content-center align-items-center vh-100">
-        <h1 className="h1">Build Week 2 - Team 2</h1>
-        <h1 className="h1 text-success">Questo div sta al centro della pagina?</h1>
-
-        <button className="btn btn-custom_color">Un bottone Custom</button>
-        <button className="btn btn-primary">Un bottone primary modificato</button>
-      </div>
-    </>
-  )
+    <Router>
+      <Routes>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+        <Route path="/" element={
+          <div>
+            <h1>Build Week 2 - Team 2</h1>
+          </div>
+        } />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
