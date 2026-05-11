@@ -23,9 +23,9 @@ const findAll = () =>
        u.email                    AS user_email,
        e.title                   AS event_title,
        e.description                   AS event_description,
-       e.location                     AS event_description,
+       e.location                     AS event_location,
        e.date                       AS event_date,
-       e.organizer                  AS event_organizer,
+       e.organizer_id                 AS event_organizer,
        e.max_seats                     AS event_max_seats,
        e.available                      AS event_available,
        e.category                       AS event_category
@@ -44,9 +44,9 @@ const findById = (id) =>
        u.email                    AS user_email,
        e.title                   AS event_title,
        e.description                   AS event_description,
-       e.location                     AS event_description,
+       e.location                     AS event_location,
        e.date                       AS event_date,
-       e.organizer                  AS event_organizer,
+       e.organizer_id                  AS event_organizer,
        e.max_seats                     AS event_max_seats,
        e.available                      AS event_available,
        e.category                       AS event_category
@@ -65,9 +65,9 @@ const findById = (id) =>
        u.email                    AS user_email,
        e.title                   AS event_title,
        e.description                   AS event_description,
-       e.location                     AS event_description,
+       e.location                     AS event_location,
        e.date                       AS event_date,
-       e.organizer                  AS event_organizer,
+       e.organizer_id                 AS event_organizer,
        e.max_seats                     AS event_max_seats,
        e.available                      AS event_available,
        e.category                       AS event_category
@@ -87,9 +87,9 @@ const findById = (id) =>
        u.email                    AS user_email,
        e.title                   AS event_title,
        e.description                   AS event_description,
-       e.location                     AS event_description,
+       e.location                     AS event_location,
        e.date                       AS event_date,
-       e.organizer                  AS event_organizer,
+       e.organizer_id                  AS event_organizer,
        e.max_seats                     AS event_max_seats,
        e.available                      AS event_available,
        e.category                       AS event_category
@@ -104,7 +104,7 @@ const findById = (id) =>
 
 const create = ({ user_id, event_id }) =>
   pool.query(
-    `INSERT INTO events (user_id, event_id)
+    `INSERT INTO registrations (user_id, event_id)
      VALUES ($1, $2)
      RETURNING *`,
     [user_id, event_id]
@@ -113,6 +113,6 @@ const create = ({ user_id, event_id }) =>
 
 // Elimina un prestito per id
 const remove = (id) =>
-  pool.query('DELETE FROM events WHERE id = $1 RETURNING id', [id]);
+  pool.query('DELETE FROM registrations WHERE id = $1 RETURNING id', [id]);
 
 module.exports = { init, findAll, findById, findByEventId, findByUserId, create, remove };

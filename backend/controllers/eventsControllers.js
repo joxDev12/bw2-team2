@@ -3,7 +3,7 @@ const eventsService = require('../services/eventsServices');
 // POST /
 const crea = async (req, res, next) => {
   try {
-    const event = await eventsService.crea(req.body);
+    const event = await eventsService.crea(req.user.id, req.body);
     res.status(201).json({ successo: true, dati: event });
   } catch (err) { next(err); }
 };

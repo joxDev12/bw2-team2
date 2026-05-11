@@ -1,8 +1,8 @@
 
 const eventsModel = require('../models/eventsModel');
 
-const crea = async (dati) => {
-  const event = await eventsModel.create(dati);
+const crea = async (id, dati) => {
+  const event = await eventsModel.create(id, dati);
   return event.rows[0];
 };
 

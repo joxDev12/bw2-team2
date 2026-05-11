@@ -83,7 +83,7 @@ const aggiorna = async (id, dati) => {
 
 const elimina = async (id) => {
   await getById(id);
-  await users.remove(id);
+  await usersModel.remove(id);
   return { message: 'Utente eliminato' };
 };
 

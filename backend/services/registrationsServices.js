@@ -40,7 +40,7 @@ const getById = async (id) => {
 };
 
 const getAllByEventId = async (id) => {
-  const result = await eventsModel.findByEventId(id);
+  const result = await registrationsModel.findByEventId(id);
   if (!result.rows.length) {
     const err = new Error('Registrazione non trovata');
     err.statusCode = 404;
@@ -50,7 +50,7 @@ const getAllByEventId = async (id) => {
 };
 
 const getAllByUserId = async (id) => {
-  const result = await eventsModel.findByUserId(id);
+  const result = await registrationsModel.findByUserId(id);
   if (!result.rows.length) {
     const err = new Error('Registrazione non trovata');
     err.statusCode = 404;

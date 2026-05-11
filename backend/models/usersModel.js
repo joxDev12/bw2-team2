@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
     username VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     role         VARCHAR(20)   NOT NULL DEFAULT 'partecipant'
                   CHECK (role IN ('admin', 'partecipant', 'organizer')),
     token_version INTEGER       NOT NULL DEFAULT 0,
@@ -26,7 +26,7 @@ const findAll = () =>
 
 const findById = (id) =>
   pool.query(
-    'SELECT id, name, surname, email, role, username, FROM users WHERE id = $1',
+    'SELECT id, name, surname, email, username, role FROM users WHERE id = $1',
     [id]
   );
 
