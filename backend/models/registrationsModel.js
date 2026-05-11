@@ -67,8 +67,6 @@ const create = ({ user_id, event_id }) =>
   );
 
 
-
-
 // Elimina un prestito per id
 const remove = (id) =>
   pool.query('DELETE FROM events WHERE id = $1 RETURNING id', [id]);

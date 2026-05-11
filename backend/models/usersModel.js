@@ -31,6 +31,9 @@ const findById = (id) =>
 const findByEmail = (email) =>
   pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
+const findByUsername = (username) =>
+  pool.query('SELECT * FROM users WHERE username = $1', [username]);
+
 
 const create = ({ name, surname, email, username, password_hash, role }) =>
   pool.query(
@@ -67,6 +70,6 @@ const remove = (id) =>
   pool.query('DELETE FROM users WHERE id = $1 RETURNING id', [id]);
 
 module.exports = {
-  init, findAll, findById, findByEmail,
+  init, findAll, findById, findByEmail, findByUsername,
   create, update, updatePassword, remove
 };
