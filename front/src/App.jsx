@@ -1,4 +1,4 @@
-
+import Hero from './components/Hero';
 
 function App() {
 
@@ -11,6 +11,7 @@ function App() {
 
         <button className="btn btn-custom_color">Un bottone Custom</button>
         <button className="btn btn-primary">Un bottone primary modificato</button>
+        <hero
       </div>
     </>
   )
