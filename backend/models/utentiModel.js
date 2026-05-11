@@ -1,0 +1,74 @@
+// ============================================================
+// models/utenti.js — Model della tabella "utenti"
+// ============================================================
+
+const pool = require('../config/db');
+
+const CREATE_TABLE = `
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    role VARCHAR(25) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    created_at date DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+`;
+
+const init = () => pool.query(CREATE_TABLE);
+
+const findAll = () =>
+  pool.query(
+    'SELECT id, name, surname, email, username, role FROM users ORDER BY id'
+  );
+
+const findById = (id) =>
+  pool.query(
+    'SELECT id, name, surname, email, role, username, FROM users WHERE id = $1',
+    [id]
+  );
+
+const findByEmail = (email) =>
+  pool.query('SELECT * FROM users WHERE email = $1', [email]);
+
+
+const create = ({ name, surname, email, username, password_hash, role }) =>
+  pool.query(
+    `INSERT INTO utenti (name, surname, email, username, password_hash, role)
+     VALUES ($1, $2, $3, $4, $5, $6)
+     RETURNING id, name, surname, email, username, ruolo`,
+    [name, surname, email, username, password_hash, role]
+  );
+
+const update = (id, { name, surname, email, username, role }) =>
+  pool.query(
+    `UPDATE users
+     SET name    = COALESCE($1, name),
+         surname = COALESCE($2, surname),
+         email   = COALESCE($3, email),
+         username  = COALESCE($4, username),
+         role = COALESCE($5, role)
+     WHERE id = $6
+     RETURNING id, name, surname, email, username, role`,
+    [name, surname, email, username, role, id]
+  );
+
+
+const updatePassword = (id, hashedPassword) =>
+  pool.query(
+    `UPDATE users
+     SET password_hash     = $1
+     WHERE id = $2
+     RETURNING id`,
+    [hashedPassword, id]
+  );
+
+const remove = (id) =>
+  pool.query('DELETE FROM users WHERE id = $1 RETURNING id', [id]);
+
+module.exports = {
+  init, findAll, findById, findByEmail,
+  create, update, updatePassword, remove
+};
