@@ -8,6 +8,10 @@ const cors = require('cors');
 
 require('dotenv').config();
 
+const usersModel   = require('./models/usersModel');
+const eventsModel    = require('./models/eventsModel');
+const registrationsModel = require('./models/registrationsModel');
+
 
 const app  = express();
 const port = process.env.SERVER_PORT;
@@ -49,11 +53,9 @@ app.use(errorHandler);
 
 const start = async () => {
   try {
-    await utenteModel.init();
-    await libriModel.init();
-    await prestitiModel.init();
-
-    await seedAdmin();
+    await usersModel.init();
+    await eventsModel.init();
+    await registrationsModel.init();
 
     console.log('Tabelle sincronizzate');
 
