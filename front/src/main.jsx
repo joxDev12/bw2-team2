@@ -16,7 +16,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 // Stili di base applicati all'intera pagina
-import "./index.css";
+// import "./index.css";
 
 // Il componente principale che contiene tutta l'app
 import App from "./App.jsx";
@@ -24,7 +24,7 @@ import App from "./App.jsx";
 //Il componente che elabora le routes della nostra SPA
 import { BrowserRouter } from "react-router-dom";
 
-import { AuthProvider } from "./context/AuthProvider.jsx";
+// import { AuthProvider } from "./context/AuthProvider.jsx";
 
 // Trova l'elemento <div id="root"> in index.html,
 // lo "trasforma" in un root React e ci renderizza <App />.
@@ -33,9 +33,10 @@ import { AuthProvider } from "./context/AuthProvider.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider>
+      
         <App />
-      </AuthProvider>
+      
+      
     </BrowserRouter>
   </StrictMode>,
 );

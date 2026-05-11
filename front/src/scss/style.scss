@@ -1,6 +1,9 @@
 @use "customs/colors" as *;
 @use "customs/fonts" as *;
 
+//componenti
+@use "./components/navbar";
+
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
 @import "customs/bootstrap_variables";  // per cambiare le variabili generiche di bootstrap
