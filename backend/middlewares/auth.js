@@ -45,7 +45,7 @@ const soloAdmin = (req, res, next) => {
 };
 
 
-/* const soloOrganizerOrAdmin = (req, res, next) => {
+const soloOrganizerOrAdmin = (req, res, next) => {
   if (req.user?.role !== 'organizer' || 'admin') {
     return res.status(403).json({
       successo: false,
@@ -53,7 +53,7 @@ const soloAdmin = (req, res, next) => {
     });
   }
   next();
-}; */
+};
 
 
 const soloSéOAdmin = (req, res, next) => {
@@ -84,4 +84,4 @@ const soloSéAdminOrOrganizer = (req, res, next) => {
   next();
 };
 
-module.exports = { autenticato, soloAdmin, soloSéOAdmin, soloSéAdminOrOrganizer };
+module.exports = { autenticato, soloAdmin, soloSéOAdmin, soloSéAdminOrOrganizer, soloOrganizerOrAdmin };

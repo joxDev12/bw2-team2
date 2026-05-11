@@ -26,7 +26,7 @@ const findAll = () =>
 
 const findById = (id) =>
   pool.query(
-    'SELECT id, name, surname, email, username, role FROM users WHERE id = $1',
+    'SELECT id, name, surname, email, username, role, token_version FROM users WHERE id = $1',
     [id]
   );
 
@@ -52,7 +52,8 @@ const update = (id, { name, surname, email, username, role }) =>
          surname = COALESCE($2, surname),
          email   = COALESCE($3, email),
          username  = COALESCE($4, username),
-         role = COALESCE($5, role)
+         role = COALESCE($5, role),
+         token_version = token_version + 1
      WHERE id = $6
      RETURNING id, name, surname, email, username, role`,
     [name, surname, email, username, role, id]
@@ -62,7 +63,8 @@ const update = (id, { name, surname, email, username, role }) =>
 const updatePassword = (id, hashedPassword) =>
   pool.query(
     `UPDATE users
-     SET password_hash     = $1
+     SET password_hash     = $1,
+     token_version = token_version + 1
      WHERE id = $2
      RETURNING id`,
     [hashedPassword, id]

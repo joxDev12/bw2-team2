@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const controller = require('../controllers/eventsControllers');
-const { autenticato, soloAdmin, soloSéOAdmin, soloSéAdminOrOrganizer } = require('../middlewares/auth');
+const { autenticato, soloAdmin, soloSéOAdmin, soloSéAdminOrOrganizer, soloOrganizerOrAdmin} = require('../middlewares/auth');
 
-router.post('/', autenticato, soloSéAdminOrOrganizer, controller.crea);
+router.post('/', autenticato, soloOrganizerOrAdmin, controller.crea);
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);
 router.get('/category/:category', controller.getAllByCategory);
