@@ -1,6 +1,8 @@
 @use "customs/colors" as *;
 @use "customs/fonts" as *;
 @use "./components/hero";
+@use "components/LoginForm";
+@use "components/registerForm";
 
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
