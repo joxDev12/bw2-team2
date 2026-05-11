@@ -1,5 +1,8 @@
 @use "customs/colors" as *;
 @use "customs/fonts" as *;
+@use "./components/hero";
+@use "components/LoginForm";
+@use "components/registerForm";
 
 //componenti
 @use "./components/navbar";
@@ -31,6 +34,8 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+@import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 
 @import "customs/custom_bootstrap";   // qui non facciamo cambio variabile ma solo il comportamento delle classi.
 
