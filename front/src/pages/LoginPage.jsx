@@ -1,6 +1,8 @@
 import { useState } from 'react';
 // import { useAuth} from '../context/useAuth'
-import { useNavigate, Link} from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+
+import LoginForm from '../components/LoginForm';
 
 function LoginPage(){
     const [email, setEmail] = useState('');
@@ -33,16 +35,8 @@ function LoginPage(){
         <>
         <div className='auth-container'>
              <h1>LOGIN</h1>
-            {/* <div className='auth-card'>
-               
-                <form onSubmit={handleSubmit}>
-                    <input type="email" placeholder='Email'value={email} onChange={e => setEmail(e.target.value)} required/>
-                    <input type="password" placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} required/>
-                    {errore && <p className='errore'>{errore}</p>}
-                    <button type='submit'>Accedi</button>
-                </form>
-                <p className='auth-link'>Non hai un account? <Link to='/register'>Registrati</Link></p>
-            </div> */}
+
+                <LoginForm />
         </div>
         </>
     )

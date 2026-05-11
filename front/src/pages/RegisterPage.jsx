@@ -2,6 +2,8 @@ import { useState } from 'react';
 // import { register } from '../api/auth';   // ← NON esiste ancora, quindi lo lasciamo commentato
 import { useNavigate, Link } from 'react-router-dom';
 
+import RegisterForm from '../components/RegisterForm';
+
 function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,35 +48,7 @@ function RegisterPage() {
     
     <div className='auth-container'>
         <h1>REGISTRA</h1>
-      {/* <div className='auth-card'>
-        
-
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder='Email'
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
-
-          <input
-            type="password"
-            placeholder='Password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-
-          {errore && <p className='errore'>{errore}</p>}
-
-          <button type='submit'>Registrati</button>
-        </form>
-
-        <p className='auth-link'>
-          Hai già un account? <Link to='/login'>Accedi</Link>
-        </p>
-      </div> */}
+      <RegisterForm />
     </div>
   );
 }
