@@ -9,7 +9,7 @@ function Help() {
                         <p>Il nostro team è disponibile 24/7 per supportarti.</p>
                         <button className="btn btn-primary">Contattaci</button>
                     </div>
-                    <i class="bi bi-telephone custom-icon-help"></i>
+                    <i className="bi bi-telephone custom-icon-help"></i>
                 </div>
             </div>
         </>

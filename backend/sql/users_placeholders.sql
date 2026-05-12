@@ -1,0 +1,159 @@
+INSERT INTO
+    users (
+        name,
+        surname,
+        email,
+        username,
+        password_hash,
+        role
+    )
+VALUES
+    -- 3 admin
+    (
+        'Marco',
+        'Rossi',
+        'marco.rossi@example.com',
+        'marcorossi',
+        'Marco1',
+        'admin'
+    ),
+    (
+        'Laura',
+        'Bianchi',
+        'laura.bianchi@example.com',
+        'laurabianchi',
+        'Laura1',
+        'admin'
+    ),
+    (
+        'Davide',
+        'Ferrari',
+        'davide.ferrari@example.com',
+        'davideferrari',
+        'Davide1',
+        'admin'
+    ),
+
+-- 5 organizer
+(
+    'Giulia',
+    'Romano',
+    'giulia.romano@example.com',
+    'giuliaromano',
+    'Giulia1',
+    'organizer'
+),
+(
+    'Alessandro',
+    'Gallo',
+    'alessandro.gallo@example.com',
+    'alessandrogallo',
+    'Alessandro1',
+    'organizer'
+),
+(
+    'Sara',
+    'Conti',
+    'sara.conti@example.com',
+    'saraconti',
+    'Sara1',
+    'organizer'
+),
+(
+    'Matteo',
+    'Greco',
+    'matteo.greco@example.com',
+    'matteogreco',
+    'Matteo1',
+    'organizer'
+),
+(
+    'Francesca',
+    'Marini',
+    'francesca.marini@example.com',
+    'francescamarini',
+    'Francesca1',
+    'organizer'
+),
+
+-- 10 partecipant
+(
+    'Luca',
+    'Esposito',
+    'luca.esposito@example.com',
+    'lucaesposito',
+    'Luca1',
+    'partecipant'
+),
+(
+    'Elena',
+    'Ricci',
+    'elena.ricci@example.com',
+    'elenaricci',
+    'Elena1',
+    'partecipant'
+),
+(
+    'Andrea',
+    'Moretti',
+    'andrea.moretti@example.com',
+    'andreamoretti',
+    'Andrea1',
+    'partecipant'
+),
+(
+    'Martina',
+    'Lombardi',
+    'martina.lombardi@example.com',
+    'martinalombardi',
+    'Martina1',
+    'partecipant'
+),
+(
+    'Simone',
+    'Barbieri',
+    'simone.barbieri@example.com',
+    'simonebarbieri',
+    'Simone1',
+    'partecipant'
+),
+(
+    'Chiara',
+    'Fontana',
+    'chiara.fontana@example.com',
+    'chiarafontana',
+    'Chiara1',
+    'partecipant'
+),
+(
+    'Federico',
+    'Santoro',
+    'federico.santoro@example.com',
+    'federicosantoro',
+    'Federico1',
+    'partecipant'
+),
+(
+    'Valentina',
+    'Caruso',
+    'valentina.caruso@example.com',
+    'valentinacaruso',
+    'Valentina1',
+    'partecipant'
+),
+(
+    'Nicola',
+    'Rinaldi',
+    'nicola.rinaldi@example.com',
+    'nicolarinaldi',
+    'Nicola1',
+    'partecipant'
+),
+(
+    'Ilaria',
+    'Martini',
+    'ilaria.martini@example.com',
+    'ilariamartini',
+    'Ilaria1',
+    'partecipant'
+);

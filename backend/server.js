@@ -3,7 +3,15 @@ const express      = require('express');
 const errorHandler = require('./middlewares/errorHandler')
 const helmet       = require('helmet');
 /* const rateLimit    = require('express-rate-limit'); */
-const seedAdmin    = require('./middlewares/seeder');
+
+//seeds DA COMMENTARE DEL TRY UNA VOLTA MESSI NEL DB!!
+// vanno rimossi perchè i js placeholders xke fanno il trucate della tabella, senno la relazione organizer_id ed eventi non combacia
+const seedAdmin = require('./middlewares/seeder');
+const seedUsersPlaceholder = require('./utils/seederUsersPlaceholder');
+const seedEventsPlaceholder = require('./utils/seederEventsPlaceholder');
+const seedRegistrationsPlaceholder = require('./utils/seederRegistrationsPlaceholder');
+
+
 const cors = require('cors');
 
 require('dotenv').config();
@@ -67,7 +75,12 @@ const start = async () => {
     await eventsModel.init();
     await registrationsModel.init();
 
-    await seedAdmin();
+    await seedUsersPlaceholder();
+    // seedAdmin va dopo perchè il usersPlaceholder fa il truncate della tabella facendo ripartire sempre da ID 1
+    await seedAdmin(); 
+
+    await seedEventsPlaceholder();
+    await seedRegistrationsPlaceholder()
 
     console.log('Tabelle sincronizzate');
 

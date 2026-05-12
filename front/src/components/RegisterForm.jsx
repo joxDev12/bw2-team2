@@ -1,45 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function RegisterForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    role: "partecipant",
-  });
-
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("Le password non coincidono.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      console.log("Registrazione in corso...", formData);
-    } catch (err) {
-      setError(err.message || "Errore durante la registrazione");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit }) {
   return (
     <div
       className="card shadow-sm p-4 mx-auto border-0"
@@ -50,9 +11,9 @@ function RegisterForm() {
         <p className="text-muted">Unisciti alla nostra community di eventi</p>
       </div>
 
-      {error && (
+      {errore && (
         <div className="alert alert-danger" role="alert">
-          <span>⚠️</span> {error}
+          <span>⚠️</span> {errore}
         </div>
       )}
 
@@ -66,7 +27,7 @@ function RegisterForm() {
               id="name"
               type="text"
               name="name"
-              value={formData.name}
+              value={form.name}
               onChange={handleChange}
               placeholder="Mario"
               className="form-control"
@@ -81,7 +42,7 @@ function RegisterForm() {
               id="surname"
               type="text"
               name="surname"
-              value={formData.surname}
+              value={form.surname}
               onChange={handleChange}
               placeholder="Rossi"
               className="form-control"
@@ -98,7 +59,7 @@ function RegisterForm() {
             id="username"
             type="text"
             name="username"
-            value={formData.username}
+            value={form.username}
             onChange={handleChange}
             placeholder="mario88"
             className="form-control"
@@ -114,7 +75,7 @@ function RegisterForm() {
             id="email"
             type="email"
             name="email"
-            value={formData.email}
+            value={form.email}
             onChange={handleChange}
             placeholder="mario.rossi@esempio.it"
             className="form-control"
@@ -129,7 +90,7 @@ function RegisterForm() {
           <select
             id="role"
             name="role"
-            value={formData.role}
+            value={form.role}
             onChange={handleChange}
             className="form-select"
           >
@@ -147,7 +108,7 @@ function RegisterForm() {
               id="password"
               type="password"
               name="password"
-              value={formData.password}
+              value={form.password}
               onChange={handleChange}
               placeholder="********"
               className="form-control"
@@ -162,7 +123,7 @@ function RegisterForm() {
               id="confirmPassword"
               type="password"
               name="confirmPassword"
-              value={formData.confirmPassword}
+              value={form.confirmPassword}
               onChange={handleChange}
               placeholder="********"
               className="form-control"
@@ -174,9 +135,9 @@ function RegisterForm() {
         <button
           type="submit"
           className="btn btn-primary w-100 py-2 mt-2 fw-bold"
-          disabled={loading}
+          disabled={caricamento}
         >
-          {loading ? "Registrazione in corso..." : "Crea account"}
+          {caricamento ? "Registrazione in corso..." : "Crea account"}
         </button>
       </form>
 
