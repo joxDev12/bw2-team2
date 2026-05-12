@@ -40,7 +40,7 @@ const create = (id,{ title, description, date, location, max_seats, category }) 
      RETURNING *`,
     [title, description, date, location, max_seats, category, id]
   );
-
+ 
 
 const update = (id, { title, description, date, location, category }) =>
   pool.query(

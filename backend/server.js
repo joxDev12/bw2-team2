@@ -2,7 +2,7 @@
 const express      = require('express');
 const errorHandler = require('./middlewares/errorHandler')
 const helmet       = require('helmet');
-const rateLimit    = require('express-rate-limit');
+/* const rateLimit    = require('express-rate-limit'); */
 const seedAdmin    = require('./middlewares/seeder');
 const cors = require('cors');
 
@@ -23,11 +23,11 @@ const app  = express();
 const port = process.env.SERVER_PORT;
 
 
-const limiterGlobale = rateLimit({
+/* const limiterGlobale = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   message: { successo: false, errore: 'Troppe richieste, riprova tra qualche minuto' }
-});
+}); */
 
 app.use(express.json());
 
@@ -41,7 +41,7 @@ app.use(cors({
 }));
 
 
-app.use(limiterGlobale);
+/* app.use(limiterGlobale); */
 
 app.get('/health', (req, res) => {
   res.status(200).json({ message: 'Backend avviato: OK', status: '200' });

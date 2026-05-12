@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const controller = require('../controllers/eventsControllers');
-const { autenticato, soloAdmin, soloSéOAdmin, soloSéAdminOrOrganizer, soloOrganizerOrAdmin} = require('../middlewares/auth');
+const { autenticato, soloAdmin, } = require('../middlewares/auth');
 
 router.post('/', autenticato, soloOrganizerOrAdmin, controller.crea);
 router.get('/', controller.getAll);

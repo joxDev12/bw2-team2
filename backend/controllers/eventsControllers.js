@@ -52,7 +52,7 @@ const aggiorna = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-// DELETE /:id
+// DELETE /:id 
 const elimina = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);

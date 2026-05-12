@@ -45,23 +45,12 @@ const soloAdmin = (req, res, next) => {
 };
 
 
-const soloOrganizerOrAdmin = (req, res, next) => {
-  if (req.user?.role !== 'organizer' || 'admin') {
-    return res.status(403).json({
-      successo: false,
-      errore: 'Accesso riservato agli organizzatori'
-    });
-  }
-  next();
-};
-
-
-const soloSéOAdmin = (req, res, next) => {
+const soloSéOorganizer = (req, res, next) => {
   const idRichiesto = parseInt(req.params.id);
-  const isAdmin     = req.user?.role === 'admin';
-  const isSéStesso  = req.user?.id    === idRichiesto;
+  const isOrganizer     = req.users?.role === 'organizer';
+  const isSéStesso  = req.users?.id    === idRichiesto;
 
-  if (!isAdmin && !isSéStesso) {
+  if (!isOrganizer && !isSéStesso) {
     return res.status(403).json({
       successo: false,
       errore: 'Non sei autorizzato ad accedere a questa risorsa'
@@ -70,18 +59,4 @@ const soloSéOAdmin = (req, res, next) => {
   next();
 };
 
-const soloSéAdminOrOrganizer = (req, res, next) => {
-  const idRichiesto = parseInt(req.params.id);
-  const isAdminOrOganizer    = req.user?.role === 'admin' || 'organizer';
-  const isSéStesso  = req.user?.id    === idRichiesto;
-
-  if (!isAdminOrOganizer && !isSéStesso) {
-    return res.status(403).json({
-      successo: false,
-      errore: 'Non sei autorizzato ad accedere a questa risorsa'
-    });
-  }
-  next();
-};
-
-module.exports = { autenticato, soloAdmin, soloSéOAdmin, soloSéAdminOrOrganizer, soloOrganizerOrAdmin };
+module.exports = { autenticato, soloAdmin, soloSéOorganizer };

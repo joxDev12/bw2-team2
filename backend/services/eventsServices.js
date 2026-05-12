@@ -28,7 +28,7 @@ const getAllByCategory = async (category) => {
     const err = new Error('Evento non trovato');
     err.statusCode = 404;
     throw err;
-  }
+  } 
   return result.rows;
 };
 
@@ -45,6 +45,9 @@ const getAllByOrganizerId = async (id) => {
 
 const aggiorna = async (id, dati) => {
   await getById(id); 
+  // devo verificare che l id di organizer presente nell instanza evento da modificare
+  // sia uguale all id user presente nel payload di jwt, se si eseguo update
+  // se no errore
   const result = await eventsModel.update(id, dati);
   return result.rows[0];
 };
