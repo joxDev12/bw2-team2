@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS events (
     id SERIAL PRIMARY KEY,
     organizer_id INT NOT NULL,
     title VARCHAR(500) NOT NULL,
+    image VARCHAR(500),
     description TEXT,
     date DATE NOT NULL,
     location VARCHAR(500) NOT NULL,

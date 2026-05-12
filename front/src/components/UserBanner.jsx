@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import profilePlaceholder from '../assets/img/profile_placeholder.webp';
 
 function UserBanner() {
     const { utente, logout } = useAuth();
     const navigate = useNavigate();
     const nomeCompleto = [utente?.name, utente?.surname].filter(Boolean).join(' ');
-    const nomeVisualizzato = nomeCompleto;
+    const nomeVisualizzato = nomeCompleto || utente?.username || 'Nome Utente';
+    const immagineProfilo = utente?.img_profile || profilePlaceholder;
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -28,7 +30,7 @@ function UserBanner() {
             >
                 <h6 className="user-banner__name mb-0 text-white fw-bold">{nomeVisualizzato}</h6>
                 <img
-                    src="https://github.com/mdo.png"
+                    src={immagineProfilo}
                     alt="Immagine profilo utente"
                     className="user-banner__avatar rounded-circle"
                 />

@@ -4,6 +4,7 @@ INSERT INTO
         surname,
         email,
         username,
+        img_profile,
         password_hash,
         role
     )
@@ -14,7 +15,8 @@ VALUES
         'Rossi',
         'marco.rossi@example.com',
         'marcorossi',
-        'Marco1',
+        'https://i.pravatar.cc/300?img=1',
+        '$2b$12$uA8jb82FSIRWCQAfiDTZL.iX2bwRc6qOgbRvFNYS3iAUlBw.UH/zC',
         'admin'
     ),
     (
@@ -22,7 +24,8 @@ VALUES
         'Bianchi',
         'laura.bianchi@example.com',
         'laurabianchi',
-        'Laura1',
+        'https://i.pravatar.cc/300?img=2',
+        '$2b$12$1UuDvD2hcp730cNjNvDJKu3WM1HR5UyRFeWTAG5RW0lWutqeHlbiG',
         'admin'
     ),
     (
@@ -30,7 +33,8 @@ VALUES
         'Ferrari',
         'davide.ferrari@example.com',
         'davideferrari',
-        'Davide1',
+        'https://i.pravatar.cc/300?img=3',
+        '$2b$12$BY/2oKbmP8X7OeO1cUYB9OAGfr4TxEIYmKTaDDnRSIupjIlkLb1ju',
         'admin'
     ),
 
@@ -40,7 +44,8 @@ VALUES
     'Romano',
     'giulia.romano@example.com',
     'giuliaromano',
-    'Giulia1',
+    'https://i.pravatar.cc/300?img=4',
+    '$2b$12$qqtcm6BbhJ.yuUjgyrpkR.uhbjBQmoLjWB7nuyupnzxBycY8EzOzu',
     'organizer'
 ),
 (
@@ -48,7 +53,8 @@ VALUES
     'Gallo',
     'alessandro.gallo@example.com',
     'alessandrogallo',
-    'Alessandro1',
+    'https://i.pravatar.cc/300?img=5',
+    '$2b$12$Fb3NguH5x9T/ZQaRO0ORIeHgcjn/TdfGg6HN3oaBDdD4KlQIsQ2rO',
     'organizer'
 ),
 (
@@ -56,7 +62,8 @@ VALUES
     'Conti',
     'sara.conti@example.com',
     'saraconti',
-    'Sara1',
+    'https://i.pravatar.cc/300?img=6',
+    '$2b$12$.DkpBIJViX6VEFUfrFAxLePrQNWlMpRo2XSVx6P4LF4.nfx1OhxAO',
     'organizer'
 ),
 (
@@ -64,7 +71,8 @@ VALUES
     'Greco',
     'matteo.greco@example.com',
     'matteogreco',
-    'Matteo1',
+    'https://i.pravatar.cc/300?img=7',
+    '$2b$12$BxVy8ZeaVOnc8JgLAEgqmOuZBy8.5fHjYDWzgX/g9.tt3Lrv8h/Ty',
     'organizer'
 ),
 (
@@ -72,7 +80,8 @@ VALUES
     'Marini',
     'francesca.marini@example.com',
     'francescamarini',
-    'Francesca1',
+    'https://i.pravatar.cc/300?img=8',
+    '$2b$12$5yKchqPypgzdO2C2O0BbiOIlC0oxYUiRUtSIiM.E93l7duePyltGO',
     'organizer'
 ),
 
@@ -82,7 +91,8 @@ VALUES
     'Esposito',
     'luca.esposito@example.com',
     'lucaesposito',
-    'Luca1',
+    'https://i.pravatar.cc/300?img=9',
+    '$2b$12$Cv/6bxfqhBmYbMCoW44UQerli69R7T02O.K7hbl22E1c2WepYuCSK',
     'partecipant'
 ),
 (
@@ -90,7 +100,8 @@ VALUES
     'Ricci',
     'elena.ricci@example.com',
     'elenaricci',
-    'Elena1',
+    'https://i.pravatar.cc/300?img=10',
+    '$2b$12$l4PcMrMMXhL3I.4dQDHGPuBdIxwUrMRnN.MTeinkuSPz5RW0v0Agi',
     'partecipant'
 ),
 (
@@ -98,7 +109,8 @@ VALUES
     'Moretti',
     'andrea.moretti@example.com',
     'andreamoretti',
-    'Andrea1',
+    'https://i.pravatar.cc/300?img=11',
+    '$2b$12$KqUR98FIABUMZkKTiUB5Q.dHi3vKCvSgCcXSvPYmAyPfMyB8WItR2',
     'partecipant'
 ),
 (
@@ -106,7 +118,8 @@ VALUES
     'Lombardi',
     'martina.lombardi@example.com',
     'martinalombardi',
-    'Martina1',
+    'https://i.pravatar.cc/300?img=12',
+    '$2b$12$yv5bS1dCbrcpYphjySVzXODNAn7JiErPUrOXril/14O.gvm6Vfy6a',
     'partecipant'
 ),
 (
@@ -114,7 +127,8 @@ VALUES
     'Barbieri',
     'simone.barbieri@example.com',
     'simonebarbieri',
-    'Simone1',
+    'https://i.pravatar.cc/300?img=13',
+    '$2b$12$65VZIn5dfru0Smx.eqvXyuWqV4dQcYitD2yWe2ga4kasgqftxW1va',
     'partecipant'
 ),
 (
@@ -122,7 +136,8 @@ VALUES
     'Fontana',
     'chiara.fontana@example.com',
     'chiarafontana',
-    'Chiara1',
+    'https://i.pravatar.cc/300?img=14',
+    '$2b$12$BHT2ak.Uw6B48IQyttE7NOMrI8oe7qRKRsSH9stLw9vhER8l78mKK',
     'partecipant'
 ),
 (
@@ -130,7 +145,8 @@ VALUES
     'Santoro',
     'federico.santoro@example.com',
     'federicosantoro',
-    'Federico1',
+    'https://i.pravatar.cc/300?img=15',
+    '$2b$12$ku0qyQwPh3Yv3YTNJOhjy.tRR29t79dDKeGThx9tK2Pt4OesLTTQ2',
     'partecipant'
 ),
 (
@@ -138,7 +154,8 @@ VALUES
     'Caruso',
     'valentina.caruso@example.com',
     'valentinacaruso',
-    'Valentina1',
+    'https://i.pravatar.cc/300?img=16',
+    '$2b$12$bCsp7U1XpNYXvZBnvgR9YOek9c1u41CPJ0RY3pIK44BTa2NWfikvi',
     'partecipant'
 ),
 (
@@ -146,7 +163,8 @@ VALUES
     'Rinaldi',
     'nicola.rinaldi@example.com',
     'nicolarinaldi',
-    'Nicola1',
+    'https://i.pravatar.cc/300?img=17',
+    '$2b$12$dWh.AMHxaD/faVXhQ7UtQ.BhBh82hP4QKEqN1SbC2/wFVr0l0sP1a',
     'partecipant'
 ),
 (
@@ -154,6 +172,7 @@ VALUES
     'Martini',
     'ilaria.martini@example.com',
     'ilariamartini',
-    'Ilaria1',
+    'https://i.pravatar.cc/300?img=18',
+    '$2b$12$7DbWwu.DoWvCWzbd7PSXYO3mQao/xTCsoDfNOWa.nV4A6aAp/SYXy',
     'partecipant'
 );

@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS events (
     id SERIAL PRIMARY KEY,
     organizer_id INT NOT NULL,
     title VARCHAR(500) NOT NULL,
+    image VARCHAR(500),
     description TEXT,
     date DATE NOT NULL,
     location VARCHAR(500) NOT NULL,
@@ -33,26 +34,27 @@ const findByOrganizerId = (id) =>
   pool.query('SELECT * FROM events WHERE organizer_id = $1', [id]); 
 
 
-const create = (id,{ title, description, date, location, max_seats, category }) =>
+const create = (id,{ title, image, description, date, location, max_seats, category }) =>
   pool.query(
-    `INSERT INTO events (title, description, date, location, max_seats, category, organizer_id)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)
+    `INSERT INTO events (title, image, description, date, location, max_seats, category, organizer_id)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
      RETURNING *`,
-    [title, description, date, location, max_seats, category, id]
+    [title, image, description, date, location, max_seats, category, id]
   );
  
 
-const update = (id, { title, description, date, location, category }) =>
+const update = (id, { title, image, description, date, location, category }) =>
   pool.query(
     `UPDATE events
      SET title             = COALESCE($1, title),
-         description             = COALESCE($2, description),
-         date               = COALESCE($3, date),
-         location = COALESCE($4, location),
-         category            = COALESCE($5, category)
-     WHERE id = $6
+         image             = COALESCE($2, image),
+         description             = COALESCE($3, description),
+         date               = COALESCE($4, date),
+         location = COALESCE($5, location),
+         category            = COALESCE($6, category)
+     WHERE id = $7
      RETURNING *`,
-    [title, description, date, location, category, id]
+    [title, image, description, date, location, category, id]
   );
 
 

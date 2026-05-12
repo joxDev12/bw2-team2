@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     surname VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     username VARCHAR(255) UNIQUE NOT NULL,
+    img_profile VARCHAR(500),
     password_hash VARCHAR(255) NOT NULL,
     role         VARCHAR(20)   NOT NULL DEFAULT 'partecipant'
                   CHECK (role IN ('admin', 'partecipant', 'organizer')),
@@ -21,12 +22,12 @@ const init = () => pool.query(CREATE_TABLE);
 
 const findAll = () =>
   pool.query(
-    'SELECT id, name, surname, email, username, role FROM users ORDER BY id'
+    'SELECT id, name, surname, email, username, img_profile, role FROM users ORDER BY id'
   );
 
 const findById = (id) =>
   pool.query(
-    'SELECT id, name, surname, email, username, role, token_version FROM users WHERE id = $1',
+    'SELECT id, name, surname, email, username, img_profile, role, token_version FROM users WHERE id = $1',
     [id]
   );
 
@@ -37,26 +38,27 @@ const findByUsername = (username) =>
   pool.query('SELECT * FROM users WHERE username = $1', [username]);
 
 
-const create = ({ name, surname, email, username, password_hash, role }) =>
+const create = ({ name, surname, email, username, img_profile, password_hash, role }) =>
   pool.query(
-    `INSERT INTO users (name, surname, email, username, password_hash, role)
-     VALUES ($1, $2, $3, $4, $5, $6)
-     RETURNING id, name, surname, email, username, role`,
-    [name, surname, email, username, password_hash, role]
+    `INSERT INTO users (name, surname, email, username, img_profile, password_hash, role)
+     VALUES ($1, $2, $3, $4, $5, $6, $7)
+     RETURNING id, name, surname, email, username, img_profile, role`,
+    [name, surname, email, username, img_profile, password_hash, role]
   );
 
-const update = (id, { name, surname, email, username, role }) =>
+const update = (id, { name, surname, email, username, img_profile, role }) =>
   pool.query(
     `UPDATE users
      SET name    = COALESCE($1, name),
          surname = COALESCE($2, surname),
          email   = COALESCE($3, email),
          username  = COALESCE($4, username),
-         role = COALESCE($5, role),
+         img_profile = COALESCE($5, img_profile),
+         role = COALESCE($6, role),
          token_version = token_version + 1
-     WHERE id = $6
-     RETURNING id, name, surname, email, username, role`,
-    [name, surname, email, username, role, id]
+     WHERE id = $7
+     RETURNING id, name, surname, email, username, img_profile, role`,
+    [name, surname, email, username, img_profile, role, id]
   );
 
 
