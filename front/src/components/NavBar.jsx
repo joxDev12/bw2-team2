@@ -4,13 +4,10 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow-sm custom-navbar">
       <div className="container-fluid">
-
-        
         <NavLink className="navbar-brand fw-bold" to="/">
           EventiHub
         </NavLink>
 
-        
         <button
           className="navbar-toggler"
           type="button"
@@ -20,11 +17,8 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-  
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto">
-
-          
             <li className="nav-item">
               <NavLink className="nav-link" to="/chi-siamo">
                 Chi siamo
@@ -38,14 +32,12 @@ function Navbar() {
             </li>
 
             <li className="nav-item">
-              <NavLink className="nav-link" to="/assistenza">
-                Assistenza
+              <NavLink className="nav-link" to="/contatti">
+                Contatti
               </NavLink>
             </li>
-
           </ul>
 
-         
           <div className="d-flex gap-2">
             <NavLink className="btn btn-outline-light" to="/login">
               Accedi
@@ -62,4 +54,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
