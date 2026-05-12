@@ -47,7 +47,6 @@ function RegisterPage() {
   return (
     
     <div className='auth-container'>
-        <h1>REGISTRA</h1>
       <RegisterForm />
     </div>
   );
