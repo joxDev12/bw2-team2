@@ -21,7 +21,7 @@ router.get('/:id', autenticato, soloSéOAdmin, controller.getById);
 
 // FIX #3 — solo se Admin: solo l'utente stesso o un admin
 // può modificare un profilo
-router.patch('/:id', autenticato, soloSéOAdmin,controller.aggiorna);
+router.patch('/:id', autenticato, soloSéOAdmin, controller.aggiorna);
 
 router.patch('/:id/promuovi' , autenticato, soloAdmin, controller.aggiorna)
 
