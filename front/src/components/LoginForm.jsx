@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
 
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ function LoginForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -21,30 +21,37 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      console.log('Accesso in corso...', formData);
+      console.log("Accesso in corso...", formData);
     } catch (err) {
-      setError(err.message || 'Credenziali non valide');
+      setError(err.message || "Credenziali non valide");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-card">
-      <div className="auth-card-header">
-        <h2 className="auth-heading">Accedi</h2>
-        <p className="auth-sub">Inserisci le tue credenziali per continuare</p>
+    <div
+      className="card shadow-sm p-4 mx-auto border-0"
+      style={{ maxWidth: "400px", width: "100%" }}
+    >
+      <div className="text-center mb-4">
+        <h2 className="h4 mb-2 fw-bold">Accedi</h2>
+        <p className="text-muted">
+          Inserisci le tue credenziali per continuare
+        </p>
       </div>
 
       {error && (
-        <div className="alert alert-danger">
+        <div className="alert alert-danger" role="alert">
           <span>⚠️</span> {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="auth-form">
-        <div className="form-group">
-          <label htmlFor="email" className="form-label">Email</label>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label fw-medium">
+            Email
+          </label>
           <input
             id="email"
             type="email"
@@ -52,14 +59,16 @@ function LoginForm() {
             value={formData.email}
             onChange={handleChange}
             placeholder="mario.rossi@esempio.it"
-            className="form-input"
+            className="form-control"
             required
             autoFocus
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="password" className="form-label">Password</label>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label fw-medium">
+            Password
+          </label>
           <input
             id="password"
             type="password"
@@ -67,23 +76,25 @@ function LoginForm() {
             value={formData.password}
             onChange={handleChange}
             placeholder="••••••••"
-            className="form-input"
+            className="form-control"
             required
           />
         </div>
 
         <button
           type="submit"
-          className="btn-primary btn-full"
+          className="btn btn-primary w-100 py-2 mt-2 fw-bold"
           disabled={loading}
         >
-          {loading ? 'Accesso in corso...' : 'Accedi'}
+          {loading ? "Accesso in corso..." : "Accedi"}
         </button>
       </form>
 
-      <p className="auth-footer">
-        Non hai un account?{' '}
-        <Link to="/register" className="auth-link">Registrati</Link>
+      <p className="text-center mt-4 mb-0 text-muted">
+        Non hai un account?{" "}
+        <Link to="/register" className="text-decoration-none fw-bold">
+          Registrati
+        </Link>
       </p>
     </div>
   );

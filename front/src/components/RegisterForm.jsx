@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function RegisterForm() {
   const [formData, setFormData] = useState({
-    name: '',
-    surname: '',
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    role: 'partecipant'
+    name: "",
+    surname: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    role: "partecipant",
   });
 
   const [error, setError] = useState(null);
@@ -17,7 +17,7 @@ function RegisterForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -26,37 +26,42 @@ function RegisterForm() {
     setLoading(true);
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Le password non coincidono.');
+      setError("Le password non coincidono.");
       setLoading(false);
       return;
     }
 
     try {
-      console.log('Registrazione in corso...', formData);
+      console.log("Registrazione in corso...", formData);
     } catch (err) {
-      setError(err.message || 'Errore durante la registrazione');
+      setError(err.message || "Errore durante la registrazione");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-card">
-      <div className="auth-card-header">
-        <h2 className="auth-heading">Crea account</h2>
-        <p className="auth-sub">Unisciti alla nostra community di eventi</p>
+    <div
+      className="card shadow-sm p-4 mx-auto border-0"
+      style={{ maxWidth: "500px", width: "100%" }}
+    >
+      <div className="text-center mb-4">
+        <h2 className="h4 mb-2 fw-bold">Crea account</h2>
+        <p className="text-muted">Unisciti alla nostra community di eventi</p>
       </div>
 
       {error && (
-        <div className="alert alert-danger">
+        <div className="alert alert-danger" role="alert">
           <span>⚠️</span> {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="auth-form">
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="name" className="form-label">Nome</label>
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label htmlFor="name" className="form-label fw-medium">
+              Nome
+            </label>
             <input
               id="name"
               type="text"
@@ -64,12 +69,14 @@ function RegisterForm() {
               value={formData.name}
               onChange={handleChange}
               placeholder="Mario"
-              className="form-input"
+              className="form-control"
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="surname" className="form-label">Cognome</label>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="surname" className="form-label fw-medium">
+              Cognome
+            </label>
             <input
               id="surname"
               type="text"
@@ -77,14 +84,16 @@ function RegisterForm() {
               value={formData.surname}
               onChange={handleChange}
               placeholder="Rossi"
-              className="form-input"
+              className="form-control"
               required
             />
           </div>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="username" className="form-label">Username</label>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label fw-medium">
+            Username
+          </label>
           <input
             id="username"
             type="text"
@@ -92,13 +101,15 @@ function RegisterForm() {
             value={formData.username}
             onChange={handleChange}
             placeholder="mario88"
-            className="form-input"
+            className="form-control"
             required
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="email" className="form-label">Email</label>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label fw-medium">
+            Email
+          </label>
           <input
             id="email"
             type="email"
@@ -106,28 +117,32 @@ function RegisterForm() {
             value={formData.email}
             onChange={handleChange}
             placeholder="mario.rossi@esempio.it"
-            className="form-input"
+            className="form-control"
             required
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="role" className="form-label">Vuoi organizzare o partecipare?</label>
+        <div className="mb-3">
+          <label htmlFor="role" className="form-label fw-medium">
+            Vuoi organizzare o partecipare?
+          </label>
           <select
             id="role"
             name="role"
             value={formData.role}
             onChange={handleChange}
-            className="form-input"
+            className="form-select"
           >
             <option value="participant">Voglio partecipare agli eventi</option>
             <option value="organizer">Voglio organizzare eventi</option>
           </select>
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="password" className="form-label">Password</label>
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label htmlFor="password" className="form-label fw-medium">
+              Password
+            </label>
             <input
               id="password"
               type="password"
@@ -135,12 +150,14 @@ function RegisterForm() {
               value={formData.password}
               onChange={handleChange}
               placeholder="********"
-              className="form-input"
+              className="form-control"
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword" className="form-label">Conferma</label>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="confirmPassword" className="form-label fw-medium">
+              Conferma
+            </label>
             <input
               id="confirmPassword"
               type="password"
@@ -148,7 +165,7 @@ function RegisterForm() {
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="********"
-              className="form-input"
+              className="form-control"
               required
             />
           </div>
@@ -156,16 +173,18 @@ function RegisterForm() {
 
         <button
           type="submit"
-          className="btn-primary btn-full"
+          className="btn btn-primary w-100 py-2 mt-2 fw-bold"
           disabled={loading}
         >
-          {loading ? 'Registrazione in corso...' : 'Crea account'}
+          {loading ? "Registrazione in corso..." : "Crea account"}
         </button>
       </form>
 
-      <p className="auth-footer">
-        Hai già un account?{' '}
-        <Link to="/login" className="auth-link">Accedi</Link>
+      <p className="text-center mt-4 mb-0 text-muted">
+        Hai già un account?{" "}
+        <Link to="/login" className="text-decoration-none fw-bold">
+          Accedi
+        </Link>
       </p>
     </div>
   );
