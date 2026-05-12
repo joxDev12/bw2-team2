@@ -11,7 +11,7 @@ function Faq() {
                                 Come posso acquistare i biglietti?
                             </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show ">
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
                             <div class="accordion-body">
                                 <strong>Per acquistare i biglietti, basta cliccare sul pulsante "Acquista" accanto all'evento desiderato e seguire le istruzioni per completare l'acquisto.</strong> Se hai bisogno di assistenza durante il processo di acquisto, non esitare a contattare il nostro servizio clienti.
                             </div>
@@ -41,13 +41,14 @@ function Faq() {
                             </div>
                         </div>
                     </div>
+
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
                                 L'evento è gratuito o a pagamento?
                             </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
                             <div class="accordion-body">
                                 La nostra piattaforma ospita sia eventi gratuiti che a pagamento. Puoi filtrare gli eventi in base alle tue preferenze per trovare quelli che meglio si adattano alle tue esigenze. Se hai domande specifiche su un evento, ti consigliamo di contattare l'organizzatore dell'evento per ulteriori informazioni.
                             </div>
