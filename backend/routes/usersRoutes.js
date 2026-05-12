@@ -1,6 +1,13 @@
 const router = require('express').Router();
 const controller = require('../controllers/usersControllers');
-const { autenticato, soloAutorizzati } = require('../middlewares/auth');
+const { autenticato,
+    soloAdmin,
+    soloAdminOStessoUtente,
+  soloAdminOOrganizer,
+  soloPartecipant,
+  soloAdminOOrganizerProprietarioEvento,
+  soloAdminOProprietarioRegistrazione,
+  soloAdminOProprietarioRegistrazioneOOrganizerEvento } = require('../middlewares/auth2');
 const limiter    = require('express-rate-limit');
 
 const limiterAuth = limiter({
@@ -10,23 +17,23 @@ const limiterAuth = limiter({
 });
 
 // Pubbliche 
-router.post('/registra', limiterAuth, controller.registra);
-router.post('/login',    limiterAuth, controller.login);
+router.post('/registra', controller.registra);
+router.post('/login', controller.login);  
 
 
 // Solo admin può vedere la lista completa degli utenti
-router.get('/', autenticato, soloAutorizzati, controller.getAll);
+router.get('/', autenticato, soloAdmin, controller.getAll);
 
-router.get('/:id', autenticato, soloAutorizzati, controller.getById);
+router.get('/:id', autenticato, soloAdminOStessoUtente, controller.getById);
 
 // FIX #3 — solo se Admin: solo l'utente stesso o un admin
 // può modificare un profilo
-router.patch('/:id', autenticato, soloAutorizzati, controller.aggiorna);
+router.patch('/:id', autenticato, soloAdminOStessoUtente, controller.aggiorna);
 
-router.patch('/:id/promuovi' , autenticato, soloAutorizzati, controller.aggiorna)
+router.patch('/:id/promuovi' , autenticato, soloAdmin, controller.aggiorna)
 
 // Solo admin può eliminare un utente
-router.delete('/:id', autenticato, soloAutorizzati, controller.elimina);
+router.delete('/:id', autenticato, soloAdminOStessoUtente, controller.elimina);
 
 // ── Esportazione ──────────────────────────────────────────────
 module.exports = router;

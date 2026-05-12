@@ -1,13 +1,20 @@
 const router = require('express').Router();
 const controller = require('../controllers/eventsControllers');
-const { autenticato, soloAutorizzati } = require('../middlewares/auth');
+const { autenticato,
+    soloAdmin,
+    soloAdminOStessoUtente,
+  soloAdminOOrganizer,
+  soloPartecipant,
+  soloAdminOOrganizerProprietarioEvento,
+  soloAdminOProprietarioRegistrazione,
+  soloAdminOProprietarioRegistrazioneOOrganizerEvento } = require('../middlewares/auth2');
 
-router.post('/', autenticato, soloAutorizzati, controller.crea);
+router.post('/', autenticato, soloAdminOOrganizer, controller.crea);
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);
 router.get('/category/:category', controller.getAllByCategory);
 router.get('/organizer/:id', controller.getAllByOrganizerId);
-router.patch('/:id', autenticato, soloAutorizzati, controller.aggiorna);
-router.delete('/:id', autenticato, soloAutorizzati, controller.elimina);
+router.patch('/:id', autenticato, soloAdminOOrganizerProprietarioEvento, controller.aggiorna);
+router.delete('/:id', autenticato, soloAdminOOrganizerProprietarioEvento, controller.elimina);
 
-module.exports = router;
+module.exports = router;  
