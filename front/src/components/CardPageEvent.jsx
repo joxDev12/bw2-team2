@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const CardPageEvent = ({ evento, formattaData, badgeColore }) => {
   return (
     <div className="col-12">
@@ -48,14 +50,32 @@ const CardPageEvent = ({ evento, formattaData, badgeColore }) => {
                   <i className="bi bi-ticket-perforated me-2"></i>
                   Registrati all'evento
                 </button>
-                <button
+
+{/* Button non fa azzione */}
+
+                {/* <button
                   className="btn btn-outline-secondary px-4 rounded-pill"
                   id={`info-evento-${evento.id}`}
                   title="Maggiori Informazioni"
                 >
                   <i className="bi bi-info-circle me-2"></i>
                   Maggiori Info
-                </button>
+                </button> */}
+
+
+{/* Link reindirizza alla routhe */}
+<Link
+  to={`/eventi/${evento.id}`}
+  className="btn btn-outline-secondary px-4 rounded-pill"
+  id={`info-evento-${evento.id}`}
+  title="Maggiori Informazioni"
+>
+  <i className="bi bi-info-circle me-2"></i>
+  Maggiori Info
+</Link>
+
+
+                
               </div>
             </div>
           </div>

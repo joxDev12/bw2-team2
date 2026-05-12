@@ -8,6 +8,7 @@ import EventiPage from "./pages/EventiPage";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import EventiDettaglioPage from "./pages/EventiDettaglioPage";
 import NotFound from "./pages/NotFound";
 
 // ── Componente App ───────────────────────────────────────────
@@ -23,6 +24,8 @@ function App() {
           <Route path="eventi" element={<EventiPage />} />
           <Route path="contatti" element={<ContattiPage />} />
         </Route>
+
+        <Route path="/eventi/:id" element={<EventiDettaglioPage />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
