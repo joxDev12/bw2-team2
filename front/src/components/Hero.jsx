@@ -4,7 +4,7 @@ function Hero() {
 
     return (
         <>
-            <div className="px-4 py-5 my-5 text-center hero-section w-100">
+            <div className="px-5 py-5 text-center hero-section w-100">
                 <h1 className="display-5 fw-bold"> Vivi momenti <br /> che restano.
                 </h1>
 
