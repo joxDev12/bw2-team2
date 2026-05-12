@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 
 import HomePage from "./pages/HomePage";
-import AssistenzaPage from "./pages/AssistenzaPage";
+import ContattiPage from "./pages/ContattiPage";
 import ChiSiamoPage from "./pages/ChiSiamoPage";
 import EventiPage from "./pages/EventiPage";
 
@@ -21,7 +21,7 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="chi-siamo" element={<ChiSiamoPage />} />
           <Route path="eventi" element={<EventiPage />} />
-          <Route path="assistenza" element={<AssistenzaPage />} />
+          <Route path="contatti" element={<ContattiPage />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
