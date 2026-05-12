@@ -1,49 +1,69 @@
-import {NavLink} from 'react-router-dom';
-
+import { NavLink } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="navbar-dark bg-dark text-light py-4 custom-footer">
+    <footer className="navbar navbar-dark bg-dark text-light py-4 shadow-sm custom-footer">
       <div className="container">
-
         <div className="row">
-
-         
           <div className="col-md-4 mb-3">
-           <NavLink className="navbar-brand fw-bold" to="/">
-          EventiHub
-        </NavLink>
-            <p className="text-muted">
-              La piattaforma per scoprire, organizzare e vivere eventi indimenticabili.
+            <NavLink className="navbar-brand fw-bold" to="/">
+             <img src="../../src/assets/img/logo.png" alt="EventiHub" className="img-logo-navbar" />
+            </NavLink>
+            <p className="footer-text text-light py-3 fs-6">
+              La piattaforma per scoprire, organizzare e vivere eventi
+              indimenticabili.
             </p>
           </div>
 
-
           <div className="col-md-4 mb-3">
             <h6 className="fw-bold">Navigazione</h6>
-            <ul className="list-unstyled footer-links">
-              <li><NavLink to="/" className="nav-link">Esplora</NavLink></li>
-              <li><NavLink to="/chi-siamo" className="nav-link">Chi siamo</NavLink></li>
-              <li><NavLink to="/eventi" className="nav-link">Eventi</NavLink></li>
-              <li><NavLink to="/assistenza" className="nav-link">Assistenza</NavLink></li>
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <NavLink className="nav-link py-0" to="/">
+                  Esplora
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link py-0" to="/chi-siamo">
+                  Chi siamo
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link py-0" to="/eventi">
+                  Eventi
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link py-0" to="/assistenza">
+                  Assistenza
+                </NavLink>
+              </li>
             </ul>
           </div>
 
-  
           <div className="col-md-4 mb-3">
             <h6 className="fw-bold">Contatti</h6>
-            <p className="text-light mb-1">info@eventihub.com</p>
-            <p className="text-light">Milano, Italia</p>
+
+            <p className="text-light mb-2">
+              <i className="bi bi-envelope-fill me-2"></i>
+              info@eventihub.com
+            </p>
+
+            <p className="text-light mb-3">
+              <i className="bi bi-geo-alt-fill me-2"></i>
+              Milano, Italia
+            </p>
           </div>
 
+          <hr
+            className="bg-secondary border-0 opacity-50"
+            style={{ height: "1px" }}
+          />
+
+          <div className="text-center text-lig fs-6">
+            © {new Date().getFullYear()} EventiHub — Tutti i diritti riservati
+          </div>
         </div>
-
-        <hr className="border-secondary" />
-
-        <div className="text-center text-muted">
-          © {new Date().getFullYear()} EventiHub — Tutti i diritti riservati
-        </div>
-
       </div>
     </footer>
   );
