@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from '../context/AuthContext';
+import UserBanner from './UserBanner';
 
 function Navbar() {
+  const { utente } = useAuth();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow-sm custom-navbar">
       <div className="container-fluid">
@@ -38,15 +42,19 @@ function Navbar() {
             </li>
           </ul>
 
-          <div className="d-flex gap-2">
-            <NavLink className="btn btn-outline-light" to="/login">
-              Accedi
-            </NavLink>
+          {utente ? (
+            <UserBanner />
+          ) : (
+            <div className="d-flex gap-2">
+              <NavLink className="btn btn-outline-light" to="/login">
+                Accedi
+              </NavLink>
 
-            <NavLink className="btn btn-primary" to="/register">
-              Registrati
-            </NavLink>
-          </div>
+              <NavLink className="btn btn-primary" to="/register">
+                Registrati
+              </NavLink>
+            </div>
+          )}
         </div>
       </div>
     </nav>

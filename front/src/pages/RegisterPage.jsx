@@ -14,7 +14,7 @@ function RegisterPage() {
     surname: '',
     username: '',
     email: '',
-    role: 'participant',
+    role: 'partecipant',
     password: '',
     confirmPassword: '',
   });

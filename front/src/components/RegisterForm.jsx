@@ -94,7 +94,7 @@ function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit })
             onChange={handleChange}
             className="form-select"
           >
-            <option value="participant">Voglio partecipare agli eventi</option>
+            <option value="partecipant">Voglio partecipare agli eventi</option>
             <option value="organizer">Voglio organizzare eventi</option>
           </select>
         </div>

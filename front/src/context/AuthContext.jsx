@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { usersAPI } from '../services/api'
 
 const AuthContext = createContext(null)
 
@@ -22,13 +23,44 @@ export function AuthProvider({ children }) {
   })
 
   useEffect(() => {
-    if (token) {
-      const payload = decodeJWT(token)
-      if (!payload || payload.exp * 1000 < Date.now()) {
-        logout()
+    if (!token) {
+      setUtente(null)
+      return
+    }
+
+    const payload = decodeJWT(token)
+
+    if (!payload || payload.exp * 1000 < Date.now()) {
+      logout()
+      return
+    }
+
+    setUtente(payload)
+
+    if (payload.name || !payload.id) {
+      return
+    }
+
+    let annullato = false
+
+    const caricaUtente = async () => {
+      try {
+        const datiUtente = await usersAPI.getById(payload.id)
+
+        if (!annullato) {
+          setUtente((prev) => ({ ...prev, ...datiUtente }))
+        }
+      } catch {
+        // Gli errori 401 vengono già gestiti globalmente da auth:unauthorized.
       }
     }
-  }, [])
+
+    caricaUtente()
+
+    return () => {
+      annullato = true
+    }
+  }, [token])
 
   useEffect(() => {
     const handleUnauthorized = () => logout()
