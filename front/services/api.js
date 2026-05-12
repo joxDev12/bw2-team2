@@ -62,54 +62,17 @@ export const eventsAPI = {
   getAll:   ()         => request('GET',    '/events'),
   getById:  (id)       => request('GET',    `/events/${id}`),
   crea:     (dati)     => request('POST',   '/events', dati),
-  aggiorna: (id, dati) => request('PATCH',  `/libri/${id}`, dati),
-  elimina:  (id)       => request('DELETE', `/libri/${id}`),
+  aggiorna: (id, dati) => request('PATCH',  `/events/${id}`, dati),
+  elimina:  (id)       => request('DELETE', `/events/${id}`),
 }
 
-// ── Prestiti ──────────────────────────────────────────────────
-export const prestitiAPI = {
-  getAll: () => request('GET', '/prestiti'),
+// ── Registrations  ──────────────────────────────────────────────────
+export const registrationsAPI = {
+  getAll: () => request('GET', '/registrations'),
 
-  crea: (libro_id, data_restituzione_prevista) =>
-    request('POST', '/prestiti', { libro_id, data_restituzione_prevista }),
+  crea: (user_id, data_restituzione_prevista) =>
+    request('POST', '/registrations', {  }),
 
-  restituisci: (id) => request('PATCH', `/prestiti/${id}/restituisci`),
-  elimina:     (id) => request('DELETE', `/prestiti/${id}`),
-}
-// ── Import massivo libri (CSV) ────────────────────────────────
-export const importAPI = {
-  importaCSV: async (file) => {
-    const token = localStorage.getItem('token')
-    const formData = new FormData()
-    formData.append('file', file) 
-
-    let res
-    try {
-      res = await fetch(`${BASE_URL}/import/libriCSV`, {
-        method: 'POST',
-        headers: {
-          // NON impostiamo Content-Type: il browser lo imposta automaticamente
-          // con il boundary multipart corretto quando il body è FormData
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
-        body: formData,
-      })
-    } catch {
-      throw new Error('Impossibile contattare il server. Controlla che il backend sia in esecuzione.')
-    }
-
-    const data = await res.json()
-
-    if (res.status === 401) window.dispatchEvent(new Event('auth:unauthorized'))
-
-    // Nota: il backend risponde sempre successo:true per l'import (anche con errori parziali).
-    // Gli errori parziali sono in data.dati.errori e data.dati.saltato.
-    if (!data.successo) {
-      const err = new Error(data.errore || 'Errore durante l\'import')
-      err.status = res.status
-      throw err
-    }
-
-    return data.dati
-  }
+  
+  elimina:     (id) => request('DELETE', `/registrations/${id}`),
 }
