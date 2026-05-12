@@ -3,9 +3,13 @@ import CardFeedback from "./CardFeedback";
 function Feedback() {
     return (
         <>
-        <div className="d-flex justify-content-center align-items-center flex-sm-row flex-column gap-4 py-5 px-5 bg-dark" >
-            <CardFeedback />
-        </div>
+            <div className="py-5 px-5">
+                <div className="container">
+                    <div className="row g-4">
+                        <CardFeedback />
+                    </div>
+                </div>
+            </div>
         </>
     )
 
