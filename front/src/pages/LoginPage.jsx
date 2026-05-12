@@ -36,7 +36,7 @@ function LoginPage(){
         <div className='auth-container'>
              <h1>LOGIN</h1>
 
-                <LoginForm />
+             <LoginForm />
         </div>
         </>
     )
