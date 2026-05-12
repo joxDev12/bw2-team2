@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const controller = require('../controllers/eventsControllers');
-const { autenticato, soloAdmin, } = require('../middlewares/auth');
+const { autenticato, soloAutorizzati } = require('../middlewares/auth');
 
-router.post('/', autenticato, soloOrganizerOrAdmin, controller.crea);
+router.post('/', autenticato, soloAutorizzati, controller.crea);
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);
 router.get('/category/:category', controller.getAllByCategory);
 router.get('/organizer/:id', controller.getAllByOrganizerId);
-router.patch('/:id', autenticato, soloSéAdminOrOrganizer, controller.aggiorna);
-router.delete('/:id', autenticato, soloSéAdminOrOrganizer, controller.elimina);
+router.patch('/:id', autenticato, soloAutorizzati, controller.aggiorna);
+router.delete('/:id', autenticato, soloAutorizzati, controller.elimina);
 
 module.exports = router;

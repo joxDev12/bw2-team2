@@ -34,18 +34,23 @@ const autenticato = async (req, res, next) => {
 };
 
 
-const soloAdmin = (req, res, next) => {
-  if (req.user?.role !== 'admin') {
+const soloAutorizzati = (req, res, next) => {
+  const idRichiesto = parseInt(req.params.id);
+  const isAdmin = req.user?.role === 'admin'
+  const isOrganizer     = req.user?.role === 'organizer';
+  const isSeStesso  = req.user?.id    === idRichiesto;
+
+  if (!isAdmin && !isSeStesso && !isOrganizer) {
     return res.status(403).json({
       successo: false,
-      errore: 'Accesso riservato agli amministratori'
+      errore: 'Non sei autorizzato ad accedere a questa risorsa'
     });
   }
   next();
 };
 
 
-const soloSéOorganizer = (req, res, next) => {
+/* const soloSéOorganizer = (req, res, next) => {
   const idRichiesto = parseInt(req.params.id);
   const isOrganizer     = req.users?.role === 'organizer';
   const isSéStesso  = req.users?.id    === idRichiesto;
@@ -57,6 +62,6 @@ const soloSéOorganizer = (req, res, next) => {
     });
   }
   next();
-};
+}; */
 
-module.exports = { autenticato, soloAdmin, soloSéOorganizer };
+module.exports = { autenticato, soloAutorizzati };
