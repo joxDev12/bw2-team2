@@ -1,27 +1,33 @@
 
 const express      = require('express');
-const errorHandler = require('./middleware/errorHandler');
+const errorHandler = require('./middlewares/errorHandler')
 const helmet       = require('helmet');
-const rateLimit    = require('express-rate-limit');
-const seedAdmin    = require('./middleware/seeder');
+/* const rateLimit    = require('express-rate-limit'); */
+const seedAdmin    = require('./middlewares/seeder');
 const cors = require('cors');
 
 require('dotenv').config();
 
+//model per creare le tabelle 
 const usersModel   = require('./models/usersModel');
 const eventsModel    = require('./models/eventsModel');
 const registrationsModel = require('./models/registrationsModel');
+
+//routes
+const usersRoutes   = require('./routes/usersRoutes');
+const eventsRoutes    = require('./routes/eventsRoutes');
+const registrationsRoutes = require('./routes/registrationsRoutes');
 
 
 const app  = express();
 const port = process.env.SERVER_PORT;
 
 
-const limiterGlobale = rateLimit({
+/* const limiterGlobale = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   message: { successo: false, errore: 'Troppe richieste, riprova tra qualche minuto' }
-});
+}); */
 
 app.use(express.json());
 
@@ -35,12 +41,16 @@ app.use(cors({
 }));
 
 
-app.use(limiterGlobale);
+/* app.use(limiterGlobale); */
 
-app.get('/', (req, res) => {
+app.get('/health', (req, res) => {
   res.status(200).json({ message: 'Backend avviato: OK', status: '200' });
 });
 
+// APIs
+app.use('/api/users',   usersRoutes);
+app.use('/api/events',    eventsRoutes);
+app.use('/api/registrations', registrationsRoutes);
 
 
 
@@ -57,6 +67,8 @@ const start = async () => {
     await eventsModel.init();
     await registrationsModel.init();
 
+    await seedAdmin();
+
     console.log('Tabelle sincronizzate');
 
     app.listen(port, () =>
@@ -64,7 +76,7 @@ const start = async () => {
     );
   } catch (err) {
     console.error('Errore di avvio al Server EventHub:', err);
-    process.exit(1); // Usciamo con codice errore se qualcosa va storto
+    process.exit(1);
   }
 };
 

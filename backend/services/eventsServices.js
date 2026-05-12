@@ -1,8 +1,8 @@
 
 const eventsModel = require('../models/eventsModel');
 
-const crea = async (dati) => {
-  const event = await eventsModel.create(dati);
+const crea = async (id, dati) => {
+  const event = await eventsModel.create(id, dati);
   return event.rows[0];
 };
 
@@ -22,9 +22,32 @@ const getById = async (id) => {
   return result.rows[0];
 };
 
+const getAllByCategory = async (category) => {
+  const result = await eventsModel.findByCategory(category);
+  if (!result.rows.length) {
+    const err = new Error('Evento non trovato');
+    err.statusCode = 404;
+    throw err;
+  } 
+  return result.rows;
+};
+
+const getAllByOrganizerId = async (id) => {
+  const result = await eventsModel.findByOrganizerId(id);
+  if (!result.rows.length) {
+    const err = new Error('Evento non trovato');
+    err.statusCode = 404;
+    throw err;
+  }
+  return result.rows;
+};
+
 
 const aggiorna = async (id, dati) => {
   await getById(id); 
+  // devo verificare che l id di organizer presente nell instanza evento da modificare
+  // sia uguale all id user presente nel payload di jwt, se si eseguo update
+  // se no errore
   const result = await eventsModel.update(id, dati);
   return result.rows[0];
 };
@@ -36,4 +59,4 @@ const elimina = async (id) => {
 };
 
 // ── Esportazione ──────────────────────────────────────────────
-module.exports = { getAll, getById, crea, aggiorna, elimina };
+module.exports = { getAll, getById, getAllByCategory, getAllByOrganizerId, crea, aggiorna, elimina };

@@ -4,13 +4,15 @@ const pool = require('../config/db');
 
 const CREATE_TABLE = `
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    role VARCHAR(25) NOT NULL,
+    id SERIAL NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role         VARCHAR(20)   NOT NULL DEFAULT 'partecipant'
+                  CHECK (role IN ('admin', 'partecipant', 'organizer')),
+    token_version INTEGER       NOT NULL DEFAULT 0,
     created_at date DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 `;
@@ -24,7 +26,7 @@ const findAll = () =>
 
 const findById = (id) =>
   pool.query(
-    'SELECT id, name, surname, email, role, username, FROM users WHERE id = $1',
+    'SELECT id, name, surname, email, username, role, token_version FROM users WHERE id = $1',
     [id]
   );
 
@@ -37,9 +39,9 @@ const findByUsername = (username) =>
 
 const create = ({ name, surname, email, username, password_hash, role }) =>
   pool.query(
-    `INSERT INTO utenti (name, surname, email, username, password_hash, role)
+    `INSERT INTO users (name, surname, email, username, password_hash, role)
      VALUES ($1, $2, $3, $4, $5, $6)
-     RETURNING id, name, surname, email, username, ruolo`,
+     RETURNING id, name, surname, email, username, role`,
     [name, surname, email, username, password_hash, role]
   );
 
@@ -50,7 +52,8 @@ const update = (id, { name, surname, email, username, role }) =>
          surname = COALESCE($2, surname),
          email   = COALESCE($3, email),
          username  = COALESCE($4, username),
-         role = COALESCE($5, role)
+         role = COALESCE($5, role),
+         token_version = token_version + 1
      WHERE id = $6
      RETURNING id, name, surname, email, username, role`,
     [name, surname, email, username, role, id]
@@ -60,7 +63,8 @@ const update = (id, { name, surname, email, username, role }) =>
 const updatePassword = (id, hashedPassword) =>
   pool.query(
     `UPDATE users
-     SET password_hash     = $1
+     SET password_hash     = $1,
+     token_version = token_version + 1
      WHERE id = $2
      RETURNING id`,
     [hashedPassword, id]

@@ -50,10 +50,11 @@ const login = async ({ email, password }) => {
     {
       id:            user.id,
       email:         user.email,
-      role:         user.role
+      role:          user.role,
+      token_version: user.token_version
     },
     process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES_IN }
+    { expiresIn: '1d' }
   );
 
   return token;
@@ -82,7 +83,7 @@ const aggiorna = async (id, dati) => {
 
 const elimina = async (id) => {
   await getById(id);
-  await users.remove(id);
+  await usersModel.remove(id);
   return { message: 'Utente eliminato' };
 };
 
