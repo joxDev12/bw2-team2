@@ -3,15 +3,15 @@ const controller = require('../controllers/usersControllers');
 const { autenticato, soloAutorizzati } = require('../middlewares/auth');
 const limiter    = require('express-rate-limit');
 
-/* const limiterAuth = limiter({
+const limiterAuth = limiter({
   windowMs: 1 * 60 * 1000,
   max: 10,
   message: { successo: false, errore: 'Troppi tentativi, riprova tra qualche minuto' }
-}); */
+});
 
 // Pubbliche 
-router.post('/registra', controller.registra);
-router.post('/login', controller.login);
+router.post('/registra', limiterAuth, controller.registra);
+router.post('/login',    limiterAuth, controller.login);
 
 
 // Solo admin può vedere la lista completa degli utenti
