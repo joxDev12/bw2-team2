@@ -1,29 +1,15 @@
 .feedback-card {
-    background: rgba(20, 20, 40, 0.95);
-    border-radius: 20px;
-    padding: 30px;
-    color: white;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
 
-    backdrop-filter: blur(10px);
+.feedback-card:hover {
+    transform: translateY(-5px);
 
-    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .feedback-text {
-    font-size: 1rem;
     line-height: 1.7;
-    margin-bottom: 30px;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.feedback-user {
-    display: flex;
-    align-items: center;
-    gap: 14px;
 }
 
 .feedback-avatar {
@@ -31,9 +17,7 @@
     height: 55px;
     border-radius: 50%;
     object-fit: cover;
-
     border: 2px solid rgba(255, 255, 255, 0.15);
-
     flex-shrink: 0;
 }
 
@@ -42,8 +26,5 @@
 }
 
 
-.feedback-card:hover {
-    transform: translateY(-5px);
-    transition: 0.3s ease;
-}
+
 

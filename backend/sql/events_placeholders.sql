@@ -6,6 +6,9 @@ INSERT INTO
         description,
         date,
         location,
+        indirizzo,
+        price,
+        isFree,
         max_seats,
         available,
         category
@@ -19,6 +22,9 @@ VALUES
         'Concerto rock dal vivo con band emergenti e artisti locali.',
         '2026-06-15',
         'Roma',
+        'Via Appia 12',
+        0,
+        TRUE,
         120,
         TRUE,
         'Musica'
@@ -30,6 +36,9 @@ VALUES
         'Serata jazz all’aperto con musicisti professionisti.',
         '2026-06-22',
         'Milano',
+        'Corso Garibaldi 45',
+        0,
+        TRUE,
         80,
         TRUE,
         'Musica'
@@ -41,6 +50,9 @@ VALUES
         'Evento musicale dedicato a performance acustiche e cantautorato.',
         '2026-07-05',
         'Firenze',
+        'Via dei Calzaiuoli 21',
+        0,
+        TRUE,
         25,
         TRUE,
         'Musica'
@@ -52,6 +64,9 @@ VALUES
         'Serata dedicata alla musica elettronica con DJ set.',
         '2026-07-18',
         'Napoli',
+        'Via Toledo 88',
+        0,
+        TRUE,
         200,
         TRUE,
         'Musica'
@@ -63,6 +78,9 @@ VALUES
         'Evento musicale intimo con posti molto limitati.',
         '2026-08-02',
         'Ancona',
+        'Via del Porto 7',
+        0,
+        TRUE,
         3,
         TRUE,
         'Musica'
@@ -76,6 +94,9 @@ VALUES
     'Torneo amatoriale di calcetto aperto a squadre locali.',
     '2026-06-18',
     'Roma',
+    'Viale Trastevere 103',
+    0,
+    TRUE,
     50,
     TRUE,
     'Sport'
@@ -87,6 +108,9 @@ VALUES
     'Gara podistica cittadina su percorso urbano di 10 chilometri.',
     '2026-06-29',
     'Milano',
+    'Via Torino 19',
+    0,
+    TRUE,
     300,
     TRUE,
     'Sport'
@@ -98,6 +122,9 @@ VALUES
     'Lezione introduttiva all’arrampicata sportiva con istruttori qualificati.',
     '2026-07-10',
     'Firenze',
+    'Via Romana 14',
+    0,
+    TRUE,
     15,
     TRUE,
     'Sport'
@@ -109,6 +136,9 @@ VALUES
     'Sessione di yoga guidata all’aperto per principianti e intermedi.',
     '2026-07-21',
     'Napoli',
+    'Piazza Dante 5',
+    0,
+    TRUE,
     20,
     TRUE,
     'Sport'
@@ -120,6 +150,9 @@ VALUES
     'Evento sportivo con accesso ristretto per la finale del torneo.',
     '2026-08-06',
     'Ancona',
+    'Corso Mazzini 31',
+    0,
+    TRUE,
     2,
     TRUE,
     'Sport'
@@ -133,6 +166,9 @@ VALUES
     'Conferenza dedicata a intelligenza artificiale, sviluppo software e nuovi strumenti digitali.',
     '2026-06-20',
     'Milano',
+    'Viale Monza 140',
+    0,
+    TRUE,
     150,
     TRUE,
     'Tecnologia'
@@ -144,6 +180,9 @@ VALUES
     'Giornata formativa sulla sicurezza informatica e protezione dei dati.',
     '2026-07-02',
     'Roma',
+    'Via Nazionale 62',
+    0,
+    TRUE,
     100,
     TRUE,
     'Tecnologia'
@@ -155,6 +194,9 @@ VALUES
     'Evento per sviluppatori frontend, backend e full stack.',
     '2026-07-14',
     'Firenze',
+    'Borgo San Frediano 52',
+    0,
+    TRUE,
     75,
     TRUE,
     'Tecnologia'
@@ -166,6 +208,9 @@ VALUES
     'Presentazione di startup tecnologiche davanti a mentor e investitori.',
     '2026-07-28',
     'Napoli',
+    'Via Chiaia 26',
+    0,
+    TRUE,
     30,
     TRUE,
     'Tecnologia'
@@ -177,6 +222,9 @@ VALUES
     'Laboratorio pratico con posti limitati su Git, PostgreSQL e progettazione database.',
     '2026-08-09',
     'Ancona',
+    'Via Conero 9',
+    0,
+    TRUE,
     4,
     TRUE,
     'Tecnologia'
@@ -190,6 +238,9 @@ VALUES
     'Spettacolo teatrale ispirato ai grandi classici della tradizione italiana.',
     '2026-06-25',
     'Roma',
+    'Via Ostiense 77',
+    0,
+    TRUE,
     90,
     TRUE,
     'Cultura e Spettacolo'
@@ -201,6 +252,9 @@ VALUES
     'Esposizione di opere contemporanee con visita guidata.',
     '2026-07-04',
     'Milano',
+    'Via Brera 11',
+    0,
+    TRUE,
     60,
     TRUE,
     'Cultura e Spettacolo'
@@ -212,6 +266,9 @@ VALUES
     'Proiezione serale all’aperto di film italiani e internazionali.',
     '2026-07-16',
     'Firenze',
+    'Piazza Santa Croce 8',
+    0,
+    TRUE,
     110,
     TRUE,
     'Cultura e Spettacolo'
@@ -223,6 +280,9 @@ VALUES
     'Incontro culturale con letture, autori e discussione aperta.',
     '2026-07-31',
     'Napoli',
+    'Via Partenope 33',
+    0,
+    TRUE,
     18,
     TRUE,
     'Cultura e Spettacolo'
@@ -234,6 +294,9 @@ VALUES
     'Serata di cabaret con accesso molto limitato.',
     '2026-08-12',
     'Ancona',
+    'Piazza del Plebiscito 4',
+    0,
+    TRUE,
     1,
     TRUE,
     'Cultura e Spettacolo'
@@ -247,6 +310,9 @@ VALUES
     'Percorso di degustazione con vini selezionati da diverse regioni italiane.',
     '2026-06-27',
     'Firenze',
+    'Via della Scala 16',
+    0,
+    TRUE,
     40,
     TRUE,
     'Enogastronomia'
@@ -258,6 +324,9 @@ VALUES
     'Evento dedicato al cibo di strada con stand locali e prodotti artigianali.',
     '2026-07-08',
     'Napoli',
+    'Via San Biagio 42',
+    0,
+    TRUE,
     250,
     TRUE,
     'Enogastronomia'
@@ -269,6 +338,9 @@ VALUES
     'Cena a tema con piatti tipici regionali e abbinamenti consigliati.',
     '2026-07-19',
     'Roma',
+    'Piazza Navona 10',
+    0,
+    TRUE,
     35,
     TRUE,
     'Enogastronomia'
@@ -280,6 +352,9 @@ VALUES
     'Laboratorio pratico per imparare a preparare pasta fresca fatta a mano.',
     '2026-08-01',
     'Milano',
+    'Corso Como 6',
+    0,
+    TRUE,
     10,
     TRUE,
     'Enogastronomia'
@@ -291,6 +366,9 @@ VALUES
     'Degustazione privata con posti estremamente limitati.',
     '2026-08-15',
     'Ancona',
+    'Via XXIX Settembre 2',
+    0,
+    TRUE,
     2,
     TRUE,
     'Enogastronomia'
