@@ -1,5 +1,22 @@
 @use "colors" as *;
+@use "fonts" as*;
 
 
+//fonts
+$font-family-sans-serif: $font-body;
+$font-family-base: $font-body;
 
+// 
+$headings-font-family: $font-heading;
+$headings-font-weight: 800;
 
+// dimensioni h
+
+$h1-font-size: 72px;
+$h2-font-size: 48px;
+$h3-font-size: 36px;
+$h4-font-size: 28px;
+$h5-font-size: 22px;
+
+//buttons
+$btn-transition: background-color 0.3s ease;

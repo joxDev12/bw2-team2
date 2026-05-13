@@ -68,7 +68,7 @@ $fw-extrabold: 800;
 
 //PALETTE COLORI
 $primary: #5E41EE;
-$text-primary: #FFFFFF
+$text-primary: #FFFFFF 
 $text-secondary: #B6BDD2
 
 // BACKGROUND
