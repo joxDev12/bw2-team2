@@ -63,25 +63,25 @@ const update = (id, { title, image, description, date, location, indirizzo, pric
   );
 
 
-const decrementa = (id) =>
+const decrementa = (id, seats = 1) =>
   pool.query(
     `UPDATE events
-     SET max_seats    = max_seats - 1,
-         available = CASE WHEN max_seats - 1 = 0 THEN false ELSE true END
-     WHERE id = $1
+     SET max_seats    = max_seats - $2,
+         available = CASE WHEN max_seats - $2 = 0 THEN false ELSE true END
+     WHERE id = $1 AND max_seats >= $2 AND available = true
      RETURNING *`,
-    [id]
+    [id, seats]
   );
 
 
-const incrementa = (id) =>
+const incrementa = (id, seats = 1) =>
   pool.query(
     `UPDATE events
-     SET max_seats   = max_seats + 1,
+     SET max_seats   = max_seats + $2,
          available = true
      WHERE id = $1
      RETURNING *`,
-    [id]
+    [id, seats]
   );
 
 

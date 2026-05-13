@@ -35,6 +35,15 @@ const getAllByEventId = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
+// GET /event/:id/public
+const getPublicByEventId = async (req, res, next) => {
+    try {
+    const id = parseInt(req.params.id);
+    const registrations = await registrationsService.getPublicByEventId(id);
+    res.json({ successo: true, dati: registrations });
+  } catch (err) { next(err); }
+};
+
 
 // GET /user/:id
 const getAllByUserId = async (req, res, next) => {
@@ -55,4 +64,4 @@ const elimina = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-module.exports = { getAll, getById, getAllByEventId, getAllByUserId, crea, elimina};
+module.exports = { getAll, getById, getAllByEventId, getAllByUserId, getPublicByEventId, crea, elimina};

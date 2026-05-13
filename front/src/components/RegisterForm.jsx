@@ -31,6 +31,7 @@ function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit })
               onChange={handleChange}
               placeholder="Mario"
               className="form-control"
+              maxLength={255}
               required
             />
           </div>
@@ -46,6 +47,7 @@ function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit })
               onChange={handleChange}
               placeholder="Rossi"
               className="form-control"
+              maxLength={255}
               required
             />
           </div>
@@ -63,6 +65,8 @@ function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit })
             onChange={handleChange}
             placeholder="mario88"
             className="form-control"
+            minLength={3}
+            maxLength={255}
             required
           />
         </div>
@@ -79,6 +83,7 @@ function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit })
             onChange={handleChange}
             placeholder="mario.rossi@esempio.it"
             className="form-control"
+            maxLength={255}
             required
           />
         </div>
@@ -112,6 +117,10 @@ function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit })
               onChange={handleChange}
               placeholder="********"
               className="form-control"
+              minLength={8}
+              maxLength={100}
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_\-+=\[\]{};':&quot;\\|,.<>\/?`~]).+$"
+              title="La password deve contenere almeno una maiuscola, una minuscola, un numero e un carattere speciale"
               required
             />
           </div>
@@ -127,6 +136,8 @@ function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit })
               onChange={handleChange}
               placeholder="********"
               className="form-control"
+              minLength={8}
+              maxLength={100}
               required
             />
           </div>

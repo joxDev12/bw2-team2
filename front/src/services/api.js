@@ -1,5 +1,4 @@
 const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api'
-const ROOT_URL = BASE_URL.replace(/\/api\/?$/, '')
 
 if (!import.meta.env.VITE_API_URL) {
   console.warn(
@@ -40,7 +39,42 @@ async function request(method, path, body = null, baseUrl = BASE_URL) {
   }
 
   if (!data.successo) {
-    const err = new Error(data.errore || 'Errore sconosciuto')
+    const messaggioValidazione = data.errori?.map((errore) => errore.msg).join('\n')
+    const err = new Error(data.errore || messaggioValidazione || 'Errore sconosciuto')
+    err.status = res.status
+    throw err
+  }
+
+  return data.dati
+}
+
+async function uploadRequest(method, path, formData, baseUrl = BASE_URL) {
+  const token = getToken()
+
+  const options = {
+    method,
+    headers: {
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+    body: formData,
+  }
+
+  let res
+  try {
+    res = await fetch(`${baseUrl}${path}`, options)
+  } catch {
+    throw new Error('Impossibile contattare il server. Controlla che il backend sia in esecuzione.')
+  }
+
+  const data = await res.json()
+
+  if (res.status === 401) {
+    window.dispatchEvent(new Event('auth:unauthorized'))
+  }
+
+  if (!data.successo) {
+    const messaggioValidazione = data.errori?.map((errore) => errore.msg).join('\n')
+    const err = new Error(data.errore || messaggioValidazione || 'Errore sconosciuto')
     err.status = res.status
     throw err
   }
@@ -63,6 +97,11 @@ export const usersAPI = {
   getAll: () => request('GET', '/users'),
   getById: (id) => request('GET', `/users/${id}`),
   aggiorna: (id, dati) => request('PATCH', `/users/${id}`, dati),
+  aggiornaImmagineProfilo: (id, file) => {
+    const formData = new FormData()
+    formData.append('img_profile', file)
+    return uploadRequest('PATCH', `/users/${id}/img-profile`, formData)
+  },
   promuovi: (id, dati) => request('PATCH', `/users/${id}/promuovi`, dati),
   elimina: (id) => request('DELETE', `/users/${id}`),
 }
@@ -83,7 +122,9 @@ export const registrationsAPI = {
   getAll: () => request('GET', '/registrations'),
   getById: (id) => request('GET', `/registrations/${id}`),
   getByEventId: (id) => request('GET', `/registrations/event/${id}`),
+  getPublicByEventId: (id) => request('GET', `/registrations/event/${id}/public`),
   getByUserId: (id) => request('GET', `/registrations/user/${id}`),
-  crea: (event_id) => request('POST', '/registrations', { event_id }),
+  crea: (dati) =>
+    request('POST', '/registrations', typeof dati === 'object' ? dati : { event_id: dati }),
   elimina: (id) => request('DELETE', `/registrations/${id}`),
 }

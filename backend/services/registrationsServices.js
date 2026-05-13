@@ -2,7 +2,8 @@ const registrationsModel = require('../models/registrationsModel');
 const eventsModel    = require('../models/eventsModel');
 const usersModel   = require('../models/usersModel');
 
-const crea = async ({ event_id }, user_id) => {
+const crea = async ({ event_id, seats = 1 }, user_id) => {
+  const seatsRichiesti = parseInt(seats);
   const user = await usersModel.findById(user_id);
   const event  = await eventsModel.findById(event_id);
 
@@ -18,9 +19,22 @@ const crea = async ({ event_id }, user_id) => {
     throw err;
   }
 
-  const registration = await registrationsModel.create({ user_id, event_id });
-  await eventsModel.decrementa(event_id);
-  return event.rows[0];
+  if (seatsRichiesti > event.rows[0].max_seats) {
+    const err = new Error('I posti richiesti superano quelli disponibili');
+    err.statusCode = 409;
+    throw err;
+  }
+
+  const eventAggiornato = await eventsModel.decrementa(event_id, seatsRichiesti);
+
+  if (!eventAggiornato.rows.length) {
+    const err = new Error('I posti richiesti non sono piu disponibili');
+    err.statusCode = 409;
+    throw err;
+  }
+
+  const registration = await registrationsModel.create({ user_id, event_id, seats: seatsRichiesti });
+  return registration.rows[0];
 };
 
 
@@ -59,12 +73,26 @@ const getAllByUserId = async (id) => {
   return result.rows;
 };
 
+const getPublicByEventId = async (id) => {
+  const event = await eventsModel.findById(id);
+
+  if (!event.rows.length) {
+    const err = new Error('Evento non trovato');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const result = await registrationsModel.findPublicByEventId(id);
+  return result.rows;
+};
+
 
 const elimina = async (id) => {
-  await getById(id);
+  const registration = await getById(id);
   await registrationsModel.remove(id);
+  await eventsModel.incrementa(registration.event_id, registration.seats);
   return { message: 'Registrazione eliminata' };
 };
 
 // ── Esportazione ──────────────────────────────────────────────
-module.exports = { getAll, getById, getAllByEventId, getAllByUserId, crea, elimina };
+module.exports = { getAll, getById, getAllByEventId, getAllByUserId, getPublicByEventId, crea, elimina };

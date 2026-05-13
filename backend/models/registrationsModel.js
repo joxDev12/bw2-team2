@@ -5,10 +5,14 @@ CREATE TABLE IF NOT EXISTS registrations (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     event_id INT NOT NULL,
+    seats INTEGER NOT NULL DEFAULT 1 CHECK(seats > 0),
     registered_at date NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE
 );
+
+ALTER TABLE registrations
+    ADD COLUMN IF NOT EXISTS seats INTEGER NOT NULL DEFAULT 1 CHECK(seats > 0);
 `;
 
 
@@ -112,14 +116,27 @@ const findById = (id) =>
     [id]
   );
 
-
-
-const create = ({ user_id, event_id }) =>
+const findPublicByEventId = (id) =>
   pool.query(
-    `INSERT INTO registrations (user_id, event_id)
-     VALUES ($1, $2)
+    `SELECT
+       u.name,
+       u.surname,
+       u.img_profile
+     FROM registrations reg
+     JOIN users u ON u.id = reg.user_id
+     WHERE reg.event_id = $1
+     ORDER BY reg.registered_at DESC`,
+    [id]
+  );
+
+
+
+const create = ({ user_id, event_id, seats }) =>
+  pool.query(
+    `INSERT INTO registrations (user_id, event_id, seats)
+     VALUES ($1, $2, $3)
      RETURNING *`,
-    [user_id, event_id]
+    [user_id, event_id, seats]
   );
 
 
@@ -127,4 +144,4 @@ const create = ({ user_id, event_id }) =>
 const remove = (id) =>
   pool.query('DELETE FROM registrations WHERE id = $1 RETURNING id', [id]);
 
-module.exports = { init, findAll, findById, findByEventId, findByUserId, create, remove };
+module.exports = { init, findAll, findById, findByEventId, findByUserId, findPublicByEventId, create, remove };

@@ -42,6 +42,23 @@ const aggiorna = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
+// PATCH /:id/img-profile
+const aggiornaImmagineProfilo = async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+
+    if (!req.file) {
+      const err = new Error('Immagine profilo obbligatoria');
+      err.statusCode = 400;
+      throw err;
+    }
+
+    const img_profile = `${req.protocol}://${req.get('host')}/uploads/profiles/${req.file.filename}`;
+    const user = await usersService.aggiorna(id, { img_profile });
+    res.json({ successo: true, dati: user });
+  } catch (err) { next(err); }
+};
+
 // DELETE /:id
 const elimina = async (req, res, next) => {
   try {
@@ -51,4 +68,4 @@ const elimina = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-module.exports = { registra, login, getAll, getById, aggiorna, elimina };
+module.exports = { registra, login, getAll, getById, aggiorna, aggiornaImmagineProfilo, elimina };

@@ -2,6 +2,7 @@
 const express      = require('express');
 const errorHandler = require('./middlewares/errorHandler')
 const helmet       = require('helmet');
+const path         = require('path');
 /* const rateLimit    = require('express-rate-limit'); */
 
 //seeds DA COMMENTARE DEL TRY UNA VOLTA MESSI NEL DB!!
@@ -39,7 +40,9 @@ const port = process.env.SERVER_PORT;
 
 app.use(express.json());
 
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' }
+}));
 
 
 app.use(cors({
@@ -50,6 +53,8 @@ app.use(cors({
 
 
 /* app.use(limiterGlobale); */
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/health', (req, res) => {
   res.status(200).json({ message: 'Backend avviato: OK', status: '200' });

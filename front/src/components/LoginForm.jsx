@@ -15,7 +15,7 @@ function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
 
       {errore && (
         <div className="alert alert-danger" role="alert">
-          <span>⚠️</span> {errore}
+          <span>Attenzione:</span> {errore}
         </div>
       )}
 
@@ -32,6 +32,7 @@ function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
             onChange={handleChange}
             placeholder="mario.rossi@esempio.it"
             className="form-control"
+            maxLength={255}
             required
             autoFocus
           />
@@ -47,8 +48,9 @@ function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
             name="password"
             value={form.password}
             onChange={handleChange}
-            placeholder="••••••••"
+            placeholder="********"
             className="form-control"
+            maxLength={100}
             required
           />
         </div>
