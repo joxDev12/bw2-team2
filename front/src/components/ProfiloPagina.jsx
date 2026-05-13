@@ -16,7 +16,7 @@ function ProfiloPagina() {
 
   const getRoleBadge = (role) => {
     const roles = {
-      user: { label: "Utente", cls: "bg-primary", icon: "bi-person-fill" },
+      partecipant: { label: "Utente", cls: "bg-primary", icon: "bi-person-fill" },
       organizer: {
         label: "Organizzatore",
         cls: "bg-success",
@@ -24,7 +24,7 @@ function ProfiloPagina() {
       },
       admin: { label: "Admin", cls: "bg-danger", icon: "bi-shield-lock-fill" },
     };
-    return roles[role] || roles.user;
+    return roles[role] || roles.partecipant;
   };
 
   const roleBadge = getRoleBadge(utente.role);

@@ -1,16 +1,21 @@
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/img/logo.png";
 import ProfiloPagina from "../components/ProfiloPagina";
+import MieiEventiUtente from "../components/MieiEventiUtente";
+import MieiEventiOrganizzatore from "../components/MieiEventiOrganizzatore";
 
 function Dashboard() {
+  const [activeTab, setActiveTab] = useState("profilo"); // "profilo", "miei-eventi", "lista-eventi"
+
   const navigate = useNavigate();
   const { utente, logout } = useAuth();
 
   const user = {
     name: utente?.name ? `${utente.name} ${utente.surname || ''}`.trim() : "Utente",
     email: utente?.email || "",
-    role: utente?.role || "user", // "user" | "organizer" | "admin"
+    role: utente?.role || "partecipant", // "partecipant" | "organizer" | "admin"
     avatar: utente?.img_profile || null,
   };
 
@@ -29,11 +34,11 @@ function Dashboard() {
 
   const getRoleBadge = (role) => {
     const roles = {
-      user: { label: "Utente", cls: "bg-primary" },
+      partecipant: { label: "Utente", cls: "bg-primary" },
       organizer: { label: "Organizzatore", cls: "bg-success" },
       admin: { label: "Admin", cls: "bg-danger" },
     };
-    return roles[role] || roles.user;
+    return roles[role] || roles.partecipant;
   };
 
   const roleBadge = getRoleBadge(user.role);
@@ -79,30 +84,30 @@ function Dashboard() {
         <nav className="sidebar-nav flex-grow-1 flex-shrink-0 px-3 py-3">
           <ul className="nav nav-pills flex-column gap-1">
             <li className="nav-item">
-              <NavLink
-                to="/dashboard"
-                end
-                className={({ isActive }) => 
-                  `nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${isActive ? 'active shadow-sm' : 'text-white-50 link-light'}`
-                }
+              <button
+                onClick={() => setActiveTab("profilo")}
+                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === 'profilo' ? 'active shadow-sm' : 'text-white-50 link-light border-0 w-100 bg-transparent text-start'}`}
               >
                 <i className="bi bi-person-fill fs-5"></i>
                 <span>Profilo</span>
-              </NavLink>
+              </button>
             </li>
 
             <li className="nav-item">
-              <button className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light border-0 w-100 bg-transparent text-start">
+              <button 
+                onClick={() => setActiveTab("miei-eventi")}
+                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === 'miei-eventi' ? 'active shadow-sm' : 'text-white-50 link-light border-0 w-100 bg-transparent text-start'}`}
+              >
                 <i className="bi bi-calendar2-week-fill fs-5"></i>
                 <span>I Miei Eventi</span>
               </button>
             </li>
 
             <li className="nav-item">
-              <button className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light border-0 w-100 bg-transparent text-start">
+              <NavLink to="/eventi" className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light border-0 w-100 bg-transparent text-start">
                 <i className="bi bi-card-list fs-5"></i>
                 <span>Lista Eventi</span>
-              </button>
+              </NavLink>
             </li>
           </ul>
         </nav>
@@ -145,7 +150,10 @@ function Dashboard() {
 
         {/* Area contenuto */}
         <div className="dashboard-content p-4">
-          <ProfiloPagina />
+          {activeTab === "profilo" && <ProfiloPagina />}
+          {activeTab === "miei-eventi" && (
+            user.role === "partecipant" ? <MieiEventiUtente /> : <MieiEventiOrganizzatore />
+          )}
         </div>
       </main>
 
@@ -165,7 +173,7 @@ function Dashboard() {
             data-bs-dismiss="offcanvas"
           ></button>
         </div>
-        <div className="offcanvas-body p-0 bg-dark text-white">
+        <div className="offcanvas-body p-0 bg-dark text-white d-flex flex-column">
           <div className="text-center px-3 py-4">
             {user.avatar ? (
               <img
@@ -192,41 +200,51 @@ function Dashboard() {
           <nav className="px-3 py-2">
             <ul className="nav nav-pills flex-column gap-1">
               <li className="nav-item">
-                <NavLink
-                  to="/dashboard"
-                  end
-                  className={({ isActive }) => 
-                    `nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${isActive ? 'active shadow-sm' : 'text-white-50 link-light'}`
-                  }
+                <button
+                  onClick={() => setActiveTab("profilo")}
                   data-bs-dismiss="offcanvas"
+                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === 'profilo' ? 'active shadow-sm' : 'text-white-50 link-light border-0 w-100 bg-transparent text-start'}`}
                 >
                   <i className="bi bi-person-fill fs-5"></i>
                   <span>Profilo</span>
-                </NavLink>
+                </button>
               </li>
               <li className="nav-item">
-                <button className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light border-0 w-100 bg-transparent text-start">
+                <button 
+                  onClick={() => setActiveTab("miei-eventi")}
+                  data-bs-dismiss="offcanvas"
+                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === 'miei-eventi' ? 'active shadow-sm' : 'text-white-50 link-light border-0 w-100 bg-transparent text-start'}`}
+                >
                   <i className="bi bi-calendar2-week-fill fs-5"></i>
                   <span>I Miei Eventi</span>
                 </button>
               </li>
               <li className="nav-item">
-                <button className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light border-0 w-100 bg-transparent text-start">
+                <NavLink to="/eventi" data-bs-dismiss="offcanvas" className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light border-0 w-100 bg-transparent text-start">
                   <i className="bi bi-card-list fs-5"></i>
                   <span>Lista Eventi</span>
-                </button>
-              </li>
-              <li className="nav-item mt-2">
-                <button
-                  onClick={handleLogout}
-                  className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-danger border-0 w-100 text-start bg-transparent"
-                >
-                  <i className="bi bi-box-arrow-left fs-5"></i>
-                  <span>Logout</span>
-                </button>
+                </NavLink>
               </li>
             </ul>
           </nav>
+
+          <div className="offcanvas-footer flex-shrink-0 px-3 py-3 bg-black bg-opacity-10 mt-auto">
+            <NavLink
+              to="/"
+              data-bs-dismiss="offcanvas"
+              className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light mb-1"
+            >
+              <i className="bi bi-arrow-left-circle fs-5"></i>
+              <span>Torna al sito</span>
+            </NavLink>
+            <button
+              onClick={handleLogout}
+              className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-danger border-0 w-100 text-start bg-transparent"
+            >
+              <i className="bi bi-box-arrow-left fs-5"></i>
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
