@@ -12,6 +12,7 @@ const HomePage = () => {
   return (
     <div>
       <Hero />
+      <ListEvent />
       <ComeFunziona />
       <BannerOrganizzatore />
       <Feedback />

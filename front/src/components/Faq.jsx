@@ -2,17 +2,17 @@ function Faq() {
     return (
         <>
 
-            <div className="accordion py-5 px-5 bg-success w-100" id="accordionPanelsStayOpenExample">
-                <h4 className="mb-3">Domande Frequenti</h4>
+            <div className="accordion w-75" id="accordionPanelsStayOpenExample">
+                <h4 className="mb-3 text-light">Domande Frequenti</h4>
                 <div className="d-flex flex-column gap-1">
-                    <div className="accordion-item ">
+                    <div className="accordion">
                         <h2 className="accordion-header">
                             <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                                 Come posso acquistare i biglietti?
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse">
-                            <div className="accordion-body">
+                            <div className="accordion-body bg-item text-light">
                                 <strong>Per acquistare i biglietti, basta cliccare sul pulsante "Acquista" accanto all'evento desiderato e seguire le istruzioni per completare l'acquisto.</strong> Se hai bisogno di assistenza durante il processo di acquisto, non esitare a contattare il nostro servizio clienti.
                             </div>
                         </div>

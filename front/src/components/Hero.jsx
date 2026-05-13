@@ -2,12 +2,12 @@ function Hero() {
 
     return (
         <>
-            <div className="px-5 py-5 text-center hero-section w-100">
-                <h1 className="display-5 fw-bold"> Vivi momenti <br /> che restano.
+            <div className="px-5 py-5 text-center hero-section w-100 d-flex align-items-center justify-content-center flex-column gap-2">
+                <h1 className="display-5 fw-bold text-light"> Vivi momenti <br /> che restano.
                 </h1>
 
-                <div className="col-lg-10 mx-auto">
-                    <p className="lead mb-4"> Eventi pubblici o privati per ogni interesse. <br /> Crea, organizza e partecipa.
+                <div className="col-lg-10 mx-auto pb-5">
+                    <p className="lead mb-4 text-light fw-semibold mb-5"> Eventi pubblici o privati per ogni interesse. <br /> Crea, organizza e partecipa.
                     </p>
 
                     <form className="d-flex flex-column gap-2 flex-sm-row gap-sm-0 custom-border">

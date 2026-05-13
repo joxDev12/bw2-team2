@@ -1,7 +1,7 @@
 function ComeFunziona() {
 
     return (
-        <div className="py-5 px-5 bg-danger">
+        <div className="py-5 px-5 bg-purple">
 
             <h2 className="text-center text-white fw-bold mb-5">
                 Come funziona

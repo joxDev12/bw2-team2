@@ -6,10 +6,10 @@ import img4 from "../assets/img/4.webp";
 function CardFeedback() {
     return (
         <>
-            <h4 className="text-center">Cosa dicono di noi</h4>
+            <h4 className="text-center text-light">Cosa dicono di noi</h4>
             
             <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-danger border-1 border-black h-100">
+                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
 
                     <p className="feedback-text mb-3 text-light">
                         “Con EventHub ho scoperto tanti eventi interessanti vicino a me. Piattaforma semplice e veloce da usare.”
@@ -27,9 +27,8 @@ function CardFeedback() {
                 </div>
             </div>
 
-
             <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-danger border-1 border-black h-100">
+                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
 
                     <p className="feedback-text mb-3 text-light">
                         “EventHub ha una grafica moderna e permette di trovare eventi in pochi clic.”
@@ -48,7 +47,7 @@ function CardFeedback() {
             </div>
 
             <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-danger border-1 border-black h-100">
+                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
 
                     <p className="feedback-text mb-3 text-light">
                         “Organizzare eventi su EventHub è stato davvero intuitivo. Ottima gestione dei partecipanti.”
@@ -67,7 +66,7 @@ function CardFeedback() {
             </div>
 
             <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-danger border-1 border-black h-100">
+                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
 
                     <p className="feedback-text mb-3 text-light">
                         “Esperienza molto positiva con EventHub, sia come partecipante che come organizzatrice.”
@@ -83,7 +82,45 @@ function CardFeedback() {
                     </div>
 
                 </div>
-            </div>            
+            </div>     
+
+            <div className="col-12 col-md-6 col-lg-4">
+                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
+
+                    <p className="feedback-text mb-3 text-light">
+                        “Esperienza molto positiva con EventHub, sia come partecipante che come organizzatrice.”
+                    </p>
+
+                    <div className="feedback-user d-flex align-items-center gap-3">
+                        <img src={img4} alt="Simona B." className="feedback-avatar" />
+
+                        <div>
+                            <h6 className="mb-0 fw-bold">Simona B.</h6>
+                            <small>Palermo</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div> 
+
+            <div className="col-12 col-md-6 col-lg-4">
+                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
+
+                    <p className="feedback-text mb-3 text-light">
+                        “Esperienza molto positiva con EventHub, sia come partecipante che come organizzatrice.”
+                    </p>
+
+                    <div className="feedback-user d-flex align-items-center gap-3">
+                        <img src={img4} alt="Simona B." className="feedback-avatar" />
+
+                        <div>
+                            <h6 className="mb-0 fw-bold">Simona B.</h6>
+                            <small>Palermo</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>        
         </>
     );
 
