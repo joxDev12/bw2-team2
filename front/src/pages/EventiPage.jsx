@@ -1,91 +1,7 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 
 import CardPageEvent from "../components/CardPageEvent";
 
-const eventiData = [
-  {
-    id: 1,
-    title: "Rock Festival 2026",
-    category: "Musica",
-    date: "2026-06-15",
-    location: "Roma",
-    image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&h=400&fit=crop",
-    description: "Un'esperienza musicale unica con artisti internazionali e band emergenti. Tre giorni di musica live, food truck e divertimento sotto le stelle.",
-  },
-  {
-    id: 2,
-    title: "Comedy Night Live",
-    category: "Spettacolo",
-    date: "2026-07-20",
-    location: "Milano",
-    image: "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?w=600&h=400&fit=crop",
-    description: "Una serata di risate con i migliori comici italiani. Stand-up comedy, improvvisazione e tanto divertimento per una notte indimenticabile.",
-  },
-  {
-    id: 3,
-    title: "Torneo di Calcio a 5",
-    category: "Sport",
-    date: "2026-08-10",
-    location: "Napoli",
-    image: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&h=400&fit=crop",
-    description: "Torneo amatoriale aperto a tutti. Squadre da 5 giocatori, premi per i primi tre classificati e barbecue finale per tutti i partecipanti.",
-  },
-  {
-    id: 4,
-    title: "Tech Conference 2026",
-    category: "Tecnologia",
-    date: "2026-09-05",
-    location: "Torino",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop",
-    description: "Conferenza dedicata alle ultime innovazioni in ambito AI, blockchain e sviluppo web. Speaker di fama internazionale e workshop pratici.",
-  },
-  {
-    id: 5,
-    title: "Jazz sotto le Stelle",
-    category: "Musica",
-    date: "2026-07-28",
-    location: "Firenze",
-    image: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&h=400&fit=crop",
-    description: "Una serata magica all'aperto con i migliori musicisti jazz. Atmosfera romantica, ottimo vino e musica che scalda l'anima.",
-  },
-  {
-    id: 6,
-    title: "Maratona Cittadina",
-    category: "Sport",
-    date: "2026-10-12",
-    location: "Roma",
-    image: "https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?w=600&h=400&fit=crop",
-    description: "Corsa per tutti i livelli: 5km, 10km e maratona completa. Percorso panoramico attraverso i monumenti più belli della città eterna.",
-  },
-  {
-    id: 7,
-    title: "Teatro d'Avanguardia",
-    category: "Spettacolo",
-    date: "2026-06-30",
-    location: "Bologna",
-    image: "https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&h=400&fit=crop",
-    description: "Spettacolo teatrale contemporaneo che mescola danza, recitazione e tecnologia. Un'esperienza immersiva che ridefinisce il concetto di palcoscenico.",
-  },
-  {
-    id: 8,
-    title: "Hackathon AI Innovation",
-    category: "Tecnologia",
-    date: "2026-11-15",
-    location: "Milano",
-    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop",
-    description: "48 ore di coding intenso per sviluppare soluzioni innovative basate sull'intelligenza artificiale. Premi per i progetti più creativi.",
-  },
-  {
-    id: 9,
-    title: "Festival Elettronica",
-    category: "Musica",
-    date: "2026-08-22",
-    location: "Rimini",
-    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&h=400&fit=crop",
-    description: "Il più grande festival di musica elettronica della riviera. DJ internazionali, light show spettacolari e party fino all'alba sulla spiaggia.",
-  },
-];
 
 const categorie = [
   { nome: "Tutti", icona: "bi-grid-fill" },
@@ -95,7 +11,7 @@ const categorie = [
   { nome: "Tecnologia", icona: "bi-cpu" },
 ];
 
-const locations = [...new Set(eventiData.map((e) => e.location))].sort();
+
 
 function formattaData(dataStr) {
   const data = new Date(dataStr);
@@ -117,9 +33,32 @@ function badgeColore(categoria) {
 }
 
 const EventiPage = () => {
+const [eventiData, setEventiData] = useState([]);
+
   const [categoriaAttiva, setCategoriaAttiva] = useState("Tutti");
   const [filtroData, setFiltroData] = useState("");
   const [filtroLocation, setFiltroLocation] = useState("");
+
+
+  const locations = [...new Set(eventiData.map((e) => e.location))].sort();
+
+useEffect(() => {
+  fetch("http://localhost:3000/api/events")
+    .then((res) => res.json())
+    .then((data) => {
+
+ console.log("DATA FROM BACKEND:", data);
+
+setEventiData(data.dati);
+      
+    })
+    .catch((err) => {
+      console.error("Errore caricamento eventi:", err);
+      setEventiData([]);
+    });
+}, []);
+
+
 
   const eventiFiltrati = eventiData.filter((evento) => {
     const matchCategoria = categoriaAttiva === "Tutti" || evento.category === categoriaAttiva;
