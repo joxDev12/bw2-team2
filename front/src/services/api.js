@@ -1,5 +1,4 @@
 const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api'
-const ROOT_URL = BASE_URL.replace(/\/api\/?$/, '')
 
 if (!import.meta.env.VITE_API_URL) {
   console.warn(
@@ -40,7 +39,8 @@ async function request(method, path, body = null, baseUrl = BASE_URL) {
   }
 
   if (!data.successo) {
-    const err = new Error(data.errore || 'Errore sconosciuto')
+    const messaggioValidazione = data.errori?.map((errore) => errore.msg).join('\n')
+    const err = new Error(data.errore || messaggioValidazione || 'Errore sconosciuto')
     err.status = res.status
     throw err
   }
@@ -85,6 +85,7 @@ export const registrationsAPI = {
   getByEventId: (id) => request('GET', `/registrations/event/${id}`),
   getPublicByEventId: (id) => request('GET', `/registrations/event/${id}/public`),
   getByUserId: (id) => request('GET', `/registrations/user/${id}`),
-  crea: (event_id) => request('POST', '/registrations', { event_id }),
+  crea: (dati) =>
+    request('POST', '/registrations', typeof dati === 'object' ? dati : { event_id: dati }),
   elimina: (id) => request('DELETE', `/registrations/${id}`),
 }

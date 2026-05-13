@@ -1,21 +1,38 @@
-const router     = require('express').Router();
+const router = require('express').Router();
+const { body, param } = require('express-validator');
+const validate = require('../middlewares/validate');
 const controller = require('../controllers/registrationsControllers');
-const { autenticato,
-    soloAdmin,
-    soloAdminOStessoUtente,
-  soloAdminOOrganizer,
+const {
+  autenticato,
+  soloAdmin,
+  soloAdminOStessoUtente,
   soloPartecipant,
   soloAdminOOrganizerProprietarioEvento,
   soloAdminOProprietarioRegistrazione,
-  soloAdminOProprietarioRegistrazioneOOrganizerEvento } = require('../middlewares/auth');
+} = require('../middlewares/auth');
 
+// Regole di validazione
+const regolaId = [
+  param('id')
+    .isInt({ min: 1 }).withMessage('L\'id deve essere un numero intero positivo'),
+];
 
-router.post('/',                 autenticato, soloPartecipant, controller.crea);
-router.get('/',                  autenticato, soloAdmin, controller.getAll);
-router.get('/:id', autenticato, soloAdminOProprietarioRegistrazione, controller.getById);
-router.get('/event/:id/public', controller.getPublicByEventId);
-router.get('/event/:id', autenticato, soloAdminOOrganizerProprietarioEvento, controller.getAllByEventId);
-router.get('/user/:id',               autenticato, soloAdminOStessoUtente, controller.getAllByUserId);
-router.delete('/:id',            autenticato, soloAdminOProprietarioRegistrazione, controller.elimina);
+const regolaCrea = [
+  body('event_id')
+    .notEmpty().withMessage('L\'event_id e obbligatorio')
+    .isInt({ min: 1 }).withMessage('event_id deve essere un numero intero positivo'),
+
+  body('seats')
+    .optional()
+    .isInt({ min: 1 }).withMessage('Il numero di posti deve essere un intero positivo'),
+];
+
+router.post('/', autenticato, soloPartecipant, regolaCrea, validate, controller.crea);
+router.get('/', autenticato, soloAdmin, controller.getAll);
+router.get('/event/:id/public', regolaId, validate, controller.getPublicByEventId);
+router.get('/event/:id', autenticato, regolaId, validate, soloAdminOOrganizerProprietarioEvento, controller.getAllByEventId);
+router.get('/user/:id', autenticato, regolaId, validate, soloAdminOStessoUtente, controller.getAllByUserId);
+router.get('/:id', autenticato, regolaId, validate, soloAdminOProprietarioRegistrazione, controller.getById);
+router.delete('/:id', autenticato, regolaId, validate, soloAdminOProprietarioRegistrazione, controller.elimina);
 
 module.exports = router;

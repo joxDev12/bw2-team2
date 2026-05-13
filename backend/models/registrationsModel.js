@@ -5,10 +5,14 @@ CREATE TABLE IF NOT EXISTS registrations (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     event_id INT NOT NULL,
+    seats INTEGER NOT NULL DEFAULT 1 CHECK(seats > 0),
     registered_at date NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE
 );
+
+ALTER TABLE registrations
+    ADD COLUMN IF NOT EXISTS seats INTEGER NOT NULL DEFAULT 1 CHECK(seats > 0);
 `;
 
 
@@ -127,12 +131,12 @@ const findPublicByEventId = (id) =>
 
 
 
-const create = ({ user_id, event_id }) =>
+const create = ({ user_id, event_id, seats }) =>
   pool.query(
-    `INSERT INTO registrations (user_id, event_id)
-     VALUES ($1, $2)
+    `INSERT INTO registrations (user_id, event_id, seats)
+     VALUES ($1, $2, $3)
      RETURNING *`,
-    [user_id, event_id]
+    [user_id, event_id, seats]
   );
 
 
