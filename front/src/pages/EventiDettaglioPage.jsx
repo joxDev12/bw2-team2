@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import eventsPlaceholder from "../assets/img/events_placeholder.webp";
 
 const EventiDettaglioPage = () => {
   const { id } = useParams();
@@ -60,7 +61,7 @@ const EventiDettaglioPage = () => {
     <div className="container py-5">
       <div className="card border-0 shadow-lg overflow-hidden event-card">
         <img
-          src={evento.image}
+          src={evento.image || eventsPlaceholder}
           alt={evento.title}
           className="w-100"
           style={{

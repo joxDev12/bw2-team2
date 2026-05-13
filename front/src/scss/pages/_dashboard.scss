@@ -15,6 +15,24 @@ $sidebar-width: 280px;
   z-index: 1000;
 }
 
+.dashboard-logo {
+  width: 180px;
+  max-width: 100%;
+  height: auto;
+}
+
+.dashboard-topbar-logo {
+  width: 130px;
+  max-width: 45vw;
+  height: auto;
+}
+
+.dashboard-offcanvas-logo {
+  width: 210px;
+  max-width: 100%;
+  height: auto;
+}
+
 .sidebar-avatar-placeholder {
   transition: transform 0.3s ease;
   &:hover {

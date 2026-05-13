@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import eventsPlaceholder from "../assets/img/events_placeholder.webp";
 
 const CardPageEvent = ({ evento, formattaData, badgeColore }) => {
   return (
@@ -7,7 +8,7 @@ const CardPageEvent = ({ evento, formattaData, badgeColore }) => {
         <div className="row g-0 h-100">
           <div className="col-md-4 position-relative">
             <img
-              src={evento.image}
+              src={evento.image || eventsPlaceholder}
               className="img-fluid w-100 h-100"
               alt={evento.title}
               style={{ objectFit: "cover", minHeight: "220px" }}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/img/logo.png";
@@ -8,7 +8,7 @@ import MieiEventiOrganizzatore from "../components/MieiEventiOrganizzatore";
 import RegistrazioniUtenti from "../components/RegistrazioniUtenti";
 
 function Dashboard() {
-  const [activeTab, setActiveTab] = useState("profilo"); // "profilo", "miei-eventi", "lista-eventi"
+  const [activeTab, setActiveTab] = useState(() => localStorage.getItem("dashboardTab") || "profilo"); // "profilo", "miei-eventi", "registrazioni"
 
   const navigate = useNavigate();
   const { utente, logout } = useAuth();
@@ -23,8 +23,13 @@ function Dashboard() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("dashboardTab");
     logout();
     navigate("/login");
+  };
+
+  const handleTornaAlSito = () => {
+    navigate("/");
   };
 
   const getInitials = (name) =>
@@ -46,13 +51,28 @@ function Dashboard() {
 
   const roleBadge = getRoleBadge(user.role);
 
+  useEffect(() => {
+    if (activeTab === "registrazioni" && user.role !== "admin" && user.role !== "organizer") {
+      setActiveTab("profilo");
+      localStorage.setItem("dashboardTab", "profilo");
+      return;
+    }
+
+    localStorage.setItem("dashboardTab", activeTab);
+  }, [activeTab, user.role]);
+
+  const cambiaTab = (tab) => {
+    setActiveTab(tab);
+    localStorage.setItem("dashboardTab", tab);
+  };
+
   return (
     <div className="dashboard-wrapper d-flex vh-100">
       {/* ── SIDEBAR ── */}
       <aside className="dashboard-sidebar d-none d-lg-flex flex-column bg-dark text-white border-end shadow-sm overflow-y-auto custom-scrollbar">
         <div className="sidebar-brand px-3 py-4 text-center">
-          <NavLink to="/" className="text-white text-decoration-none">
-            <img src={logo} alt="EventiHub Logo" style={{ height: "45px" }} />
+          <NavLink to="/" className="text-white text-decoration-none d-block">
+            <img src={logo} alt="EventiHub Logo" className="dashboard-logo" />
           </NavLink>
         </div>
 
@@ -90,8 +110,8 @@ function Dashboard() {
           <ul className="nav nav-pills flex-column gap-1">
             <li className="nav-item">
               <button
-                onClick={() => setActiveTab("profilo")}
-                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "profilo" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
+                onClick={() => cambiaTab("profilo")}
+                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all border-0 w-100 text-start ${activeTab === "profilo" ? "active shadow-sm" : "text-white-50 link-light bg-transparent"}`}
               >
                 <i className="bi bi-person-fill fs-5"></i>
                 <span>Profilo</span>
@@ -100,8 +120,8 @@ function Dashboard() {
 
             <li className="nav-item">
               <button
-                onClick={() => setActiveTab("miei-eventi")}
-                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "miei-eventi" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
+                onClick={() => cambiaTab("miei-eventi")}
+                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all border-0 w-100 text-start ${activeTab === "miei-eventi" ? "active shadow-sm" : "text-white-50 link-light bg-transparent"}`}
               >
                 <i className="bi bi-calendar2-week-fill fs-5"></i>
                 <span>I Miei Eventi</span>
@@ -111,8 +131,8 @@ function Dashboard() {
             {(user.role === "admin" || user.role === "organizer") && (
               <li className="nav-item">
                 <button
-                  onClick={() => setActiveTab("registrazioni")}
-                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "registrazioni" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
+                  onClick={() => cambiaTab("registrazioni")}
+                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all border-0 w-100 text-start ${activeTab === "registrazioni" ? "active shadow-sm" : "text-white-50 link-light bg-transparent"}`}
                 >
                   <i className="bi bi-people-fill fs-5"></i>
                   <span>Registrazioni</span>
@@ -125,13 +145,14 @@ function Dashboard() {
         {/* Footer sidebar */}
         <div className="sidebar-footer flex-shrink-0 px-3 py-3 bg-black bg-opacity-10 mt-auto">
           <hr className="my-2 opacity-25 d-lg-none" />
-          <NavLink
-            to="/"
-            className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light mb-1"
+          <button
+            type="button"
+            onClick={handleTornaAlSito}
+            className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light mb-1 border-0 w-100 text-start bg-transparent"
           >
             <i className="bi bi-arrow-left-circle fs-5"></i>
             <span>Torna al sito</span>
-          </NavLink>
+          </button>
           <button
             onClick={handleLogout}
             className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-danger border-0 w-100 text-start bg-transparent"
@@ -154,7 +175,7 @@ function Dashboard() {
           >
             <i className="bi bi-list fs-5"></i>
           </button>
-          <img src={logo} alt="EventiHub Logo" style={{ height: "30px" }} />
+          <img src={logo} alt="EventiHub Logo" className="dashboard-topbar-logo" />
           <div style={{ width: "32px" }}></div>
         </header>
 
@@ -176,13 +197,13 @@ function Dashboard() {
         tabIndex="-1"
         id="mobileSidebar"
       >
-        <div className="offcanvas-header">
-          <h5 className="offcanvas-title text-white">
-            <img src={logo} alt="EventiHub Logo" style={{ height: "35px" }} />
+        <div className="offcanvas-header bg-dark justify-content-center position-relative px-3 py-4">
+          <h5 className="offcanvas-title text-white mb-0">
+            <img src={logo} alt="EventiHub Logo" className="dashboard-offcanvas-logo" />
           </h5>
           <button
             type="button"
-            className="btn-close btn-close-white"
+            className="btn-close btn-close-white position-absolute top-0 end-0 m-3"
             data-bs-dismiss="offcanvas"
           ></button>
         </div>
@@ -218,9 +239,9 @@ function Dashboard() {
             <ul className="nav nav-pills flex-column gap-1">
               <li className="nav-item">
                 <button
-                  onClick={() => setActiveTab("profilo")}
+                  onClick={() => cambiaTab("profilo")}
                   data-bs-dismiss="offcanvas"
-                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "profilo" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
+                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all border-0 w-100 text-start ${activeTab === "profilo" ? "active shadow-sm" : "text-white-50 link-light bg-transparent"}`}
                 >
                   <i className="bi bi-person-fill fs-5"></i>
                   <span>Profilo</span>
@@ -228,9 +249,9 @@ function Dashboard() {
               </li>
               <li className="nav-item">
                 <button
-                  onClick={() => setActiveTab("miei-eventi")}
+                  onClick={() => cambiaTab("miei-eventi")}
                   data-bs-dismiss="offcanvas"
-                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "miei-eventi" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
+                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all border-0 w-100 text-start ${activeTab === "miei-eventi" ? "active shadow-sm" : "text-white-50 link-light bg-transparent"}`}
                 >
                   <i className="bi bi-calendar2-week-fill fs-5"></i>
                   <span>I Miei Eventi</span>
@@ -240,9 +261,9 @@ function Dashboard() {
               {(user.role === "admin" || user.role === "organizer") && (
                 <li className="nav-item">
                   <button
-                    onClick={() => setActiveTab("registrazioni")}
+                    onClick={() => cambiaTab("registrazioni")}
                     data-bs-dismiss="offcanvas"
-                    className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "registrazioni" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
+                    className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all border-0 w-100 text-start ${activeTab === "registrazioni" ? "active shadow-sm" : "text-white-50 link-light bg-transparent"}`}
                   >
                     <i className="bi bi-people-fill fs-5"></i>
                     <span>Registrazioni</span>
@@ -253,14 +274,15 @@ function Dashboard() {
           </nav>
 
           <div className="offcanvas-footer flex-shrink-0 px-3 py-3 bg-black bg-opacity-10 mt-auto">
-            <NavLink
-              to="/"
+            <button
+              type="button"
+              onClick={handleTornaAlSito}
               data-bs-dismiss="offcanvas"
-              className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light mb-1"
+              className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light mb-1 border-0 w-100 text-start bg-transparent"
             >
               <i className="bi bi-arrow-left-circle fs-5"></i>
               <span>Torna al sito</span>
-            </NavLink>
+            </button>
             <button
               onClick={handleLogout}
               className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-danger border-0 w-100 text-start bg-transparent"

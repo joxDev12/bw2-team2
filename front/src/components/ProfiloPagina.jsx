@@ -153,6 +153,7 @@ function ProfiloPagina() {
 
     try {
       await usersAPI.elimina(utente.id);
+      localStorage.removeItem("dashboardTab");
       window.dispatchEvent(new Event('auth:unauthorized'));
     } catch (err) {
       setErroreElimina(err.message || "Errore durante l'eliminazione del profilo.");

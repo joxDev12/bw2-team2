@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { eventsAPI, registrationsAPI } from "../services/api";
+import profilePlaceholder from "../assets/img/profile_placeholder.webp";
+
+const getImmagineUtente = (reg) => reg.user_img_profile || reg.img_profile || profilePlaceholder;
 
 function RegistrazioniUtenti() {
   const { utente, token } = useAuth();
@@ -129,8 +132,21 @@ function RegistrazioniUtenti() {
                     })}
                   </td>
                   <td className="px-4 py-3">
-                    <div className="fw-bold">{reg.user_fullname}</div>
-                    <small className="text-muted">{reg.user_email}</small>
+                    <div className="d-flex align-items-center gap-3">
+                      <img
+                        src={getImmagineUtente(reg)}
+                        alt={reg.user_fullname}
+                        className="rounded-circle border shadow-sm flex-shrink-0"
+                        style={{ width: "46px", height: "46px", objectFit: "cover" }}
+                        onError={(e) => {
+                          e.currentTarget.src = profilePlaceholder;
+                        }}
+                      />
+                      <div>
+                        <div className="fw-bold">{reg.user_fullname}</div>
+                        <small className="text-muted">{reg.user_email}</small>
+                      </div>
+                    </div>
                   </td>
                   <td className="px-4 py-3">
                     <div className="fw-bold text-primary">
