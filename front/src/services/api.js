@@ -114,6 +114,11 @@ export const eventsAPI = {
   getByOrganizerId: (id) => request('GET', `/events/organizer/${id}`),
   crea: (dati) => request('POST', '/events', dati),
   aggiorna: (id, dati) => request('PATCH', `/events/${id}`, dati),
+  aggiornaImmagine: (id, file) => {
+    const formData = new FormData()
+    formData.append('image', file)
+    return uploadRequest('PATCH', `/events/${id}/image`, formData)
+  },
   elimina: (id) => request('DELETE', `/events/${id}`),
 }
 

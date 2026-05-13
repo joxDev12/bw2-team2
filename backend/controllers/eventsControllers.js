@@ -52,6 +52,29 @@ const aggiorna = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
+// PATCH /:id/image
+const aggiornaImmagine = async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const vecchioEvento = await eventsService.getById(id);
+
+    if (!req.file) {
+      const err = new Error('Immagine evento obbligatoria');
+      err.statusCode = 400;
+      throw err;
+    }
+
+    const image = `${req.protocol}://${req.get('host')}/uploads/events/${id}/${req.file.filename}`;
+    const event = await eventsService.aggiorna(id, { image });
+
+    if (vecchioEvento.image !== image) {
+      eventsService.eliminaImmagineEvento(vecchioEvento.image);
+    }
+
+    res.json({ successo: true, dati: event });
+  } catch (err) { next(err); }
+};
+
 // DELETE /:id 
 const elimina = async (req, res, next) => {
   try {
@@ -61,4 +84,4 @@ const elimina = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-module.exports = { crea, getAll, getById, getAllByCategory, getAllByOrganizerId, aggiorna, elimina };
+module.exports = { crea, getAll, getById, getAllByCategory, getAllByOrganizerId, aggiorna, aggiornaImmagine, elimina };
