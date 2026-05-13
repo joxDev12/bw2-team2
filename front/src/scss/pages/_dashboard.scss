@@ -1,0 +1,55 @@
+// ── Dashboard SCSS ───────────────────────────────────────────
+
+$sidebar-width: 280px;
+
+.dashboard-wrapper {
+  background-color: #f8f9fa;
+}
+
+.dashboard-sidebar {
+  width: $sidebar-width;
+  min-width: $sidebar-width;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.sidebar-avatar-placeholder {
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.nav-link {
+  &.transition-all {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  &.text-white-50 {
+    &:hover {
+      color: #fff !important;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+}
+
+.dashboard-main {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.dashboard-topbar {
+  background-color: #212529; // Corrisponde a bg-dark di Bootstrap
+  height: 56px;
+}
+
+.dashboard-offcanvas {
+  width: $sidebar-width !important;
+}
+
+// Ombre e rifiniture
+.shadow-sm {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+}
