@@ -34,8 +34,8 @@ function Footer() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link py-0" to="/assistenza">
-                  Assistenza
+                <NavLink className="nav-link py-0" to="/contatti">
+                  Contatti
                 </NavLink>
               </li>
             </ul>
