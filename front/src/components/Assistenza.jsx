@@ -4,9 +4,15 @@ import Help from "./Help";
 
 function Assistenza() {
     return (
-        <div className="m-0 d-flex justify-content-center flex-md-row flex-column">
-            <Faq />
-            <Help />
+        <div className="d-flex align-items-center justify-content-center py-5 px-5 flex-md-row flex-column bg-purple w-100">
+
+            <div className="col-6 container d-flex justify-content-center align-items-center">
+                <Faq />
+            </div>
+
+            <div className="col-6 container d-flex justify-content-center align-items-center">
+                <Help />
+            </div>
         </div>
     );
 
