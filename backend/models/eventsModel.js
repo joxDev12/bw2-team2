@@ -24,16 +24,51 @@ const init = () => pool.query(CREATE_TABLE);
 
 
 const findAll = () =>
-  pool.query('SELECT * FROM events ORDER BY date ASC');
+  pool.query(
+    `SELECT
+       e.*,
+       COALESCE(SUM(reg.seats), 0)::int AS seats_prenotati
+     FROM events e
+     LEFT JOIN registrations reg ON reg.event_id = e.id
+     GROUP BY e.id
+     ORDER BY e.date ASC`
+  );
 
 const findById = (id) =>
-  pool.query('SELECT * FROM events WHERE id = $1', [id]);
+  pool.query(
+    `SELECT
+       e.*,
+       COALESCE(SUM(reg.seats), 0)::int AS seats_prenotati
+     FROM events e
+     LEFT JOIN registrations reg ON reg.event_id = e.id
+     WHERE e.id = $1
+     GROUP BY e.id`,
+    [id]
+  );
 
 const findByCategory = (category) =>
-  pool.query('SELECT * FROM events WHERE category = $1', [category]);
+  pool.query(
+    `SELECT
+       e.*,
+       COALESCE(SUM(reg.seats), 0)::int AS seats_prenotati
+     FROM events e
+     LEFT JOIN registrations reg ON reg.event_id = e.id
+     WHERE e.category = $1
+     GROUP BY e.id`,
+    [category]
+  );
 
 const findByOrganizerId = (id) =>
-  pool.query('SELECT * FROM events WHERE organizer_id = $1', [id]);
+  pool.query(
+    `SELECT
+       e.*,
+       COALESCE(SUM(reg.seats), 0)::int AS seats_prenotati
+     FROM events e
+     LEFT JOIN registrations reg ON reg.event_id = e.id
+     WHERE e.organizer_id = $1
+     GROUP BY e.id`,
+    [id]
+  );
 
 
 const create = (id, { title, image, description, date, location, indirizzo, price, max_seats, category }) =>

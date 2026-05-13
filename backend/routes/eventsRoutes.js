@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { body, param } = require('express-validator');
 const validate = require('../middlewares/validate');
 const controller = require('../controllers/eventsControllers');
+const upload = require('../middlewares/upload');
 const {
   autenticato,
   soloAdminOOrganizer,
@@ -112,6 +113,7 @@ router.get('/', controller.getAll);
 router.get('/category/:category', regolaCategoria, validate, controller.getAllByCategory);
 router.get('/organizer/:id', regolaId, validate, controller.getAllByOrganizerId);
 router.get('/:id', regolaId, validate, controller.getById);
+router.patch('/:id/image', autenticato, regolaId, validate, soloAdminOOrganizerProprietarioEvento, upload.event.single('image'), controller.aggiornaImmagine);
 router.patch('/:id', autenticato, regolaAggiorna, validate, soloAdminOOrganizerProprietarioEvento, controller.aggiorna);
 router.delete('/:id', autenticato, regolaId, validate, soloAdminOOrganizerProprietarioEvento, controller.elimina);
 
