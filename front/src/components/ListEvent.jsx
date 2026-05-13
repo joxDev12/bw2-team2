@@ -1,12 +1,13 @@
-@import CardListEvent from "./CardListEvent"
+import CardListEvent from './CardListEvent';
 
-const ListEvent = () => {
+function ListEvent() {
   return (
-    <ul className="list-event">
-
-    </ul>
-
-  )
+    <>
+      <ul className="list-event">
+        <CardListEvent />
+      </ul>
+    </>
+  );
 }
 
 export default ListEvent

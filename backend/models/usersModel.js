@@ -59,9 +59,9 @@ const update = (id, { name, surname, email, username, location, indirizzo, img_p
          indirizzo = COALESCE($6, indirizzo),
          img_profile = COALESCE($7, img_profile),
          role = COALESCE($8, role),
-         token_version = token_version + 1
+         token_version = token_version + CASE WHEN $8 IS NULL THEN 0 ELSE 1 END
      WHERE id = $9
-     RETURNING id, name, surname, email, username, location, indirizzo, img_profile, role`,
+     RETURNING id, name, surname, email, username, location, indirizzo, img_profile, role, token_version`,
     [name, surname, email, username, location, indirizzo, img_profile, role, id]
   );
 

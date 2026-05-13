@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
 
     setUtente(payload)
 
-    if ((payload.name && payload.surname && payload.img_profile) || !payload.id) {
+    if (!payload.id) {
       return
     }
 
