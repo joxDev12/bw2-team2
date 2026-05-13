@@ -6,6 +6,7 @@ import ContattiPage from "./pages/ContattiPage";
 import ChiSiamoPage from "./pages/ChiSiamoPage";
 import EventiPage from "./pages/EventiPage";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -26,7 +27,7 @@ function App() {
         </Route>
 
         <Route path="/eventi/:id" element={<EventiDettaglioPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

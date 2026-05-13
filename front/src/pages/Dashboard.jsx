@@ -1,16 +1,21 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import logo from "../assets/img/logo.png";
+import ProfiloPagina from "../components/ProfiloPagina";
 
 function Dashboard() {
   const navigate = useNavigate();
+  const { utente, logout } = useAuth();
 
   const user = {
-    name: "Mario Rossi",
-    email: "mario.rossi@email.com",
-    role: "user", // "user" | "organizer" | "admin"
-    avatar: null,
+    name: utente?.name ? `${utente.name} ${utente.surname || ''}`.trim() : "Utente",
+    email: utente?.email || "",
+    role: utente?.role || "user", // "user" | "organizer" | "admin"
+    avatar: utente?.img_profile || null,
   };
 
   const handleLogout = () => {
+    logout();
     navigate("/login");
   };
 
@@ -36,11 +41,10 @@ function Dashboard() {
   return (
     <div className="dashboard-wrapper d-flex vh-100">
       {/* ── SIDEBAR ── */}
-      <aside className="dashboard-sidebar d-none d-lg-flex flex-column bg-dark text-white border-end shadow-sm">
+      <aside className="dashboard-sidebar d-none d-lg-flex flex-column bg-dark text-white border-end shadow-sm overflow-y-auto custom-scrollbar">
         <div className="sidebar-brand px-3 py-4 text-center">
           <NavLink to="/" className="text-white text-decoration-none">
-            <i className="bi bi-calendar-event-fill fs-3 me-2 text-primary"></i>
-            <span className="fw-bold fs-5">EventiHub</span>
+            <img src={logo} alt="EventiHub Logo" style={{ height: "45px" }} />
           </NavLink>
         </div>
 
@@ -51,7 +55,7 @@ function Dashboard() {
             <img
               src={user.avatar}
               alt={user.name}
-              className="sidebar-avatar rounded-circle mb-3 border border-2 border-primary border-opacity-25 shadow-sm"
+              className="sidebar-avatar rounded-circle mb-3 border border-primary border-opacity-25 shadow-sm"
               style={{ width: "80px", height: "80px", objectFit: "cover" }}
             />
           ) : (
@@ -72,7 +76,7 @@ function Dashboard() {
         <hr className="mx-3 my-0 opacity-25" />
 
         {/* Navigazione */}
-        <nav className="sidebar-nav flex-grow-1 px-3 py-3 overflow-auto">
+        <nav className="sidebar-nav flex-grow-1 flex-shrink-0 px-3 py-3">
           <ul className="nav nav-pills flex-column gap-1">
             <li className="nav-item">
               <NavLink
@@ -104,7 +108,7 @@ function Dashboard() {
         </nav>
 
         {/* Footer sidebar */}
-        <div className="sidebar-footer px-3 py-3 bg-black bg-opacity-10">
+        <div className="sidebar-footer flex-shrink-0 px-3 py-3 bg-black bg-opacity-10 mt-auto">
           <hr className="my-2 opacity-25 d-lg-none" />
           <NavLink
             to="/"
@@ -135,18 +139,13 @@ function Dashboard() {
           >
             <i className="bi bi-list fs-5"></i>
           </button>
-          <span className="fw-bold text-white">EventiHub</span>
+          <img src={logo} alt="EventiHub Logo" style={{ height: "30px" }} />
           <div style={{ width: "32px" }}></div>
         </header>
 
-        {/* Area contenuto — qui andranno i futuri componenti */}
+        {/* Area contenuto */}
         <div className="dashboard-content p-4">
-          <h2 className="fw-bold mb-1">
-            Bentornato, <span className="text-primary">{user.name.split(" ")[0]}</span>
-          </h2>
-          <p className="text-muted">Ecco il tuo pannello di controllo</p>
-
-          {/* Qui potrai aggiungere i componenti futuri */}
+          <ProfiloPagina />
         </div>
       </main>
 
@@ -158,7 +157,7 @@ function Dashboard() {
       >
         <div className="offcanvas-header">
           <h5 className="offcanvas-title text-white">
-            <i className="bi bi-calendar-event me-2"></i>EventiHub
+            <img src={logo} alt="EventiHub Logo" style={{ height: "35px" }} />
           </h5>
           <button
             type="button"
@@ -168,14 +167,21 @@ function Dashboard() {
         </div>
         <div className="offcanvas-body p-0 bg-dark text-white">
           <div className="text-center px-3 py-4">
-            <div 
-              className="sidebar-avatar-placeholder rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary bg-gradient text-white shadow-sm"
-              style={{ width: "80px", height: "80px" }}
-            >
-              <span className="fs-2 fw-bold text-white">
-                {getInitials(user.name)}
-              </span>
-            </div>
+            {user.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="sidebar-avatar rounded-circle mb-3 border border-primary border-opacity-25 shadow-sm"
+                style={{ width: "80px", height: "80px", objectFit: "cover" }}
+              />
+            ) : (
+              <div 
+                className="sidebar-avatar-placeholder rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary bg-gradient text-white shadow-sm"
+                style={{ width: "80px", height: "80px" }}
+              >
+                <span className="fs-2 fw-bold text-white">{getInitials(user.name)}</span>
+              </div>
+            )}
             <h6 className="mb-1 fw-bold text-white">{user.name}</h6>
             <small className="text-white-50 d-block mb-3">{user.email}</small>
             <span className={`badge ${roleBadge.cls} rounded-pill px-3 shadow-sm`}>
