@@ -80,8 +80,13 @@ export function AuthProvider({ children }) {
     setUtente(null)
   }
 
+  // Aggiorna i dati utente nel contesto (dopo modifica profilo)
+  const aggiornaUtente = (nuoviDati) => {
+    setUtente((prev) => ({ ...prev, ...nuoviDati }))
+  }
+
   return (
-    <AuthContext.Provider value={{ token, utente, login, logout }}>
+    <AuthContext.Provider value={{ token, utente, login, logout, aggiornaUtente }}>
       {children}
     </AuthContext.Provider>
   )
