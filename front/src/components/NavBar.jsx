@@ -8,8 +8,8 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow-sm custom-navbar">
       <div className="container-fluid">
-        <NavLink className="navbar-brand fw-bold" to="/">
-          EventiHub
+        <NavLink className="navbar-img navbar-brand fw-bold" to="/">
+          <img src="../../src/assets/img/logo.png" alt="EventiHub" className="img-logo-navbar" />
         </NavLink>
 
         <button

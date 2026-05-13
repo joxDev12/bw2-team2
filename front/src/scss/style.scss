@@ -3,6 +3,7 @@
 
 // Pagine
 @use "./pages/eventiPage";
+@use "./pages/dashboard";
 
 //componenti
 @use "./components/navbar";
@@ -13,6 +14,8 @@
 @use "./components/newsletter";
 @use "components/LoginForm";
 @use "components/registerForm";
+
+
 
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
