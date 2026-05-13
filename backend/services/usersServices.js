@@ -7,7 +7,7 @@ const usersModel = require('../models/usersModel');
 const SALT_ROUND = 12;
 
 // Registrazione
-const registra = async ({ name, surname, email, username, img_profile, role, password_hash }) => {
+const registra = async ({ name, surname, email, username, location, indirizzo, img_profile, role, password_hash }) => {
   const emailExists = await usersModel.findByEmail(email);
   if (emailExists.rows.length) {
     const err = new Error('Email già presente');
@@ -24,7 +24,7 @@ const registra = async ({ name, surname, email, username, img_profile, role, pas
 
   const hash   = await bcrypt.hash(password_hash, SALT_ROUND);
 
-  const result = await usersModel.create({ name, surname, email, username, img_profile, role, password_hash: hash });
+  const result = await usersModel.create({ name, surname, email, username, location, indirizzo, img_profile, role, password_hash: hash });
   return result.rows[0];
 };
 
@@ -52,6 +52,8 @@ const login = async ({ email, password }) => {
       name:          user.name,
       surname:       user.surname,
       username:      user.username,
+      location:      user.location,
+      indirizzo:     user.indirizzo,
       img_profile:   user.img_profile,
       email:         user.email,
       role:          user.role,
