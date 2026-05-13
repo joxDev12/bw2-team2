@@ -41,7 +41,7 @@ function ProfiloPagina() {
           <img
             src={immagineProfilo}
             alt={nomeCompleto || 'Profilo'}
-            className="profilo-avatar rounded-circle border border-4 border-white shadow mb-3"
+            className="profilo-avatar rounded-circle border border-white shadow mb-3"
             style={{ width: '120px', height: '120px', objectFit: 'cover' }}
           />
           <h4 className="mb-2 fw-bold">{nomeCompleto || 'Utente'}</h4>
