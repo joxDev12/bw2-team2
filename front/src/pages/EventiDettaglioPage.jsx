@@ -52,16 +52,13 @@ const EventiDettaglioPage = () => {
   }
 
   if (!evento) {
-  return (
-    <div className="container py-5 text-center">
-      Nessun evento trovato
-    </div>
-  );
-}
+    return (
+      <div className="container py-5 text-center">Nessun evento trovato</div>
+    );
+  }
   return (
     <div className="container py-5">
-     
-      <div className="card border-0 shadow-lg overflow-hidden">
+      <div className="card border-0 shadow-lg overflow-hidden event-card">
         <img
           src={evento.image}
           alt={evento.title}
@@ -79,35 +76,42 @@ const EventiDettaglioPage = () => {
 
           <h1 className="fw-bold mb-4">{evento.title}</h1>
 
+
+
+
+<div className="fade-in">
           <div className="row g-4 mb-5">
             <div className="col-md-4">
-              <div className="border rounded-4 p-3 h-100">
+              <div className="event-info-box h-100">
                 <div className="text-muted small mb-2">Data Evento</div>
 
                 <div className="fw-semibold">
                   <i className="bi bi-calendar3 me-2 text-primary"></i>
 
-                   {/* {new Date(evento.date).toLocaleDateString("it-IT")} */}
-{new Date(evento.date).toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" })}
-                   
+                  {/* {new Date(evento.date).toLocaleDateString("it-IT")} */}
+                  {new Date(evento.date).toLocaleDateString("it-IT", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
                 </div>
               </div>
             </div>
 
-            <div className="col-md-4">
-              <div className="border rounded-4 p-3 h-100">
-                <div className="text-muted small mb-2">Luogo</div>
 
+            <div className="col-md-4">
+              <div className="event-info-box h-100">
+                <div className="text-muted small mb-2">Luogo</div>
                 <div className="fw-semibold">
                   <i className="bi bi-geo-alt me-2 text-danger"></i>
-
                   {evento.location}
                 </div>
               </div>
             </div>
+            
 
             <div className="col-md-4">
-              <div className="border rounded-4 p-3 h-100">
+              <div className="event-info-box h-100">
                 <div className="text-muted small mb-2">Posti Disponibili</div>
 
                 <div className="fw-semibold">
@@ -117,6 +121,9 @@ const EventiDettaglioPage = () => {
                 </div>
               </div>
             </div>
+</div>
+
+
           </div>
 
           <div className="mb-5">
@@ -127,7 +134,7 @@ const EventiDettaglioPage = () => {
 
           <div className="mb-4">
             {evento.available ? (
-              <span className="badge bg-success px-4 py-3 fs-6">
+              <span className="badge bg-success px-4 py-3 fs-6 badge-glow">
                 Disponibile
               </span>
             ) : (
@@ -136,7 +143,7 @@ const EventiDettaglioPage = () => {
           </div>
 
           <button
-            className="btn btn-primary btn-lg rounded-pill px-5"
+            className="btn btn-primary btn-lg rounded-pill px-5 btn-pulse"
             disabled={!evento.available}
           >
             <i className="bi bi-ticket-perforated me-2"></i>
@@ -146,15 +153,14 @@ const EventiDettaglioPage = () => {
               : "Evento non disponibile"}
           </button>
 
-           <div className="d-flex justify-content-start mt-4">
-  <Link
-    to="/eventi"
-    className="btn btn-info mb-4 rounded-pill px-4 text-white"
-  >
-    ← Torna a tutti gli eventi
-  </Link>
-</div>
-
+          <div className="d-flex justify-content-start mt-4">
+            <Link
+              to="/eventi"
+              className="btn mb-4 rounded-pill px-4 text-dark back-link"
+            >
+              ← Torna a tutti gli eventi
+            </Link>
+          </div>
         </div>
       </div>
     </div>
