@@ -76,54 +76,78 @@ const EventiDettaglioPage = () => {
 
           <h1 className="fw-bold mb-4">{evento.title}</h1>
 
+          <div className="fade-in">
+            <div className="row g-4 mb-5">
+              <div className="col-md-4">
+                <div className="event-info-box h-100">
+                  <div className="text-muted small mb-2">Data Evento</div>
 
+                  <div className="fw-semibold">
+                    <i className="bi bi-calendar3 me-2 text-primary"></i>
 
-
-<div className="fade-in">
-          <div className="row g-4 mb-5">
-            <div className="col-md-4">
-              <div className="event-info-box h-100">
-                <div className="text-muted small mb-2">Data Evento</div>
-
-                <div className="fw-semibold">
-                  <i className="bi bi-calendar3 me-2 text-primary"></i>
-
-                  {/* {new Date(evento.date).toLocaleDateString("it-IT")} */}
-                  {new Date(evento.date).toLocaleDateString("it-IT", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
+                    {/* {new Date(evento.date).toLocaleDateString("it-IT")} */}
+                    {new Date(evento.date).toLocaleDateString("it-IT", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
 
-
-            <div className="col-md-4">
-              <div className="event-info-box h-100">
-                <div className="text-muted small mb-2">Luogo</div>
-                <div className="fw-semibold">
-                  <i className="bi bi-geo-alt me-2 text-danger"></i>
-                  {evento.location}
+              <div className="col-md-4">
+                <div className="event-info-box h-100">
+                  <div className="text-muted small mb-2">Luogo</div>
+                  <div className="fw-semibold">
+                    <i className="bi bi-geo-alt me-2 text-danger"></i>
+                    {evento.location}
+                  </div>
                 </div>
               </div>
-            </div>
-            
 
-            <div className="col-md-4">
-              <div className="event-info-box h-100">
-                <div className="text-muted small mb-2">Posti Disponibili</div>
+              <div className="col-md-4">
+                <div className="event-info-box h-100">
+                  <div className="text-muted small mb-2">Posti Disponibili</div>
 
-                <div className="fw-semibold">
-                  <i className="bi bi-people me-2 text-success"></i>
+                  <div className="fw-semibold">
+                    <i className="bi bi-people me-2 text-success"></i>
 
-                  {evento.max_seats}
+                    {evento.max_seats}
+                  </div>
                 </div>
               </div>
+
+              <div className="col-md-4">
+                <div className="event-info-box h-100">
+                  <div className="text-muted small mb-2">Indirizzo</div>
+                  <div className="fw-semibold">
+                    <i className="bi bi-map me-2 text-warning"></i>
+                    {evento.indirizzo}
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-md-4">
+                <div className="event-info-box h-100">
+                  <div className="text-muted small mb-2">Prezzo</div>
+                  <div className="fw-semibold">
+                    <i className="bi bi-cash-coin me-2 text-success"></i>
+                    {evento.isfree ? "Gratuito" : `${evento.price} €`}
+                  </div>
+                </div>
+              </div>
+
+              {evento.isfree && (
+                <span className="badge bg-info text-dark px-3 py-2 mb-3">
+                  Evento gratuito
+                </span>
+              )}
+
+              <div className="text-muted small">
+                Pubblicato il:{" "}
+                {new Date(evento.created_at).toLocaleDateString("it-IT")}
+              </div>
             </div>
-</div>
-
-
           </div>
 
           <div className="mb-5">
@@ -142,17 +166,20 @@ const EventiDettaglioPage = () => {
             )}
           </div>
 
-          <button
-            className="btn btn-primary btn-lg rounded-pill px-5 btn-pulse"
-            disabled={!evento.available}
+          <Link
+            to="/register"
+            className={`btn btn-primary btn-lg rounded-pill px-5 btn-pulse ${!evento.available ? "disabled" : ""}`}
+            onClick={(e) => {
+              if (!evento.available) e.preventDefault();
+            }}
           >
             <i className="bi bi-ticket-perforated me-2"></i>
 
             {evento.available
               ? "Registrati all'evento"
               : "Evento non disponibile"}
-          </button>
-
+          </Link>
+         
           <div className="d-flex justify-content-start mt-4">
             <Link
               to="/eventi"
