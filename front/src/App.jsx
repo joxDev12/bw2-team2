@@ -23,10 +23,12 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="chi-siamo" element={<ChiSiamoPage />} />
           <Route path="eventi" element={<EventiPage />} />
+           <Route path="/eventi/:id" element={<EventiDettaglioPage />} />
           <Route path="contatti" element={<ContattiPage />} />
+
         </Route>
 
-        <Route path="/eventi/:id" element={<EventiDettaglioPage />} />
+       
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
 
         <Route path="*" element={<NotFound />} />
