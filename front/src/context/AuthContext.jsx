@@ -82,6 +82,13 @@ export function AuthProvider({ children }) {
 
   // Aggiorna i dati utente nel contesto (dopo modifica profilo)
   const aggiornaUtente = (nuoviDati) => {
+    if (nuoviDati?.token) {
+      localStorage.setItem('token', nuoviDati.token)
+      setToken(nuoviDati.token)
+      setUtente(decodeJWT(nuoviDati.token))
+      return
+    }
+
     setUtente((prev) => ({ ...prev, ...nuoviDati }))
   }
 
