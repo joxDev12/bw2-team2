@@ -18,6 +18,34 @@
   object-fit: cover;
   border: 2px solid rgba(255, 255, 255, 0.35);
 }
+
+.navbar-user-toggler {
+  width: auto;
+  max-width: 100%;
+  border-color: rgba(255, 255, 255, 0.35);
+  padding: 0.35rem 0.5rem;
+  color: #fff;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--bs-border-radius);
+
+  &:hover,
+  &:focus,
+  &[aria-expanded="true"] {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .navbar-user-toggler {
+    .user-banner__name {
+      display: none;
+    }
+  }
+}
+
 .img-logo-navbar {
   height: 45px;
   width: auto;

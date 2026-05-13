@@ -27,10 +27,14 @@ const findAll = () =>
   pool.query(
     `SELECT
        e.*,
+       u.name || ' ' || u.surname AS organizer_fullname,
+       u.username AS organizer_username,
+       u.img_profile AS organizer_img_profile,
        COALESCE(SUM(reg.seats), 0)::int AS seats_prenotati
      FROM events e
+     JOIN users u ON u.id = e.organizer_id
      LEFT JOIN registrations reg ON reg.event_id = e.id
-     GROUP BY e.id
+     GROUP BY e.id, u.name, u.surname, u.username, u.img_profile
      ORDER BY e.date ASC`
   );
 
@@ -38,11 +42,15 @@ const findById = (id) =>
   pool.query(
     `SELECT
        e.*,
+       u.name || ' ' || u.surname AS organizer_fullname,
+       u.username AS organizer_username,
+       u.img_profile AS organizer_img_profile,
        COALESCE(SUM(reg.seats), 0)::int AS seats_prenotati
      FROM events e
+     JOIN users u ON u.id = e.organizer_id
      LEFT JOIN registrations reg ON reg.event_id = e.id
      WHERE e.id = $1
-     GROUP BY e.id`,
+     GROUP BY e.id, u.name, u.surname, u.username, u.img_profile`,
     [id]
   );
 
@@ -50,11 +58,15 @@ const findByCategory = (category) =>
   pool.query(
     `SELECT
        e.*,
+       u.name || ' ' || u.surname AS organizer_fullname,
+       u.username AS organizer_username,
+       u.img_profile AS organizer_img_profile,
        COALESCE(SUM(reg.seats), 0)::int AS seats_prenotati
      FROM events e
+     JOIN users u ON u.id = e.organizer_id
      LEFT JOIN registrations reg ON reg.event_id = e.id
      WHERE e.category = $1
-     GROUP BY e.id`,
+     GROUP BY e.id, u.name, u.surname, u.username, u.img_profile`,
     [category]
   );
 
@@ -62,11 +74,15 @@ const findByOrganizerId = (id) =>
   pool.query(
     `SELECT
        e.*,
+       u.name || ' ' || u.surname AS organizer_fullname,
+       u.username AS organizer_username,
+       u.img_profile AS organizer_img_profile,
        COALESCE(SUM(reg.seats), 0)::int AS seats_prenotati
      FROM events e
+     JOIN users u ON u.id = e.organizer_id
      LEFT JOIN registrations reg ON reg.event_id = e.id
      WHERE e.organizer_id = $1
-     GROUP BY e.id`,
+     GROUP BY e.id, u.name, u.surname, u.username, u.img_profile`,
     [id]
   );
 

@@ -1,0 +1,20 @@
+// Sezione che raccoglie le recensioni degli utenti.
+// Renderizza il componente CardFeedback nella homepage.
+import CardFeedback from "./CardFeedback";
+
+function Feedback() {
+    return (
+        <>
+            <div className="py-5 px-5 bg-purple">
+                <div className="container">
+                    <div className="row g-4">
+                        <CardFeedback />
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+
+}
+
+export default Feedback;
