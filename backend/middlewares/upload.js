@@ -8,11 +8,23 @@ fs.mkdirSync(profilesDir, { recursive: true });
 
 const profileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, profilesDir);
+        const userDir = path.join(profilesDir, req.params.id);
+        fs.mkdirSync(userDir, { recursive: true });
+        cb(null, userDir);
     },
     filename: (req, file, cb) => {
         const ext = path.extname(file.originalname).toLowerCase();
-        const filename = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
+        const userDir = path.join(profilesDir, req.params.id);
+        const oldFiles = fs.readdirSync(userDir)
+            .filter(name => name.startsWith(`${req.params.id}-profilepic.`));
+
+        oldFiles.forEach(name => {
+            try {
+                fs.unlinkSync(path.join(userDir, name));
+            } catch {}
+        });
+
+        const filename = `${req.params.id}-profilepic${ext}`;
         cb(null, filename);
     }
 });

@@ -1,8 +1,11 @@
 function ProfiloModificaModal({
   form,
+  anteprimaFoto,
+  nomeFotoProfilo,
   erroreForm,
   caricamento,
   handleChange,
+  handleFileChange,
   handleSubmit,
   chiudiModale,
 }) {
@@ -134,18 +137,34 @@ function ProfiloModificaModal({
                   />
                 </div>
                 <div className="col-12">
-                  <label htmlFor="edit-img" className="form-label fw-semibold">
-                    URL Immagine Profilo
+                  <label className="form-label fw-semibold">
+                    Foto profilo
                   </label>
-                  <input
-                    type="url"
-                    className="form-control rounded-3"
-                    id="edit-img"
-                    name="img_profile"
-                    value={form.img_profile}
-                    onChange={handleChange}
-                    placeholder="https://esempio.com/foto.jpg"
-                  />
+                  <div className="d-flex align-items-center gap-3 flex-wrap">
+                    <img
+                      src={anteprimaFoto}
+                      alt="Anteprima foto profilo"
+                      className="rounded-circle border shadow-sm flex-shrink-0"
+                      style={{ width: "72px", height: "72px", objectFit: "cover" }}
+                    />
+                    <div className="d-flex align-items-center gap-2 flex-wrap">
+                      <input
+                        type="file"
+                        className="d-none"
+                        id="edit-img-profile"
+                        name="img_profile"
+                        accept="image/jpeg,image/png,image/webp"
+                        onChange={handleFileChange}
+                      />
+                      <label
+                        htmlFor="edit-img-profile"
+                        className="btn btn-outline-primary rounded-3 mb-0"
+                      >
+                        Scegli la foto
+                      </label>
+                      <span className="text-muted small">{nomeFotoProfilo}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 

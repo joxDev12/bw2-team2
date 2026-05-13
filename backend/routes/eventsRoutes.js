@@ -86,7 +86,8 @@ const regolaAggiorna = [
     .isFloat({ min: 0 }).withMessage('Il prezzo deve essere un numero positivo'),
 
   body('max_seats')
-    .not().exists().withMessage('Il numero di posti non puo essere modificato da questa rotta'),
+    .optional()
+    .isInt({ min: 0 }).withMessage('Il numero di posti deve essere un intero positivo o zero'),
 
   body('category')
     .optional().trim()

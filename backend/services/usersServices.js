@@ -1,9 +1,18 @@
 require('dotenv').config();
 const bcrypt      = require('bcrypt');
 const jwt         = require('jsonwebtoken');
+const fs          = require('fs');
+const path        = require('path');
 const usersModel = require('../models/usersModel');
 
 const SALT_ROUND = 12;
+const uploadsDir = path.resolve(__dirname, '..', 'uploads');
+const profilesDir = path.join(uploadsDir, 'profiles');
+
+const isDentroCartella = (filePath, cartella) => {
+  const relative = path.relative(cartella, filePath);
+  return relative && !relative.startsWith('..') && !path.isAbsolute(relative);
+};
 
 const generaToken = (user) =>
   jwt.sign(
@@ -22,6 +31,47 @@ const generaToken = (user) =>
     process.env.JWT_SECRET,
     { expiresIn: '1d' }
   );
+
+const getPathImmagineProfilo = (img_profile) => {
+  if (!img_profile) return null;
+
+  let pathname = img_profile;
+
+  try {
+    pathname = new URL(img_profile).pathname;
+  } catch {
+    pathname = img_profile;
+  }
+
+  if (!pathname.startsWith('/uploads/profiles/')) return null;
+
+  const relativePath = pathname.replace(/^\/uploads\//, '');
+  const filePath = path.resolve(uploadsDir, relativePath);
+
+  if (!isDentroCartella(filePath, uploadsDir)) return null;
+
+  return filePath;
+};
+
+const eliminaImmagineProfilo = (img_profile) => {
+  const filePath = getPathImmagineProfilo(img_profile);
+
+  if (filePath && fs.existsSync(filePath)) {
+    try {
+      fs.unlinkSync(filePath);
+    } catch {}
+  }
+};
+
+const eliminaCartellaProfilo = (id) => {
+  const userDir = path.resolve(profilesDir, String(id));
+
+  if (isDentroCartella(userDir, profilesDir)) {
+    try {
+      fs.rmSync(userDir, { recursive: true, force: true });
+    } catch {}
+  }
+};
 
 // Registrazione
 const registra = async ({ name, surname, email, username, location, indirizzo, img_profile, role, password_hash }) => {
@@ -118,8 +168,9 @@ const aggiorna = async (id, dati) => {
 const elimina = async (id) => {
   await getById(id);
   await usersModel.remove(id);
+  eliminaCartellaProfilo(id);
   return { message: 'Utente eliminato' };
 };
 
 // Esportazione
-module.exports = { registra, login, getAll, getById, aggiorna, elimina, generaToken };
+module.exports = { registra, login, getAll, getById, aggiorna, elimina, generaToken, eliminaImmagineProfilo };

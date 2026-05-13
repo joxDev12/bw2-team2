@@ -45,7 +45,7 @@ const create = (id, { title, image, description, date, location, indirizzo, pric
   );
 
 
-const update = (id, { title, image, description, date, location, indirizzo, price, category }) =>
+const update = (id, { title, image, description, date, location, indirizzo, price, max_seats, category }) =>
   pool.query(
     `UPDATE events
      SET title             = COALESCE($1, title),
@@ -56,10 +56,12 @@ const update = (id, { title, image, description, date, location, indirizzo, pric
          indirizzo = COALESCE($6, indirizzo),
          price = COALESCE($7, price),
          isFree = CASE WHEN $7 IS NULL THEN isFree ELSE $7 = 0 END,
-         category            = COALESCE($8, category)
-     WHERE id = $9
+         max_seats = COALESCE($8, max_seats),
+         available = CASE WHEN $8 IS NULL THEN available ELSE $8 > 0 END,
+         category            = COALESCE($9, category)
+     WHERE id = $10
      RETURNING *`,
-    [title, image, description, date, location, indirizzo, price, category, id]
+    [title, image, description, date, location, indirizzo, price, max_seats, category, id]
   );
 
 

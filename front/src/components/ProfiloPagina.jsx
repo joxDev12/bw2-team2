@@ -13,6 +13,8 @@ function ProfiloPagina() {
   const [mostraModale, setMostraModale] = useState(false);
   const [mostraModaleElimina, setMostraModaleElimina] = useState(false);
   const [form, setForm] = useState({});
+  const [fotoProfilo, setFotoProfilo] = useState(null);
+  const [anteprimaFoto, setAnteprimaFoto] = useState(null);
   const [toast, setToast] = useState(null);
   const [erroreForm, setErroreForm] = useState(null);
   const [erroreElimina, setErroreElimina] = useState(null);
@@ -55,10 +57,11 @@ function ProfiloPagina() {
       email: utente.email || "",
       location: utente.location || "",
       indirizzo: utente.indirizzo || "",
-      img_profile: utente.img_profile || "",
       password: "",
       confermaPassword: "",
     });
+    setFotoProfilo(null);
+    setAnteprimaFoto(immagineProfilo);
     setToast(null);
     setErroreForm(null);
     setMostraModale(true);
@@ -66,6 +69,8 @@ function ProfiloPagina() {
 
   const chiudiModale = () => {
     setMostraModale(false);
+    setFotoProfilo(null);
+    setAnteprimaFoto(null);
     setErroreForm(null);
   };
 
@@ -87,6 +92,12 @@ function ProfiloPagina() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0] || null;
+    setFotoProfilo(file);
+    setAnteprimaFoto(file ? URL.createObjectURL(file) : immagineProfilo);
   };
 
   const handleSubmit = async (e) => {
@@ -115,7 +126,6 @@ function ProfiloPagina() {
         email: form.email,
         location: form.location,
         indirizzo: form.indirizzo,
-        img_profile: form.img_profile,
       };
 
       if (form.password) {
@@ -123,8 +133,11 @@ function ProfiloPagina() {
       }
 
       const risposta = await usersAPI.aggiorna(utente.id, dati);
+      const rispostaFoto = fotoProfilo
+        ? await usersAPI.aggiornaImmagineProfilo(utente.id, fotoProfilo)
+        : null;
 
-      aggiornaUtente(risposta || dati);
+      aggiornaUtente(rispostaFoto || risposta || dati);
       chiudiModale();
       mostraToast("Profilo aggiornato con successo!");
     } catch (err) {
@@ -207,9 +220,12 @@ function ProfiloPagina() {
       {mostraModale && (
         <ProfiloModificaModal
           form={form}
+          anteprimaFoto={anteprimaFoto || immagineProfilo}
+          nomeFotoProfilo={fotoProfilo?.name || "nessuna foto selezionata"}
           erroreForm={erroreForm}
           caricamento={caricamento}
           handleChange={handleChange}
+          handleFileChange={handleFileChange}
           handleSubmit={handleSubmit}
           chiudiModale={chiudiModale}
         />
