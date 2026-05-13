@@ -112,6 +112,19 @@ const findById = (id) =>
     [id]
   );
 
+const findPublicByEventId = (id) =>
+  pool.query(
+    `SELECT
+       u.name,
+       u.surname,
+       u.img_profile
+     FROM registrations reg
+     JOIN users u ON u.id = reg.user_id
+     WHERE reg.event_id = $1
+     ORDER BY reg.registered_at DESC`,
+    [id]
+  );
+
 
 
 const create = ({ user_id, event_id }) =>
@@ -127,4 +140,4 @@ const create = ({ user_id, event_id }) =>
 const remove = (id) =>
   pool.query('DELETE FROM registrations WHERE id = $1 RETURNING id', [id]);
 
-module.exports = { init, findAll, findById, findByEventId, findByUserId, create, remove };
+module.exports = { init, findAll, findById, findByEventId, findByUserId, findPublicByEventId, create, remove };

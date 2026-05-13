@@ -59,6 +59,19 @@ const getAllByUserId = async (id) => {
   return result.rows;
 };
 
+const getPublicByEventId = async (id) => {
+  const event = await eventsModel.findById(id);
+
+  if (!event.rows.length) {
+    const err = new Error('Evento non trovato');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const result = await registrationsModel.findPublicByEventId(id);
+  return result.rows;
+};
+
 
 const elimina = async (id) => {
   await getById(id);
@@ -67,4 +80,4 @@ const elimina = async (id) => {
 };
 
 // ── Esportazione ──────────────────────────────────────────────
-module.exports = { getAll, getById, getAllByEventId, getAllByUserId, crea, elimina };
+module.exports = { getAll, getById, getAllByEventId, getAllByUserId, getPublicByEventId, crea, elimina };

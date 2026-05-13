@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { registrationsAPI } from '../services/api'
 
 const RegistrationsContext = createContext(null)
@@ -7,7 +7,7 @@ const RegistrationsContext = createContext(null)
 export function RegistrationsProvider({ children }) {
 
   const [registrazioni, setRegistrazioni] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [errore, setErrore] = useState(null)
 
   const caricaRegistrazioni = async () => {
@@ -24,36 +24,22 @@ export function RegistrationsProvider({ children }) {
     }
   }
 
-  useEffect(() => {
-    let annullato = false
+  const caricaRegistrazioniEvento = async (id) => {
+    setLoading(true)
+    setErrore(null)
 
-    const recuperaRegistrazioni = async () => {
-      try {
-        const datiRegistrazioni = await registrationsAPI.getAll()
-
-        if (!annullato) {
-          setRegistrazioni(datiRegistrazioni)
-        }
-      } catch (err) {
-        if (!annullato) {
-          setErrore(err.message)
-        }
-      } finally {
-        if (!annullato) {
-          setLoading(false)
-        }
-      }
+    try {
+      const datiRegistrazioni = await registrationsAPI.getPublicByEventId(id)
+      setRegistrazioni(datiRegistrazioni)
+    } catch (err) {
+      setErrore(err.message)
+    } finally {
+      setLoading(false)
     }
-
-    recuperaRegistrazioni()
-
-    return () => {
-      annullato = true
-    }
-  }, [])
+  }
 
   return (
-    <RegistrationsContext.Provider value={{ registrazioni, loading, errore, caricaRegistrazioni }}>
+    <RegistrationsContext.Provider value={{ registrazioni, loading, errore, caricaRegistrazioni, caricaRegistrazioniEvento }}>
       {children}
     </RegistrationsContext.Provider>
   )

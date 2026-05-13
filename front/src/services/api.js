@@ -83,6 +83,7 @@ export const registrationsAPI = {
   getAll: () => request('GET', '/registrations'),
   getById: (id) => request('GET', `/registrations/${id}`),
   getByEventId: (id) => request('GET', `/registrations/event/${id}`),
+  getPublicByEventId: (id) => request('GET', `/registrations/event/${id}/public`),
   getByUserId: (id) => request('GET', `/registrations/user/${id}`),
   crea: (event_id) => request('POST', '/registrations', { event_id }),
   elimina: (id) => request('DELETE', `/registrations/${id}`),
