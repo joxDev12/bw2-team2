@@ -1,0 +1,89 @@
+const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api'
+const ROOT_URL = BASE_URL.replace(/\/api\/?$/, '')
+
+if (!import.meta.env.VITE_API_URL) {
+  console.warn(
+    '[api2.js] VITE_API_URL non definita nel file .env.\n' +
+    'Usando il fallback: http://localhost:3000/api\n' +
+    'Copia .env.example in .env per risolvere.'
+  )
+}
+
+function getToken() {
+  return localStorage.getItem('token')
+}
+
+async function request(method, path, body = null, baseUrl = BASE_URL) {
+  const token = getToken()
+
+  const options = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+  }
+
+  if (body) options.body = JSON.stringify(body)
+
+  let res
+  try {
+    res = await fetch(`${baseUrl}${path}`, options)
+  } catch {
+    throw new Error('Impossibile contattare il server. Controlla che il backend sia in esecuzione.')
+  }
+
+  const data = await res.json()
+
+  if (res.status === 401) {
+    window.dispatchEvent(new Event('auth:unauthorized'))
+  }
+
+  if (!data.successo) {
+    const err = new Error(data.errore || 'Errore sconosciuto')
+    err.status = res.status
+    throw err
+  }
+
+  return data.dati
+}
+
+
+// ── Autenticazione ────────────────────────────────────────────
+export const authAPI = {
+  login: (email, password) =>
+    request('POST', '/users/login', { email, password }),
+
+  registra: (dati) =>
+    request('POST', '/users/registra', dati),
+}
+
+// ── Users ─────────────────────────────────────────────────────
+export const usersAPI = {
+  getAll: () => request('GET', '/users'),
+  getById: (id) => request('GET', `/users/${id}`),
+  aggiorna: (id, dati) => request('PATCH', `/users/${id}`, dati),
+  promuovi: (id, dati) => request('PATCH', `/users/${id}/promuovi`, dati),
+  elimina: (id) => request('DELETE', `/users/${id}`),
+}
+
+// ── Events ────────────────────────────────────────────────────
+export const eventsAPI = {
+  getAll: () => request('GET', '/events'),
+  getById: (id) => request('GET', `/events/${id}`),
+  getByCategory: (category) => request('GET', `/events/category/${category}`),
+  getByOrganizerId: (id) => request('GET', `/events/organizer/${id}`),
+  crea: (dati) => request('POST', '/events', dati),
+  aggiorna: (id, dati) => request('PATCH', `/events/${id}`, dati),
+  elimina: (id) => request('DELETE', `/events/${id}`),
+}
+
+// ── Registrations ─────────────────────────────────────────────
+export const registrationsAPI = {
+  getAll: () => request('GET', '/registrations'),
+  getById: (id) => request('GET', `/registrations/${id}`),
+  getByEventId: (id) => request('GET', `/registrations/event/${id}`),
+  getByUserId: (id) => request('GET', `/registrations/user/${id}`),
+  crea: (event_id) => request('POST', '/registrations', { event_id }),
+  elimina: (id) => request('DELETE', `/registrations/${id}`),
+}

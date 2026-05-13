@@ -7,7 +7,7 @@ const { autenticato,
   soloPartecipant,
   soloAdminOOrganizerProprietarioEvento,
   soloAdminOProprietarioRegistrazione,
-  soloAdminOProprietarioRegistrazioneOOrganizerEvento } = require('../middlewares/auth2');
+  soloAdminOProprietarioRegistrazioneOOrganizerEvento } = require('../middlewares/auth');
 
 router.post('/', autenticato, soloAdminOOrganizer, controller.crea);
 router.get('/', controller.getAll);

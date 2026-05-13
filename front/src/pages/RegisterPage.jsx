@@ -1,53 +1,73 @@
 import { useState } from 'react';
-// import { register } from '../api/auth';   // ← NON esiste ancora, quindi lo lasciamo commentato
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { authAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 import RegisterForm from '../components/RegisterForm';
 
 function RegisterPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errore, setErrore] = useState(null);
-  const [success, setSuccess] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  async function handleSubmit(e) {
+  const [form, setForm] = useState({
+    name: '',
+    surname: '',
+    username: '',
+    email: '',
+    role: 'partecipant',
+    password: '',
+    confirmPassword: '',
+  });
+  const [errore, setErrore] = useState(null);
+  const [caricamento, setCaricamento] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrore('');
+    setErrore(null);
+    setCaricamento(true);
+
+    if (form.password !== form.confirmPassword) {
+      setErrore('Le password non coincidono.');
+      setCaricamento(false);
+      return;
+    }
+
+    const datiRegistrazione = {
+      name: form.name,
+      surname: form.surname,
+      username: form.username,
+      email: form.email,
+      role: form.role,
+      password_hash: form.password,
+    };
 
     try {
-      // await register(email, password);   // togliere commento quando si implementa la funzione di registrazione
+      await authAPI.registra(datiRegistrazione);
 
-      // LOGICA TEMPORANEA per far funzionare la pagina
-      if (!email || !password) {
-        throw new Error("Inserisci email e password");
-      }
-
-      setSuccess(true);
-   
-      setTimeout(() => navigate('/login'), 1500);
-      navigate('/') //mettiamo la pagina dove vogliamo portare l'utente dopo la registrazione
-
+      const token = await authAPI.login(form.email, form.password);
+      login(token);
+      navigate('/', { replace: true });
     } catch (err) {
-      setErrore(err.message);
+      setErrore(err.message || 'Errore durante la registrazione');
+    } finally {
+      setCaricamento(false);
     }
-  }
-
-  if (success) {
-    return (
-      <div className="auth-container">
-        <div className="auth-card">
-          <h1>Registrazione completata</h1>
-          <p>Reindirizzamento al login...</p>
-        </div>
-      </div>
-    );
-  }
+  };
 
   return (
-    
     <div className='auth-container'>
-      <RegisterForm />
+      <RegisterForm
+        form={form}
+        errore={errore}
+        caricamento={caricamento}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 }

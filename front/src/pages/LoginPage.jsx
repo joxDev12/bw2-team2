@@ -1,44 +1,53 @@
 import { useState } from 'react';
-// import { useAuth} from '../context/useAuth'
-import { useNavigate, Link } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { authAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 import LoginForm from '../components/LoginForm';
 
-function LoginPage(){
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errore, setErrore] = useState(null);
-    const navigate = useNavigate();
-    // const { login } = useAuth(); // customHook 
+function LoginPage() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    async function handleSubmit(e){
-        e.preventDefault();
-        setErrore('')
-        try{
-        //    await login(email, password) 
-           //togliere commento quando si implementa il contesto
+  const destinazione = location.state?.from?.pathname || '/';
 
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [errore, setErrore] = useState(null);
+  const [caricamento, setCaricamento] = useState(false);
 
-        //    cancellare la condizione if quando si implementa il contesto
-            if (!email || !password) {
-        throw new Error("Inserisci email e password");
-      }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
 
-            navigate('/')
-        } catch(err){
-            setErrore(err.message)
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrore(null);
+    setCaricamento(true);
+
+    try {
+      const token = await authAPI.login(form.email, form.password);
+      login(token);
+      navigate(destinazione, { replace: true });
+    } catch (err) {
+      setErrore(err.message || 'Credenziali non valide');
+    } finally {
+      setCaricamento(false);
     }
-    
-    return(
-        
-        <>
-        <div className='auth-container'>
-             <LoginForm />
-        </div>
-        </>
-    )
-}
+  };
 
+  return (
+    <div className='auth-container'>
+      <LoginForm
+        form={form}
+        errore={errore}
+        caricamento={caricamento}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+    </div>
+  );
+}
 
 export default LoginPage;

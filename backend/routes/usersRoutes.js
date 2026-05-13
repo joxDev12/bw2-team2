@@ -7,7 +7,7 @@ const { autenticato,
   soloPartecipant,
   soloAdminOOrganizerProprietarioEvento,
   soloAdminOProprietarioRegistrazione,
-  soloAdminOProprietarioRegistrazioneOOrganizerEvento } = require('../middlewares/auth2');
+  soloAdminOProprietarioRegistrazioneOOrganizerEvento } = require('../middlewares/auth');
 const limiter    = require('express-rate-limit');
 
 const limiterAuth = limiter({
@@ -15,7 +15,7 @@ const limiterAuth = limiter({
   max: 10,
   message: { successo: false, errore: 'Troppi tentativi, riprova tra qualche minuto' }
 });
-
+ 
 // Pubbliche 
 router.post('/registra', controller.registra);
 router.post('/login', controller.login);  
