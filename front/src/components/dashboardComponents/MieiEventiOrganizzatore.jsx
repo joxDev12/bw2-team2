@@ -1,7 +1,6 @@
 // Area dashboard per organizzatori/admin che gestiscono gli eventi creati.
 // Coordina dati, filtri, viste responsive e modali usando componenti dedicati.
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import ProfiloToast from "./ProfiloToast";
 import EventDeleteModal from "./organizerEventsComponents/EventDeleteModal";
 import EventFormModal from "./organizerEventsComponents/EventFormModal";
@@ -13,24 +12,19 @@ import OrganizerEventsTable from "./organizerEventsComponents/OrganizerEventsTab
 import {
   categorieEvento,
   cittaEvento,
-  getImmagineEvento,
-  getPostiDisponibili,
-  getPostiPrenotati,
-  getPostiTotali,
-  getPrezzoEvento,
   ordinaEFiltraEventi,
 } from "./organizerEventsComponents/organizerEventUtils";
 import useEventCreate from "./organizerEventsComponents/useEventCreate";
 import useEventDelete from "./organizerEventsComponents/useEventDelete";
 import useEventEdit from "./organizerEventsComponents/useEventEdit";
 import useOrganizerEventsData from "./organizerEventsComponents/useOrganizerEventsData";
+import { OrganizerEventsProvider } from "./organizerEventsComponents/OrganizerEventsContext";
 
 function MieiEventiOrganizzatore() {
-  const { utente } = useAuth();
   const [filtroEventi, setFiltroEventi] = useState("data_avvenimento");
   const [toast, setToast] = useState(null);
 
-  const { eventi, setEventi, caricamento, errore } = useOrganizerEventsData(utente);
+  const { eventi, setEventi, caricamento, errore } = useOrganizerEventsData();
   const eventiFiltrati = ordinaEFiltraEventi(eventi, filtroEventi);
 
   const mostraToast = (messaggio, tipo = "success") => {
@@ -54,23 +48,24 @@ function MieiEventiOrganizzatore() {
     <div className="miei-eventi-organizzatore">
       <ProfiloToast toast={toast} onClose={() => setToast(null)} />
 
-      <OrganizerEventsHeader
-        filtroEventi={filtroEventi}
-        setFiltroEventi={setFiltroEventi}
-        apriModaleCreazione={creazione.apriModaleCreazione}
-      />
+      <OrganizerEventsProvider value={{
+        eventi: eventiFiltrati,
+        filtroEventi,
+        setFiltroEventi,
+        apriModaleCreazione: creazione.apriModaleCreazione,
+        apriModaleModifica: modifica.apriModaleModifica,
+        apriModaleElimina: eliminazione.apriModaleElimina
+      }}>
+        <OrganizerEventsHeader />
 
-      {eventi.length === 0 ? (
-        <OrganizerEventsEmptyState />
-      ) : eventiFiltrati.length === 0 ? (
-        <OrganizerEventsEmptyState tipo="filtro" />
-      ) : (
-        <OrganizerEventsViews
-          eventiFiltrati={eventiFiltrati}
-          apriModaleModifica={modifica.apriModaleModifica}
-          apriModaleElimina={eliminazione.apriModaleElimina}
-        />
-      )}
+        {eventi.length === 0 ? (
+          <OrganizerEventsEmptyState />
+        ) : eventiFiltrati.length === 0 ? (
+          <OrganizerEventsEmptyState tipo="filtro" />
+        ) : (
+          <OrganizerEventsViews />
+        )}
+      </OrganizerEventsProvider>
 
       <EventDeleteModal
         eventoDaEliminare={eliminazione.eventoDaEliminare}
@@ -127,24 +122,13 @@ function MieiEventiOrganizzatore() {
 
 // Raggruppa le tre viste responsive della lista eventi.
 // Passa alle viste figlie le stesse funzioni e gli stessi helper.
-function OrganizerEventsViews({ eventiFiltrati, apriModaleModifica, apriModaleElimina }) {
-  const propsComuni = {
-    eventi: eventiFiltrati,
-    getImmagineEvento,
-    getPrezzoEvento,
-    getPostiPrenotati,
-    getPostiDisponibili,
-    getPostiTotali,
-    apriModaleModifica,
-    apriModaleElimina,
-  };
-
+function OrganizerEventsViews() {
   return (
     <>
       {/* Tre viste separate: tabella desktop, card tablet, card mobile. */}
-      <OrganizerEventsTable {...propsComuni} />
-      <OrganizerEventsTabletList {...propsComuni} />
-      <OrganizerEventsMobileList {...propsComuni} />
+      <OrganizerEventsTable />
+      <OrganizerEventsTabletList />
+      <OrganizerEventsMobileList />
     </>
   );
 }

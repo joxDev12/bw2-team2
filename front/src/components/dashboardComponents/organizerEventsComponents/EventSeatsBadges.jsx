@@ -1,6 +1,8 @@
 // Gruppo badge con posti prenotati, disponibili e totali.
 // Riceve le funzioni di calcolo dal componente organizzatore.
-function EventSeatsBadges({ evento, getPostiPrenotati, getPostiDisponibili, getPostiTotali }) {
+import { getPostiPrenotati, getPostiDisponibili, getPostiTotali } from "./organizerEventUtils";
+
+function EventSeatsBadges({ evento }) {
   return (
     <div className="d-flex flex-wrap gap-1">
       <span className="badge px-2 py-1 rounded-pill bg-primary bg-opacity-10 text-primary">

@@ -2,13 +2,16 @@
 // Espone lista eventi, stato loading, errore e setter per aggiornamenti locali.
 import { useEffect, useState } from "react";
 import { eventsAPI } from "../../../services/api";
+import { useAuth } from "../../../context/AuthContext";
 
-function useOrganizerEventsData(utente) {
+function useOrganizerEventsData() {
+  const { utente } = useAuth();
   const [eventi, setEventi] = useState([]);
   const [caricamento, setCaricamento] = useState(true);
   const [errore, setErrore] = useState(null);
 
   useEffect(() => {
+    if (!utente) return;
     let annullato = false;
 
     const caricaDati = async () => {
@@ -37,7 +40,7 @@ function useOrganizerEventsData(utente) {
     return () => {
       annullato = true;
     };
-  }, [utente.id, utente.role]);
+  }, [utente?.id, utente?.role]);
 
   return { eventi, setEventi, caricamento, errore };
 }

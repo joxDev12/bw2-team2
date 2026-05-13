@@ -1,8 +1,10 @@
 // Gruppo di pulsanti azione per un evento: dettaglio, modifica, elimina.
 // Ha una variante mobile con pulsanti larghi e testuali.
 import { Link } from "react-router-dom";
+import { useOrganizerEventsContext } from "./OrganizerEventsContext";
 
-function EventActionButtons({ evento, apriModaleModifica, apriModaleElimina, mobile = false }) {
+function EventActionButtons({ evento, mobile = false }) {
+  const { apriModaleModifica, apriModaleElimina } = useOrganizerEventsContext();
   if (mobile) {
     return (
       <div className="d-flex gap-2 border-top pt-3 mt-2">

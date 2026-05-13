@@ -1,6 +1,8 @@
 // Cella/card con immagine, titolo e categoria dell'evento.
 // Viene usata in tabella desktop e nelle card responsive.
-function EventTitleCell({ evento, getImmagineEvento, heading = false }) {
+import { getImmagineEvento } from "./organizerEventUtils";
+
+function EventTitleCell({ evento, heading = false }) {
   const TitleTag = heading ? "h5" : "span";
 
   return (
