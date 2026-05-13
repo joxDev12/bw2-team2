@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import EventiDettaglioPage from "./pages/EventiDettaglioPage";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="contatti" element={<ContattiPage />} />
         </Route>
 
+        <Route path="/eventi/:id" element={<EventiDettaglioPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="*" element={<NotFound />} />
