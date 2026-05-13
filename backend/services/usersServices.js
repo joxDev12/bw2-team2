@@ -6,6 +6,24 @@ const usersModel = require('../models/usersModel');
 
 const SALT_ROUND = 12;
 
+const generaToken = (user) =>
+  jwt.sign(
+    {
+      id:            user.id,
+      name:          user.name,
+      surname:       user.surname,
+      username:      user.username,
+      location:      user.location,
+      indirizzo:     user.indirizzo,
+      img_profile:   user.img_profile,
+      email:         user.email,
+      role:          user.role,
+      token_version: user.token_version
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '1d' }
+  );
+
 // Registrazione
 const registra = async ({ name, surname, email, username, location, indirizzo, img_profile, role, password_hash }) => {
   const emailExists = await usersModel.findByEmail(email);
@@ -46,22 +64,7 @@ const login = async ({ email, password }) => {
     throw err;
   }
 
-  const token = jwt.sign(
-    {
-      id:            user.id,
-      name:          user.name,
-      surname:       user.surname,
-      username:      user.username,
-      location:      user.location,
-      indirizzo:     user.indirizzo,
-      img_profile:   user.img_profile,
-      email:         user.email,
-      role:          user.role,
-      token_version: user.token_version
-    },
-    process.env.JWT_SECRET,
-    { expiresIn: '1d' }
-  );
+  const token = generaToken(user);
 
   return token;
 };
@@ -94,4 +97,4 @@ const elimina = async (id) => {
 };
 
 // ── Esportazione ──────────────────────────────────────────────
-module.exports = { registra, login, getAll, getById, aggiorna, elimina };
+module.exports = { registra, login, getAll, getById, aggiorna, elimina, generaToken };

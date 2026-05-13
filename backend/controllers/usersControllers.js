@@ -38,7 +38,9 @@ const aggiorna = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
     const user = await usersService.aggiorna(id, req.body);
-    res.json({ successo: true, dati: user });
+    const isStessoUtente = req.user?.id === id;
+    const token = isStessoUtente ? usersService.generaToken(user) : null;
+    res.json({ successo: true, dati: token ? { user, token } : user });
   } catch (err) { next(err); }
 };
 
@@ -55,7 +57,9 @@ const aggiornaImmagineProfilo = async (req, res, next) => {
 
     const img_profile = `${req.protocol}://${req.get('host')}/uploads/profiles/${req.file.filename}`;
     const user = await usersService.aggiorna(id, { img_profile });
-    res.json({ successo: true, dati: user });
+    const isStessoUtente = req.user?.id === id;
+    const token = isStessoUtente ? usersService.generaToken(user) : null;
+    res.json({ successo: true, dati: token ? { user, token } : user });
   } catch (err) { next(err); }
 };
 
