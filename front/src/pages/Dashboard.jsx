@@ -5,6 +5,7 @@ import logo from "../assets/img/logo.png";
 import ProfiloPagina from "../components/ProfiloPagina";
 import MieiEventiUtente from "../components/MieiEventiUtente";
 import MieiEventiOrganizzatore from "../components/MieiEventiOrganizzatore";
+import RegistrazioniUtenti from "../components/RegistrazioniUtenti";
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("profilo"); // "profilo", "miei-eventi", "lista-eventi"
@@ -13,7 +14,9 @@ function Dashboard() {
   const { utente, logout } = useAuth();
 
   const user = {
-    name: utente?.name ? `${utente.name} ${utente.surname || ''}`.trim() : "Utente",
+    name: utente?.name
+      ? `${utente.name} ${utente.surname || ""}`.trim()
+      : "Utente",
     email: utente?.email || "",
     role: utente?.role || "partecipant", // "partecipant" | "organizer" | "admin"
     avatar: utente?.img_profile || null,
@@ -64,7 +67,7 @@ function Dashboard() {
               style={{ width: "80px", height: "80px", objectFit: "cover" }}
             />
           ) : (
-            <div 
+            <div
               className="sidebar-avatar-placeholder rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary bg-gradient text-white shadow-sm"
               style={{ width: "80px", height: "80px" }}
             >
@@ -73,7 +76,9 @@ function Dashboard() {
           )}
           <h6 className="mb-1 fw-bold">{user.name}</h6>
           <small className="text-white-50 d-block mb-3">{user.email}</small>
-          <span className={`badge ${roleBadge.cls} rounded-pill px-3 shadow-sm`}>
+          <span
+            className={`badge ${roleBadge.cls} rounded-pill px-3 shadow-sm`}
+          >
             {roleBadge.label}
           </span>
         </div>
@@ -86,7 +91,7 @@ function Dashboard() {
             <li className="nav-item">
               <button
                 onClick={() => setActiveTab("profilo")}
-                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === 'profilo' ? 'active shadow-sm' : 'text-white-50 link-light border-0 w-100 bg-transparent text-start'}`}
+                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "profilo" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
               >
                 <i className="bi bi-person-fill fs-5"></i>
                 <span>Profilo</span>
@@ -94,21 +99,26 @@ function Dashboard() {
             </li>
 
             <li className="nav-item">
-              <button 
+              <button
                 onClick={() => setActiveTab("miei-eventi")}
-                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === 'miei-eventi' ? 'active shadow-sm' : 'text-white-50 link-light border-0 w-100 bg-transparent text-start'}`}
+                className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "miei-eventi" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
               >
                 <i className="bi bi-calendar2-week-fill fs-5"></i>
                 <span>I Miei Eventi</span>
               </button>
             </li>
 
-            <li className="nav-item">
-              <NavLink to="/eventi" className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light border-0 w-100 bg-transparent text-start">
-                <i className="bi bi-card-list fs-5"></i>
-                <span>Lista Eventi</span>
-              </NavLink>
-            </li>
+            {(user.role === "admin" || user.role === "organizer") && (
+              <li className="nav-item">
+                <button
+                  onClick={() => setActiveTab("registrazioni")}
+                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "registrazioni" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
+                >
+                  <i className="bi bi-people-fill fs-5"></i>
+                  <span>Registrazioni</span>
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
 
@@ -151,13 +161,16 @@ function Dashboard() {
         {/* Area contenuto */}
         <div className="dashboard-content p-4">
           {activeTab === "profilo" && <ProfiloPagina />}
-          {activeTab === "miei-eventi" && (
-            user.role === "partecipant" ? <MieiEventiUtente /> : <MieiEventiOrganizzatore />
-          )}
+          {activeTab === "miei-eventi" &&
+            (user.role === "partecipant" ? (
+              <MieiEventiUtente />
+            ) : (
+              <MieiEventiOrganizzatore />
+            ))}
+          {activeTab === "registrazioni" && <RegistrazioniUtenti />}
         </div>
       </main>
 
-      {/* ── OFFCANVAS MOBILE ── */}
       <div
         className="offcanvas offcanvas-start dashboard-offcanvas"
         tabIndex="-1"
@@ -183,16 +196,20 @@ function Dashboard() {
                 style={{ width: "80px", height: "80px", objectFit: "cover" }}
               />
             ) : (
-              <div 
+              <div
                 className="sidebar-avatar-placeholder rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary bg-gradient text-white shadow-sm"
                 style={{ width: "80px", height: "80px" }}
               >
-                <span className="fs-2 fw-bold text-white">{getInitials(user.name)}</span>
+                <span className="fs-2 fw-bold text-white">
+                  {getInitials(user.name)}
+                </span>
               </div>
             )}
             <h6 className="mb-1 fw-bold text-white">{user.name}</h6>
             <small className="text-white-50 d-block mb-3">{user.email}</small>
-            <span className={`badge ${roleBadge.cls} rounded-pill px-3 shadow-sm`}>
+            <span
+              className={`badge ${roleBadge.cls} rounded-pill px-3 shadow-sm`}
+            >
               {roleBadge.label}
             </span>
           </div>
@@ -203,28 +220,35 @@ function Dashboard() {
                 <button
                   onClick={() => setActiveTab("profilo")}
                   data-bs-dismiss="offcanvas"
-                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === 'profilo' ? 'active shadow-sm' : 'text-white-50 link-light border-0 w-100 bg-transparent text-start'}`}
+                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "profilo" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
                 >
                   <i className="bi bi-person-fill fs-5"></i>
                   <span>Profilo</span>
                 </button>
               </li>
               <li className="nav-item">
-                <button 
+                <button
                   onClick={() => setActiveTab("miei-eventi")}
                   data-bs-dismiss="offcanvas"
-                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === 'miei-eventi' ? 'active shadow-sm' : 'text-white-50 link-light border-0 w-100 bg-transparent text-start'}`}
+                  className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "miei-eventi" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
                 >
                   <i className="bi bi-calendar2-week-fill fs-5"></i>
                   <span>I Miei Eventi</span>
                 </button>
               </li>
-              <li className="nav-item">
-                <NavLink to="/eventi" data-bs-dismiss="offcanvas" className="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-white-50 link-light border-0 w-100 bg-transparent text-start">
-                  <i className="bi bi-card-list fs-5"></i>
-                  <span>Lista Eventi</span>
-                </NavLink>
-              </li>
+
+              {(user.role === "admin" || user.role === "organizer") && (
+                <li className="nav-item">
+                  <button
+                    onClick={() => setActiveTab("registrazioni")}
+                    data-bs-dismiss="offcanvas"
+                    className={`nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all ${activeTab === "registrazioni" ? "active shadow-sm" : "text-white-50 link-light border-0 w-100 bg-transparent text-start"}`}
+                  >
+                    <i className="bi bi-people-fill fs-5"></i>
+                    <span>Registrazioni</span>
+                  </button>
+                </li>
+              )}
             </ul>
           </nav>
 
