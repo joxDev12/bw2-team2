@@ -5,13 +5,13 @@ import HomePage from "./pages/HomePage";
 import ContattiPage from "./pages/ContattiPage";
 import ChiSiamoPage from "./pages/ChiSiamoPage";
 import EventiPage from "./pages/EventiPage";
+import Dashboard from "./pages/Dashboard";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import EventiDettaglioPage from "./pages/EventiDettaglioPage";
 import NotFound from "./pages/NotFound";
 
-// ── Componente App ───────────────────────────────────────────
 function App() {
   return (
     <>
@@ -26,6 +26,7 @@ function App() {
         </Route>
 
         <Route path="/eventi/:id" element={<EventiDettaglioPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
