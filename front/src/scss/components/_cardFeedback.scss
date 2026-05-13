@@ -1,11 +1,49 @@
-.image-wrapper {
-    height: 100px;
-    overflow: hidden;
+.feedback-card {
+    background: rgba(20, 20, 40, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    color: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.card-img-custom {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+.feedback-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.9);
 }
+
+.feedback-user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.feedback-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 2px solid rgba(255, 255, 255, 0.15);
+
+    flex-shrink: 0;
+}
+
+.feedback-user small {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+
+.feedback-card:hover {
+    transform: translateY(-5px);
+    transition: 0.3s ease;
+}
+
