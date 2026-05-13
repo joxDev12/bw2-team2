@@ -4,6 +4,7 @@ import Feedback from '../components/Feedback';
 import Assistenza from '../components/Assistenza';
 import Newsletter from '../components/Newsletter';
 import BannerOrganizzatore from '../components/BannerOrganizzatore';
+import ListEvent from '../components/ListEvent';
 
 
 
