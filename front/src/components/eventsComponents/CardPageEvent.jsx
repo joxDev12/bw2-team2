@@ -44,7 +44,7 @@ openModal(evento);
 
               <div className="d-flex flex-wrap gap-4 small mb-4">
                 <span className="d-flex align-items-center">
-                  <i className="bi bi-calendar3 fs-5 me-2 text-primary"></i>
+                  <i className="bi bi-calendar3 fs-5 me-2 text-secondary"></i>
                   <span className="fs-6">{formattaData(evento.date)}</span>
                 </span>
                 <span className="d-flex align-items-center">

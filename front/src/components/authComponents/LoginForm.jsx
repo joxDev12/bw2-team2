@@ -66,7 +66,7 @@ function LoginForm() {
 
         <button
           type="submit"
-          className="btn btn-primary w-100 py-2 mt-2 fw-bold"
+          className="btn btn-secondary w-100 py-2 mt-2 fw-bold"
           disabled={loginCaricamento}
         >
           {loginCaricamento ? "Accesso in corso..." : "Accedi"}
@@ -75,7 +75,7 @@ function LoginForm() {
 
       <p className="text-center mt-4 mb-0">
         Non hai un account?{" "}
-        <Link to="/register" className="text-decoration-none fw-bold">
+        <Link to="/register" className="text-decoration-none text-secondary fw-bold">
           Registrati
         </Link>
       </p>

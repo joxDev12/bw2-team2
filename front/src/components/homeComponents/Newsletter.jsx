@@ -6,7 +6,7 @@ function Newsletter() {
       <div className="container">
         <div className="row g-4 align-items-center">
           <div className="col-12 col-lg-7 d-flex align-items-center gap-3">
-            <i className="bi bi-envelope fs-1 text-primary"></i>
+            <i className="bi bi-envelope fs-1 text-secondary"></i>
 
             <div>
               <h2 className="h4 text-light">Non perderti nulla!</h2>

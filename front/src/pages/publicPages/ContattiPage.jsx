@@ -10,8 +10,8 @@ const ContattiPage = () => {
     <div className="container py-5">
       <div className="row justify-content-center text-center mb-5">
         <div className="col-lg-8">
-          <h1 className="display-4 fw-bold mb-3 text-primary">Contattaci</h1>
-          <p className="lead">
+          <h1 className="display-4 fw-bold mb-3 text-secondary">Contattaci</h1>
+          <p className="lead text-white">
             Siamo qui per aiutarti! Hai domande sui nostri eventi o hai bisogno
             di assistenza? Compila il modulo sottostante o utilizza i nostri
             recapiti.
@@ -178,7 +178,7 @@ const ContattiPage = () => {
 
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg w-100 fw-bold"
+                  className="btn btn-secondary btn-lg w-100 fw-bold"
                 >
                   <i className="bi bi-send me-2"></i> Invia Messaggio
                 </button>

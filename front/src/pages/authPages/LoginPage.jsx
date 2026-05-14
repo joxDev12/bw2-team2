@@ -8,7 +8,7 @@ function LoginPage() {
   });
 
   return (
-    <div className="auth-container">
+    <div className="auth-container py-5">
       <LoginForm />
     </div>
   );
