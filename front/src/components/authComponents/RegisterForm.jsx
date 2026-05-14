@@ -158,7 +158,7 @@ function RegisterForm() {
 
         <button
           type="submit"
-          className="btn btn-primary w-100 py-2 mt-2 fw-bold"
+          className="btn btn-secondary w-100 py-2 mt-2 fw-bold"
           disabled={registerCaricamento}
         >
           {registerCaricamento ? "Registrazione in corso..." : "Crea account"}
@@ -167,7 +167,7 @@ function RegisterForm() {
 
       <p className="text-center mt-4 mb-0">
         Hai gia un account?{" "}
-        <Link to="/login" className="text-decoration-none fw-bold">
+        <Link to="/login" className="text-decoration-none text-secondary fw-bold">
           Accedi
         </Link>
       </p>

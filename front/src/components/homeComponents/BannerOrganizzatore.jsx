@@ -17,7 +17,7 @@ function BannerOrganizzatore() {
             </div>
 
             <div className="d-flex flex-column align-items-start align-items-md-center gap-3">
-              <Link to="/dashboard" className="btn btn-primary">
+              <Link to="/dashboard" className="btn btn-secondary">
                 Crea il tuo evento
               </Link>
 

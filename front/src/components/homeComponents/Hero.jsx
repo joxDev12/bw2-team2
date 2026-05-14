@@ -5,7 +5,6 @@ import HeroSearchForm from "./heroComponents/HeroSearchForm";
 import ListCategories from "./ListCategories";
 import { SearchProvider } from "../../context/SearchContext";
 import { eventsAPI } from "../../services/api";
-
 function Hero() {
   const [categorie, setCategorie] = useState([]);
 

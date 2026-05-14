@@ -21,7 +21,7 @@ openModal(evento);
 
   return (
     <div className="col-12">
-      <div className="card border-0 shadow-sm overflow-hidden animazione-card">
+      <div className="card border-0 shadow-sm overflow-hidden bg-soft-dark animazione-card">
         <div className="row g-0 h-100">
           <div className="col-md-4 position-relative">
             <img
@@ -33,7 +33,7 @@ openModal(evento);
             <span
               className={`badge ${badgeColore(
                 evento.category,
-              )} position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm`}
+              )} position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill text-white shadow-sm`}
             >
               {evento.category}
             </span>
@@ -45,12 +45,12 @@ openModal(evento);
           </div>
 
           <div className="col-md-8">
-            <div className="card-body d-flex flex-column h-100 p-4">
+            <div className="card-body text-white d-flex flex-column h-100 p-4">
               <h4 className="card-title fw-bold mb-3">{evento.title}</h4>
 
               <div className="d-flex flex-wrap gap-4 small mb-4">
                 <span className="d-flex align-items-center">
-                  <i className="bi bi-calendar3 fs-5 me-2 text-primary"></i>
+                  <i className="bi bi-calendar3 fs-5 me-2 text-secondary"></i>
                   <span className="fs-6">{formattaData(evento.date)}</span>
                 </span>
                 <span className="d-flex align-items-center">

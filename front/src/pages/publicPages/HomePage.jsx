@@ -7,6 +7,7 @@ import BannerOrganizzatore from "../../components/homeComponents/BannerOrganizza
 import ListEvent from "../../components/homeComponents/ListEvent";
 import ListLocations from "../../components/homeComponents/ListLocation";
 import useSEO from "../../hooks/useSEO";
+import BannerStats from "../../components/homeComponents/BannerStats"
 
 const HomePage = () => {
   useSEO({
@@ -17,6 +18,7 @@ const HomePage = () => {
   return (
     <div className="home-page text-light">
       <Hero />
+      <BannerStats />
       <ListEvent />
       <ListLocations />
       <ComeFunziona />

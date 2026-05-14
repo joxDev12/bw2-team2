@@ -11,10 +11,10 @@ function Help() {
           <p className="card-text">
             Il nostro team e' disponibile 24/7 per supportarti.
           </p>
-          <Link to="/contatti" className="btn btn-primary">Contattaci</Link>
+          <Link to="/contatti" className="btn btn-secondary">Contattaci</Link>
         </div>
 
-        <i className="bi bi-telephone fs-1 text-primary"></i>
+        <i className="bi bi-telephone fs-1 text-secondary"></i>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ function Faq() {
         const headingId = `homeFaq-heading-${item.id}`;
 
         return (
-          <div className="accordion-item bg-primary" key={item.id}>
+          <div className="accordion-item bg-secondary" key={item.id}>
             <h3 className="accordion-header" id={headingId}>
               <button
                 className={`accordion-button ${index === 0 ? "" : "collapsed"}`}
@@ -30,7 +30,7 @@ function Faq() {
               aria-labelledby={headingId}
               data-bs-parent="#homeFaq"
             >
-              <div className="accordion-body rounded-3">{item.answer}</div>
+              <div className="accordion-body">{item.answer}</div>
             </div>
           </div>
         );
