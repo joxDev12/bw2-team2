@@ -2,9 +2,6 @@
 
 $sidebar-width: 280px;
 
-.dashboard-wrapper {
-  background-color: #f8f9fa;
-}
 
 .dashboard-sidebar {
   width: $sidebar-width;
@@ -37,7 +34,7 @@ $sidebar-width: 280px;
   &.transition-all {
     transition: all 0.2s ease-in-out;
   }
-  
+
   &.text-white-50 {
     &:hover {
       color: #fff !important;
@@ -46,13 +43,7 @@ $sidebar-width: 280px;
   }
 }
 
-.dashboard-main {
-  min-height: 100vh;
-  background-color: #f8f9fa;
-}
-
 .dashboard-topbar {
-  background-color: #212529; // Corrisponde a bg-dark di Bootstrap
   height: 56px;
 }
 
@@ -62,7 +53,7 @@ $sidebar-width: 280px;
 
 // Ombre e rifiniture
 .shadow-sm {
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
 }
 
 // Scrollbar personalizzata per la sidebar
@@ -70,13 +61,16 @@ $sidebar-width: 280px;
   &::-webkit-scrollbar {
     width: 6px;
   }
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
   }
+
   &::-webkit-scrollbar-thumb:hover {
     background-color: rgba(255, 255, 255, 0.3);
   }
@@ -85,14 +79,15 @@ $sidebar-width: 280px;
 // Pagina profilo
 .profilo-avatar {
   transition: transform 0.3s ease;
+
   &:hover {
     transform: scale(1.06);
   }
 }
 
 .profilo-campo {
-  background-color: #f8f9fa;
   transition: all 0.2s ease;
+
   &:hover {
     background-color: #edf2ff;
     transform: translateY(-2px);

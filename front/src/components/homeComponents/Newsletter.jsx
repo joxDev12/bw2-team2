@@ -12,7 +12,7 @@ function Newsletter() {
               <h2 className="h4 text-light">Non perderti nulla!</h2>
               <p className="mb-0">
                 Iscriviti alla newsletter e ricevi i migliori eventi selezionati
-                direttamente nella tua inbox.
+                direttamente <br /> nella tua inbox.
               </p>
             </div>
           </div>
