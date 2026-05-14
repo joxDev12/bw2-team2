@@ -8,6 +8,9 @@
   --bs-btn-hover-border-color: #{$brand-primary-hover};
   --bs-btn-active-bg: #{$brand-primary-hover};
   --bs-btn-active-border-color: #{$brand-primary-hover};
+  --bs-btn-color: #{$brand-white};
+  --bs-btn-hover-color: #{$brand-white};
+  
 }
 
 .btn-secondary {
@@ -15,7 +18,13 @@
   --bs-btn-hover-border-color: #{$brand-secondary-hover};
   --bs-btn-active-bg: #{$brand-secondary-hover};
   --bs-btn-active-border-color: #{$brand-secondary-hover};
+  --bs-btn-color: #{$brand-white};
+  --bs-btn-hover-color: #{$brand-white};
 }
+
+
+
+
 
 // navabr
 // https: //getbootstrap.com/docs/5.3/components/navbar/#sass-variables
@@ -25,8 +34,8 @@
   --bs-navbar-brand-color: #{$brand-gray-900};
   --bs-navbar-brand-hover-color: #{$brand-primary};
   --bs-navbar-color: #{$brand-white};
-  --bs-navbar-hover-color: #{$brand-primary};
-  --bs-navbar-active-color: #{$brand-primary};
+  --bs-navbar-hover-color: #{$brand-secondary};
+  --bs-navbar-active-color: #{$brand-secondary};
   --bs-navbar-disabled-color: #{$brand-gray-600};
 
   font-family: $font-body;
@@ -50,7 +59,7 @@
 
   &:hover,
   &:focus {
-    background-color: rgba($brand-primary, .08);
+    background-color: rgba($brand-secondary, .08);
   }
 
   &.active,

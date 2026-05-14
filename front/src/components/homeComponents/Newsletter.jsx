@@ -29,7 +29,7 @@ function Newsletter() {
                 <label htmlFor="newsletter">La tua email</label>
               </div>
 
-              <button className="btn btn-primary rounded-start-0">
+              <button className="btn btn-secondary rounded-start-0">
                 Iscriviti
               </button>
             </form>
