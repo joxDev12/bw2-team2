@@ -29,7 +29,7 @@ function badgeColore(categoria) {
     case "Musica":
       return "bg-primary";
     case "Cultura e Spettacolo":
-      return "bg-danger";
+      return "bg-warning text-dark";
     case "Sport":
       return "bg-success";
     case "Tecnologia":
@@ -44,7 +44,7 @@ function bottoneCategoriaColore(categoria) {
     case "Musica":
       return "btn-outline-primary";
     case "Cultura e Spettacolo":
-      return "btn-outline-danger";
+      return "btn-outline-warning";
     case "Sport":
       return "btn-outline-success";
     case "Tecnologia":

@@ -33,7 +33,7 @@ const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
             <span
               className={`badge ${badgeColore(
                 evento.category,
-              )} position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill text-white shadow-sm`}
+              )} position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm`}
             >
               {evento.category}
             </span>
