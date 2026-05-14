@@ -8,7 +8,6 @@ import useSEO from "../../hooks/useSEO";
 import { eventsAPI } from "../../services/api";
 
 const EventiDettaglioPage = () => {
-
   const { utente } = useAuth();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -17,21 +16,20 @@ const EventiDettaglioPage = () => {
   const [loading, setLoading] = useState(true);
   const [errore, setErrore] = useState("");
 
-const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
+  function openModal() {
+    setShowModal(true);
+  }
 
-function openModal() {
-
-  setShowModal(true);
-}
-
-function closeModal() {
-  setShowModal(false);
-  
-}
+  function closeModal() {
+    setShowModal(false);
+  }
   useSEO({
     title: evento ? evento.title : "Caricamento evento...",
-    description: evento ? evento.description : "Dettagli dell'evento su EventHub."
+    description: evento
+      ? evento.description
+      : "Dettagli dell'evento su EventHub.",
   });
 
   useEffect(() => {
@@ -49,7 +47,6 @@ function closeModal() {
 
     fetchEvento();
   }, [id]);
-
 
   if (loading) {
     return (
@@ -101,7 +98,6 @@ function closeModal() {
                   <div className="fw-semibold">
                     <i className="bi bi-calendar3 me-2 text-primary"></i>
 
-                    {/* {new Date(evento.date).toLocaleDateString("it-IT")} */}
                     {new Date(evento.date).toLocaleDateString("it-IT", {
                       day: "numeric",
                       month: "long",
@@ -182,26 +178,24 @@ function closeModal() {
             )}
           </div>
 
-<button
-  className={`btn btn-primary btn-lg rounded-pill px-5 btn-pulse ${!evento.available ? "disabled" : ""}`}
-  onClick={() => {
-    if (!evento.available) return;
+          <button
+            className={`btn btn-primary btn-lg rounded-pill px-5 btn-pulse ${!evento.available ? "disabled" : ""}`}
+            onClick={() => {
+              if (!evento.available) return;
 
-    if (!utente) {
-      navigate("/login");
-      return;
-    }
+              if (!utente) {
+                navigate("/login");
+                return;
+              }
 
-    openModal(); // ← открываем модалку
-  }}
->
-  <i className="bi bi-ticket-perforated me-2"></i>
-  {evento.available ? "Registrati all'evento" : "Evento non disponibile"}
-</button>
-
-
-
-
+              openModal(); // ← открываем модалку
+            }}
+          >
+            <i className="bi bi-ticket-perforated me-2"></i>
+            {evento.available
+              ? "Registrati all'evento"
+              : "Evento non disponibile"}
+          </button>
 
           {/* <Link
             to="/register"
@@ -228,22 +222,13 @@ function closeModal() {
         </div>
       </div>
 
-
-{showModal && (
-  <ModalRegistrazioneEvento
-    show={showModal}
-    onClose={closeModal}
-    evento={evento}
-  />
-)}
-
-
-
-
-
-
-
-
+      {showModal && (
+        <ModalRegistrazioneEvento
+          show={showModal}
+          onClose={closeModal}
+          evento={evento}
+        />
+      )}
     </div>
   );
 };

@@ -1,21 +1,20 @@
 // Card evento usata nella pagina Eventi.
 // Mostra immagine, info principali e link al dettaglio.
 import { Link } from "react-router-dom";
-import {useAuth} from "../../context/AuthContext"
+import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import eventsPlaceholder from "../../assets/img/events_placeholder.webp";
 
 const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
-  const { utente} = useAuth();
+  const { utente } = useAuth();
   const navigate = useNavigate();
 
-
   function handleRegistrati() {
-if (!utente) {
-  navigate("/login");
-  return;
-}
-openModal(evento);
+    if (!utente) {
+      navigate("/login");
+      return;
+    }
+    openModal(evento);
   }
 
   return (
@@ -55,37 +54,35 @@ openModal(evento);
 
               <p className="card-text fs-5 flex-grow-1">{evento.description}</p>
 
-              <div className="d-flex gap-3 mt-4 pt-3 border-top">
+              <div className="d-flex gap-3 mt-4 pt-3 border-top align-items-center">
                 <button
-                  className="btn btn-primary px-4 fw-semibold rounded-pill"
+                  className="btn btn-primary btn-lg rounded-pill d-flex align-items-center gap-2"
                   id={`registrati-evento-${evento.id}`}
                   onClick={handleRegistrati}
                 >
-                  <i className="bi bi-ticket-perforated me-2"></i>
+                  <i className="bi bi-ticket-perforated"></i>
                   Registrati all'evento
                 </button>
 
-                {/* Button non fa azione */}
-
-                {/* <button
-                  className="btn btn-outline-secondary px-4 rounded-pill"
-                  id={`info-evento-${evento.id}`}
-                  title="Maggiori Informazioni"
-                >
-                  <i className="bi bi-info-circle me-2"></i>
-                  Maggiori Info
-                </button> */}
-
-                {/* Link reindirizza alla routhe */}
                 <Link
                   to={`/eventi/${evento.id}`}
-                  className="btn btn-outline-secondary px-4 rounded-pill"
+                  className="btn btn-outline-secondary btn-lg rounded-pill d-flex align-items-center gap-2"
                   id={`info-evento-${evento.id}`}
                   title="Maggiori Informazioni"
                 >
-                  <i className="bi bi-info-circle me-2"></i>
+                  <i className="bi bi-info-circle"></i>
                   Maggiori Info
                 </Link>
+
+                {evento.available ? (
+                  <span className="badge bg-success rounded-pill fs-6 py-2 px-3 d-flex align-items-center">
+                    Disponibile
+                  </span>
+                ) : (
+                  <span className="badge bg-danger rounded-pill fs-6 py-2 px-3 d-flex align-items-center">
+                    Sold Out
+                  </span>
+                )}
               </div>
             </div>
           </div>
