@@ -1,4 +1,11 @@
+import useSEO from "../../hooks/useSEO";
+
 const ContattiPage = () => {
+  useSEO({
+    title: "Contatti",
+    description: "Contatta il team di EventHub per assistenza, informazioni o collaborazioni."
+  });
+
   return (
     <div className="container py-5">
       <div className="row justify-content-center text-center mb-5">

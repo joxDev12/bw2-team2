@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import CardUtenti from "../../components/sharedComponents/CardUtenti";
 import { useAuth } from "../../context/AuthContext";
+import useSEO from "../../hooks/useSEO";
 
 const ChiSiamoPage = () => {
   const { token } = useAuth();
+  
+  useSEO({
+    title: "Chi Siamo",
+    description: "Scopri il team e i valori dietro EventHub, la piattaforma che connette le persone attraverso esperienze indimenticabili."
+  });
 
   return (
     <div className="chi-siamo-page">
