@@ -163,11 +163,10 @@ const EventiPage = () => {
                   <button
                     key={cat.nome}
                     id={`filter-${cat.nome.toLowerCase()}`}
-                    className={`btn btn-sm rounded-pill px-3 fw-semibold ${
-                      categoriaAttiva === cat.nome
-                        ? "btn-primary shadow-sm"
-                        : "btn-outline-light"
-                    }`}
+                    className={`btn btn-sm rounded-pill px-3 fw-semibold ${categoriaAttiva === cat.nome
+                      ? "btn-primary shadow-sm"
+                      : "btn-outline-light"
+                      }`}
                     onClick={() => setCategoriaAttiva(cat.nome)}
                   >
                     <i className={`bi ${cat.icona} me-1`}></i>

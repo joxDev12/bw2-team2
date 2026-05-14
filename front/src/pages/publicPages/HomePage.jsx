@@ -5,6 +5,7 @@ import Assistenza from "../../components/homeComponents/Assistenza";
 import Newsletter from "../../components/homeComponents/Newsletter";
 import BannerOrganizzatore from "../../components/homeComponents/BannerOrganizzatore";
 import ListEvent from "../../components/homeComponents/ListEvent";
+import ListLocations from "../../components/homeComponents/ListLocation";
 import useSEO from "../../hooks/useSEO";
 
 const HomePage = () => {
@@ -17,6 +18,7 @@ const HomePage = () => {
     <main className="text-light">
       <Hero />
       <ListEvent />
+      <ListLocations />
       <ComeFunziona />
       <BannerOrganizzatore />
       <Feedback />
