@@ -1,25 +1,54 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import CardListEvent from "./CardListEvent";
+import CardListLocation from "./CardListLocation";
 import { eventsAPI } from "../../services/api";
+import Roma from "../../assets/img/Citta/Roma.webp";
+import Napoli from "../../assets/img/Citta/Napoli.webp";
+import Milano from "../../assets/img/Citta/Milano.webp";
+import Ancona from "../../assets/img/Citta/Ancona.webp";
+import Firenze from "../../assets/img/Citta/Firenze.webp";
 
 
-const citta = [
-    { nome: "Roma", img: "bi-grid-fill" },
-    { nome: "Milano", img: "bi-music-note-beamed" },
-    { nome: "Firenze", img: "bi-stars" },
-    { nome: "Napoli", img: "bi-trophy" },
-    { nome: "Ancona", img: "bi-cpu" },
-];
+const imgLocations = {
+    Roma,
+    Napoli,
+    Milano,
+    Ancona,
+    Firenze,
+};
 
 
-function ListLocation() {
-    const [location, setLocation] = useState([]);
+function ListLocations() {
+    const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     // Calcoliamo quanti item mostrare in base alla larghezza
     const [itemsToShow, setItemsToShow] = useState(5);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const data = await eventsAPI.getAll();
+                const locationsEventi = [...new Set(data.map((evento) => evento.location))]
+                    .filter(Boolean)
+                    .sort();
+
+                setLocations(locationsEventi.map((location, index) => ({
+                    id: index + 1,
+                    nome: location,
+                    img: imgLocations[location],
+                })));
+            } catch (err) {
+                console.error("Errore nel caricamento delle locations:", err);
+                setError("Impossibile caricare le locations. Riprova più tardi.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchEvents();
+    }, []);
 
     useEffect(() => {
         const handleResize = () => {
@@ -36,27 +65,7 @@ function ListLocation() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                setLoading(true);
-                const data = await eventsAPI.getAll();
-                // Prendiamo fino a 5 location
-                setEvents(data.slice(0, 5));
-                setError(null);
-            } catch (err) {
-                console.error("Errore nel caricamento degli eventi:", err);
-                setError("Impossibile caricare gli eventi. Riprova più tardi.");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchEvents();
-    }, []);
-
-    // Il numero totale di item è events.length + 1 (la card "Vedi tutti")
-    const totalItems = events.length + 1;
+    const totalItems = locations.length;
 
     const nextSlide = () => {
         if (currentIndex < totalItems - itemsToShow) {
@@ -74,19 +83,19 @@ function ListLocation() {
         <section className="py-5 overflow-hidden">
             <div className="container">
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h2 className="h4 text-light mb-0">Eventi in evidenza</h2>
+                    <h2 className="h4 text-light mb-0">Le nostre locations</h2>
 
-                    {!loading && totalItems > itemsToShow && (
+                    {totalItems > itemsToShow && (
                         <div className="d-flex gap-2">
                             <button
-                                className="btn btn-outline-primary btn-sm rounded-circle"
+                                className="btn btn-outline-secondary btn-sm rounded-circle"
                                 onClick={prevSlide}
                                 disabled={currentIndex === 0}
                             >
                                 <i className="bi bi-chevron-left"></i>
                             </button>
                             <button
-                                className="btn btn-outline-primary btn-sm rounded-circle"
+                                className="btn btn-outline-secondary btn-sm rounded-circle"
                                 onClick={nextSlide}
                                 disabled={currentIndex >= totalItems - itemsToShow}
                             >
@@ -106,9 +115,9 @@ function ListLocation() {
                     <div className="alert alert-danger" role="alert">
                         {error}
                     </div>
-                ) : events.length === 0 ? (
+                ) : locations.length === 0 ? (
                     <div className="text-center py-5">
-                        <p className="text-muted">Nessun evento disponibile al momento.</p>
+                        <p className="text-muted">Nessuna categoria disponibile al momento.</p>
                     </div>
                 ) : (
                     <div className="slider-container">
@@ -118,33 +127,11 @@ function ListLocation() {
                                 transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`,
                             }}
                         >
-                            {events.map((event) => (
-                                <div key={event.id} className="slider-item">
-                                    <CardListEvent event={event} />
+                            {locations.map((location) => (
+                                <div key={location.id} className="slider-item">
+                                    <CardListLocation location={location} />
                                 </div>
                             ))}
-
-                            {/* Card "Vedi tutti" */}
-                            <div className="slider-item">
-                                <div className="h-100 px-2">
-                                    <Link
-                                        to="/eventi"
-                                        className="text-decoration-none h-100 d-block"
-                                    >
-                                        <article className="card bg-primary animazione-card-x border-0 shadow-sm h-100 d-flex align-items-center justify-content-center text-center p-3">
-                                            <div className="card-body d-flex flex-column align-items-center justify-content-center text-white p-0">
-                                                <div
-                                                    className="rounded-circle bg-white bg-opacity-25 d-flex align-items-center justify-content-center mb-3 transition-all"
-                                                    style={{ width: '60px', height: '60px' }}
-                                                >
-                                                    <i className="bi bi-arrow-right fs-3"></i>
-                                                </div>
-                                                <h6 className="fw-bold mb-0">Scopri tutti<br />gli eventi</h6>
-                                            </div>
-                                        </article>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 )}
@@ -153,4 +140,4 @@ function ListLocation() {
     );
 }
 
-export default ListEvent;
+export default ListLocations;

@@ -8,7 +8,7 @@ function LoginPage() {
   });
 
   return (
-    <div className="auth-container py-5">
+    <div className="auth-container d-flex justify-content-center align-items-center flex-grow-1 py-5">
       <LoginForm />
     </div>
   );

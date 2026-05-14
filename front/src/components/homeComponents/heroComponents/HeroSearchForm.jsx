@@ -14,7 +14,7 @@ function HeroSearchForm() {
       <HeroSearchField />
 
       <button
-        className="btn btn-secondary px-4 custom-rounded rounded-end-3"
+        className="btn btn-primary px-4 custom-rounded-end rounded-end-3"
         type="submit"
       >
         Cerca

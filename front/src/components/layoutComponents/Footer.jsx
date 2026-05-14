@@ -4,11 +4,14 @@ import { NavLink } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="navbar navbar-dark bg-dark text-light py-4 shadow-sm custom-footer">
+    <footer className="navbar navbar-dark bg-soft-dark text-light py-4 shadow-sm custom-footer">
       <div className="container">
         <div className="row">
-          <div className="col-md-4 mb-3">
-            <NavLink className="navbar-brand fw-bold" to="/">
+          <div className="col-md-4 mb-3 text-center text-md-start">
+            <NavLink
+              className="navbar-brand fw-bold d-flex justify-content-center justify-content-md-start"
+              to="/"
+            >
               <img
                 src="../../src/assets/img/logo.png"
                 alt="EventiHub"
@@ -47,26 +50,29 @@ function Footer() {
             </ul>
           </div>
 
-          <div className="col-md-4 mb-3">
-            <h6 className="fw-bold text-secondary">Contatti</h6>
-
+          <div className="col-md-4 mb-3 text-center text-md-start">
             <p className="text-light mb-2">
               <i className="bi bi-envelope-fill me-2"></i>
-              info@eventhub.com
+              <a
+                href="mailto:info@eventhub.com"
+                className="text-light text-decoration-none"
+              >
+                info@eventhub.com
+              </a>
             </p>
 
             <p className="text-light mb-3">
               <i className="bi bi-geo-alt-fill me-2"></i>
-              Milano, Italia
+              P.za del Duomo, 20123 Milano MI
             </p>
           </div>
 
           <hr
-            className="bg-secondary border-0 opacity-50"
+            className="bg-secondary border-0 opacity-50 w-100 my-4"
             style={{ height: "1px" }}
           />
 
-          <div className="text-center text-lig fs-6">
+          <div className="text-center text-light fs-6 w-100">
             © {new Date().getFullYear()} EventiHub — Tutti i diritti riservati
           </div>
         </div>
