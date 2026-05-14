@@ -1,16 +1,20 @@
 // Modale per modificare dati personali e foto profilo.
-// Riceve form, anteprima immagine e handler da ProfiloPagina.
-function ProfiloModificaModal({
-  form,
-  anteprimaFoto,
-  nomeFotoProfilo,
-  erroreForm,
-  caricamento,
-  handleChange,
-  handleFileChange,
-  handleSubmit,
-  chiudiModale,
-}) {
+// Legge form, anteprima immagine e handler da ProfileContext.
+import { useProfileContext } from "../../context/ProfileContext";
+
+function ProfiloModificaModal() {
+  const {
+    form,
+    anteprimaFoto,
+    nomeFotoProfilo,
+    erroreForm,
+    caricamento,
+    handleChange,
+    handleFileChange,
+    handleSubmit,
+    chiudiModale,
+  } = useProfileContext();
+
   return (
     <div
       className="modal d-block"

@@ -15,18 +15,8 @@
     }
 
     .hero-search-result:hover,
-    .hero-search-result-value:focus,
-    .hero-search-result-arrow:focus {
+    .hero-search-result:focus {
         background-color: #f8f9fa;
-    }
-
-    .hero-search-result-value {
-        color: inherit;
-    }
-
-    .hero-search-result-arrow {
-        min-width: 44px;
-        font-size: 1.1rem;
     }
 
     .hero-search-result-avatar {

@@ -1,8 +1,17 @@
 // Form di login con email, password e link alla registrazione.
-// Riceve stato e handler dalla pagina LoginPage.
+// Usa AuthContext per stato, errori e invio del login.
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
+function LoginForm() {
+  const {
+    loginForm,
+    loginErrore,
+    loginCaricamento,
+    cambiaLoginForm,
+    inviaLogin,
+  } = useAuth();
+
   return (
     <div
       className="card shadow-sm p-4 mx-auto border-0"
@@ -13,13 +22,13 @@ function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
         <p>Inserisci le tue credenziali per continuare</p>
       </div>
 
-      {errore && (
+      {loginErrore && (
         <div className="alert alert-danger" role="alert">
-          <span>Attenzione:</span> {errore}
+          <span>Attenzione:</span> {loginErrore}
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={inviaLogin}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label fw-medium">
             Email
@@ -28,8 +37,8 @@ function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
             id="email"
             type="email"
             name="email"
-            value={form.email}
-            onChange={handleChange}
+            value={loginForm.email}
+            onChange={cambiaLoginForm}
             placeholder="mario.rossi@esempio.it"
             className="form-control"
             maxLength={255}
@@ -46,8 +55,8 @@ function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
             id="password"
             type="password"
             name="password"
-            value={form.password}
-            onChange={handleChange}
+            value={loginForm.password}
+            onChange={cambiaLoginForm}
             placeholder="********"
             className="form-control"
             maxLength={100}
@@ -58,14 +67,14 @@ function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
         <button
           type="submit"
           className="btn btn-primary w-100 py-2 mt-2 fw-bold"
-          disabled={caricamento}
+          disabled={loginCaricamento}
         >
-          {caricamento ? "Accesso in corso..." : "Accedi"}
+          {loginCaricamento ? "Accesso in corso..." : "Accedi"}
         </button>
       </form>
 
       <p className="text-center mt-4 mb-0">
-        Non hai un account?{""}
+        Non hai un account?{" "}
         <Link to="/register" className="text-decoration-none fw-bold">
           Registrati
         </Link>

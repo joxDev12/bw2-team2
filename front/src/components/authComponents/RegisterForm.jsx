@@ -1,14 +1,17 @@
 // Form di registrazione con dati utente e scelta ruolo.
-// Riceve valori, errori e handler dalla pagina RegisterPage.
+// Usa AuthContext per stato, errori e invio della registrazione.
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-function RegisterForm({
-  form,
-  errore,
-  caricamento,
-  handleChange,
-  handleSubmit,
-}) {
+function RegisterForm() {
+  const {
+    registerForm,
+    registerErrore,
+    registerCaricamento,
+    cambiaRegisterForm,
+    inviaRegistrazione,
+  } = useAuth();
+
   return (
     <div
       className="card shadow-sm p-4 mx-auto border-0"
@@ -19,13 +22,13 @@ function RegisterForm({
         <p>Unisciti alla nostra community di eventi</p>
       </div>
 
-      {errore && (
+      {registerErrore && (
         <div className="alert alert-danger" role="alert">
-          <span>⚠️</span> {errore}
+          <span>Attenzione:</span> {registerErrore}
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={inviaRegistrazione}>
         <div className="row">
           <div className="col-md-6 mb-3">
             <label htmlFor="name" className="form-label fw-medium">
@@ -35,14 +38,15 @@ function RegisterForm({
               id="name"
               type="text"
               name="name"
-              value={form.name}
-              onChange={handleChange}
+              value={registerForm.name}
+              onChange={cambiaRegisterForm}
               placeholder="Mario"
               className="form-control"
               maxLength={255}
               required
             />
           </div>
+
           <div className="col-md-6 mb-3">
             <label htmlFor="surname" className="form-label fw-medium">
               Cognome
@@ -51,8 +55,8 @@ function RegisterForm({
               id="surname"
               type="text"
               name="surname"
-              value={form.surname}
-              onChange={handleChange}
+              value={registerForm.surname}
+              onChange={cambiaRegisterForm}
               placeholder="Rossi"
               className="form-control"
               maxLength={255}
@@ -69,8 +73,8 @@ function RegisterForm({
             id="username"
             type="text"
             name="username"
-            value={form.username}
-            onChange={handleChange}
+            value={registerForm.username}
+            onChange={cambiaRegisterForm}
             placeholder="mario88"
             className="form-control"
             minLength={3}
@@ -87,8 +91,8 @@ function RegisterForm({
             id="email"
             type="email"
             name="email"
-            value={form.email}
-            onChange={handleChange}
+            value={registerForm.email}
+            onChange={cambiaRegisterForm}
             placeholder="mario.rossi@esempio.it"
             className="form-control"
             maxLength={255}
@@ -103,8 +107,8 @@ function RegisterForm({
           <select
             id="role"
             name="role"
-            value={form.role}
-            onChange={handleChange}
+            value={registerForm.role}
+            onChange={cambiaRegisterForm}
             className="form-select"
           >
             <option value="partecipant">Voglio partecipare agli eventi</option>
@@ -121,8 +125,8 @@ function RegisterForm({
               id="password"
               type="password"
               name="password"
-              value={form.password}
-              onChange={handleChange}
+              value={registerForm.password}
+              onChange={cambiaRegisterForm}
               placeholder="********"
               className="form-control"
               minLength={8}
@@ -132,6 +136,7 @@ function RegisterForm({
               required
             />
           </div>
+
           <div className="col-md-6 mb-3">
             <label htmlFor="confirmPassword" className="form-label fw-medium">
               Conferma
@@ -140,8 +145,8 @@ function RegisterForm({
               id="confirmPassword"
               type="password"
               name="confirmPassword"
-              value={form.confirmPassword}
-              onChange={handleChange}
+              value={registerForm.confirmPassword}
+              onChange={cambiaRegisterForm}
               placeholder="********"
               className="form-control"
               minLength={8}
@@ -154,14 +159,14 @@ function RegisterForm({
         <button
           type="submit"
           className="btn btn-primary w-100 py-2 mt-2 fw-bold"
-          disabled={caricamento}
+          disabled={registerCaricamento}
         >
-          {caricamento ? "Registrazione in corso..." : "Crea account"}
+          {registerCaricamento ? "Registrazione in corso..." : "Crea account"}
         </button>
       </form>
 
       <p className="text-center mt-4 mb-0">
-        Hai già un account?{""}
+        Hai gia un account?{" "}
         <Link to="/login" className="text-decoration-none fw-bold">
           Accedi
         </Link>

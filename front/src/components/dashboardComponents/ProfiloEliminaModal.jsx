@@ -1,11 +1,15 @@
 // Modale di conferma per eliminare il profilo utente.
 // Mostra eventuali errori e gestisce stato di caricamento.
-function ProfiloEliminaModal({
-  erroreElimina,
-  caricamentoElimina,
-  chiudiModaleElimina,
-  handleEliminaProfilo,
-}) {
+import { useProfileContext } from "../../context/ProfileContext";
+
+function ProfiloEliminaModal() {
+  const {
+    erroreElimina,
+    caricamentoElimina,
+    chiudiModaleElimina,
+    handleEliminaProfilo,
+  } = useProfileContext();
+
   return (
     <div
       className="modal d-block"

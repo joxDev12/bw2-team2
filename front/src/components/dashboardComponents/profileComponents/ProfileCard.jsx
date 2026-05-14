@@ -1,8 +1,12 @@
 // Card principale del profilo con avatar, ruolo e campi utente.
-// Riceve i dati gia preparati da ProfiloPagina.
+// Legge i dati gia preparati da ProfileContext.
+import { useProfileContext } from "../../../context/ProfileContext";
 import ProfiloCampo from "../ProfiloCampo";
 
-function ProfileCard({ nomeCompleto, immagineProfilo, roleBadge, campi }) {
+function ProfileCard() {
+  const { nomeCompleto, immagineProfilo, roleBadge, campi } =
+    useProfileContext();
+
   return (
     <div className="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
       <div className="bg-primary bg-gradient text-white text-center py-5 px-3">

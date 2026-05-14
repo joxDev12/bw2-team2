@@ -1,36 +1,6 @@
 // Card dei feedback mostrati nella homepage.
 // Usa immagini locali e testi statici per le recensioni.
-import img1 from "../../assets/img/1.webp";
-import img2 from "../../assets/img/2.webp";
-import img3 from "../../assets/img/3.webp";
-import img4 from "../../assets/img/4.webp";
-
-const feedbacks = [
-  {
-    text: "Con EventHub ho scoperto tanti eventi interessanti vicino a me. Piattaforma semplice e veloce da usare.",
-    name: "Giacomo S.",
-    city: "Milano",
-    image: img1,
-  },
-  {
-    text: "EventHub ha una grafica moderna e permette di trovare eventi in pochi clic.",
-    name: "Giulia R.",
-    city: "Roma",
-    image: img2,
-  },
-  {
-    text: "Organizzare eventi su EventHub e' stato davvero intuitivo. Ottima gestione dei partecipanti.",
-    name: "Marco M.",
-    city: "Napoli",
-    image: img3,
-  },
-  {
-    text: "Esperienza molto positiva con EventHub, sia come partecipante che come organizzatrice.",
-    name: "Simona B.",
-    city: "Palermo",
-    image: img4,
-  },
-];
+import { feedbacks } from "./homeContent";
 
 function CardFeedback() {
   return feedbacks.map((feedback) => (
