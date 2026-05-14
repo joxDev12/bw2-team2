@@ -23,7 +23,7 @@ function OrganizerEventsMobileList() {
                 </Link>
               </div>
 
-              <div className="d-flex flex-column gap-2 text-muted small mb-3">
+              <div className="d-flex flex-column gap-2 small mb-3">
                 <span className="d-flex align-items-center">
                   <i className="bi bi-calendar3 text-primary me-2"></i>
                   {new Date(evento.date).toLocaleDateString("it-IT")}

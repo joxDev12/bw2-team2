@@ -19,7 +19,9 @@ function OrganizerEventsTable() {
             <th className="px-4 py-3 border-0">Luogo</th>
             <th className="px-4 py-3 border-0">Prezzo</th>
             <th className="px-4 py-3 border-0">Posti</th>
-            <th className="px-4 py-3 border-0 text-end rounded-end-3">Azioni</th>
+            <th className="px-4 py-3 border-0 text-end rounded-end-3">
+              Azioni
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -28,10 +30,10 @@ function OrganizerEventsTable() {
               <td className="px-4 py-3 border-bottom-0">
                 <EventTitleCell evento={evento} />
               </td>
-              <td className="px-4 py-3 border-bottom-0 text-muted">
+              <td className="px-4 py-3 border-bottom-0">
                 {new Date(evento.date).toLocaleDateString("it-IT")}
               </td>
-              <td className="px-4 py-3 border-bottom-0 text-muted">
+              <td className="px-4 py-3 border-bottom-0">
                 <span className="fw-semibold text-dark">{evento.location}</span>
                 <br />
                 <small>{evento.indirizzo || "-"}</small>

@@ -19,13 +19,15 @@ function OrganizerEventsTabletList() {
                 <div className="col-5">
                   <EventTitleCell evento={evento} />
                 </div>
-                <div className="col-3 text-muted small">
+                <div className="col-3 small">
                   <i className="bi bi-calendar3 text-primary me-2"></i>
                   {new Date(evento.date).toLocaleDateString("it-IT")}
                 </div>
-                <div className="col-4 text-muted small">
+                <div className="col-4 small">
                   <i className="bi bi-geo-alt text-danger me-2"></i>
-                  <span className="fw-semibold text-dark">{evento.location}</span>
+                  <span className="fw-semibold text-dark">
+                    {evento.location}
+                  </span>
                   <br />
                   <span className="ms-4">{evento.indirizzo || "-"}</span>
                 </div>

@@ -2,7 +2,13 @@
 // Riceve valori, errori e handler dalla pagina RegisterPage.
 import { Link } from "react-router-dom";
 
-function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit }) {
+function RegisterForm({
+  form,
+  errore,
+  caricamento,
+  handleChange,
+  handleSubmit,
+}) {
   return (
     <div
       className="card shadow-sm p-4 mx-auto border-0"
@@ -10,7 +16,7 @@ function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit })
     >
       <div className="text-center mb-4">
         <h2 className="h4 mb-2 fw-bold">Crea account</h2>
-        <p className="text-muted">Unisciti alla nostra community di eventi</p>
+        <p>Unisciti alla nostra community di eventi</p>
       </div>
 
       {errore && (
@@ -154,8 +160,8 @@ function RegisterForm({ form, errore, caricamento, handleChange, handleSubmit })
         </button>
       </form>
 
-      <p className="text-center mt-4 mb-0 text-muted">
-        Hai già un account?{" "}
+      <p className="text-center mt-4 mb-0">
+        Hai già un account?{""}
         <Link to="/login" className="text-decoration-none fw-bold">
           Accedi
         </Link>

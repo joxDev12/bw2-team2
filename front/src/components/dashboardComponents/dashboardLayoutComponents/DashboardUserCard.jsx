@@ -15,7 +15,9 @@ function DashboardUserCard({ user, roleBadge, getInitials }) {
           className="sidebar-avatar-placeholder rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary bg-gradient text-white shadow-sm"
           style={{ width: "80px", height: "80px" }}
         >
-          <span className="fs-2 fw-bold text-white">{getInitials(user.name)}</span>
+          <span className="fs-2 fw-bold text-white">
+            {getInitials(user.name)}
+          </span>
         </div>
       )}
 

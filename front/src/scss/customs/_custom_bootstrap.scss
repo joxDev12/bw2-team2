@@ -1,43 +1,125 @@
 @use "colors" as *;
+@use "fonts" as *;
 
-// qui selezione il bottone -primary e gli dico che voglio lo sfondo green1 e all'hover dovra' essere viola1.... i colori green1 e viola1 sono presenti in colors.scss
-
-// andate qui per vedere dove ho preso le variabili per i bottoni.....
-// https://getbootstrap.com/docs/5.3/components/buttons/#variables
-
-
-// buttons
-
-/* .btn-primary {
-    --bs-btn-color: white;
-    --bs-btn-bg: #{$green1};
-    --bs-btn-border-color: #{$green1};
-
-    --bs-btn-hover-color: red;
-    --bs-btn-hover-bg: yellow;
-    --bs-btn-hover-border-color: darkgreen;
-
-    --bs-btn-active-color: white;
-    --bs-btn-active-bg: limegreen;
-    --bs-btn-active-border-color: limegreen;
-
+// bottoni
+//https: //getbootstrap.com/docs/5.3/components/buttons/#sass-variables
+.btn-primary {
+  --bs-btn-hover-bg: #{$brand-primary-hover};
+  --bs-btn-hover-border-color: #{$brand-primary-hover};
+  --bs-btn-active-bg: #{$brand-primary-hover};
+  --bs-btn-active-border-color: #{$brand-primary-hover};
 }
 
-// qui modifica un bottone che ha la nostra nuova classe personale "custom-color"
-.btn-custom_color {
-    --bs-btn-color: white;
-    --bs-btn-bg: #{$red1};
-    --bs-btn-border-color: #{$green1};
-
-    --bs-btn-hover-color: blue;
-    --bs-btn-hover-bg: violet;
-    --bs-btn-hover-border-color: darkgreen;
-
-    --bs-btn-active-color: white;
-    --bs-btn-active-bg: limegreen;
-    --bs-btn-active-border-color: limegreen;
-
+.btn-secondary {
+  --bs-btn-hover-bg: #{$brand-secondary-hover};
+  --bs-btn-hover-border-color: #{$brand-secondary-hover};
+  --bs-btn-active-bg: #{$brand-secondary-hover};
+  --bs-btn-active-border-color: #{$brand-secondary-hover};
 }
- */
 
- 
+// navabr
+// https: //getbootstrap.com/docs/5.3/components/navbar/#sass-variables
+.navbar {
+  --bs-navbar-padding-y: .75rem;
+  --bs-navbar-brand-font-size: 1.25rem;
+  --bs-navbar-brand-color: #{$brand-gray-900};
+  --bs-navbar-brand-hover-color: #{$brand-primary};
+  --bs-navbar-color: #{$brand-white};
+  --bs-navbar-hover-color: #{$brand-primary};
+  --bs-navbar-active-color: #{$brand-primary};
+  --bs-navbar-disabled-color: #{$brand-gray-600};
+
+  font-family: $font-body;
+}
+
+.navbar-brand {
+  font-family: $font-heading;
+  font-weight: $brand-font-weight-bold;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  border-radius: .75rem;
+  font-weight: $brand-font-weight-medium;
+  padding-inline: .75rem;
+  transition: color .2s ease, background-color .2s ease;
+
+  &:hover,
+  &:focus {
+    background-color: rgba($brand-primary, .08);
+  }
+
+  &.active,
+  &.show {
+    color: var(--bs-navbar-active-color);
+    font-weight: $brand-font-weight-semibold;
+  }
+}
+
+// accordion
+
+// https: //getbootstrap.com/docs/5.3/components/accordion/#sass-variables
+
+.accordion {
+  --bs-accordion-border-color: #{$brand-primary};
+  --bs-accordion-border-radius: 1rem;
+  --bs-accordion-inner-border-radius: calc(1rem - 1px);
+  --bs-accordion-btn-padding-x: 1.25rem;
+  --bs-accordion-btn-padding-y: 1rem;
+  --bs-accordion-btn-color: #{$brand-white};
+  --bs-accordion-btn-bg: #{$brand-primary};
+  --bs-accordion-active-color: #{$brand-white};
+  --bs-accordion-active-bg: #{$brand-primary-hover};
+  --bs-accordion-btn-focus-border-color: #{$brand-primary};
+  --bs-accordion-btn-focus-box-shadow: 0 0 0 .25rem rgba(#{$brand-primary}, .18);
+  --bs-accordion-body-padding-x: 1.25rem;
+  --bs-accordion-body-padding-y: 1rem;
+}
+
+.accordion-button {
+  font-family: $font-heading;
+  font-weight: $brand-font-weight-semibold;
+
+  &:not(.collapsed) {
+    box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
+  }
+}
+
+.accordion-body {
+  color: $brand-gray-100;
+  font-family: $font-body;
+}
+
+// cards 
+// https: //getbootstrap.com/docs/5.3/components/card/#variables
+.card {
+  --bs-card-border-color: #{$brand-gray-200};
+  --bs-card-border-radius: 1rem;
+  --bs-card-inner-border-radius: calc(1rem - 1px);
+  --bs-card-bg: #{$brand-white};
+  --bs-card-color: #{$brand-gray-900};
+  --bs-card-cap-bg: #{$brand-gray-100};
+  --bs-card-cap-color: #{$brand-gray-900};
+  --bs-card-spacer-x: 1.25rem;
+  --bs-card-spacer-y: 1.25rem;
+  --bs-card-title-spacer-y: .75rem;
+}
+
+.card-header,
+.card-footer {
+  font-weight: $brand-font-weight-semibold;
+}
+
+.card-title {
+  font-family: $font-heading;
+  font-weight: $brand-font-weight-bold;
+}
+
+.card-subtitle,
+.card-text {
+  font-family: $font-body;
+}

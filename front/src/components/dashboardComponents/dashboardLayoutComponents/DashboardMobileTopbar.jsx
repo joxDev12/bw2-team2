@@ -3,7 +3,12 @@
 function DashboardMobileTopbar({ logo }) {
   return (
     <header className="dashboard-topbar d-lg-none d-flex align-items-center justify-content-between px-3 py-2">
-      <button className="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+      <button
+        className="btn btn-outline-light btn-sm"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mobileSidebar"
+      >
         <i className="bi bi-list fs-5"></i>
       </button>
       <img src={logo} alt="EventiHub Logo" className="dashboard-topbar-logo" />

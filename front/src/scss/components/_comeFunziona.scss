@@ -1,15 +1,7 @@
-
-
-.step-card {
-    position: relative;
-    text-align: center;
-    color: white;
-}
-
 .step-icon {
     width: 70px;
     height: 70px;
-    margin: 0 auto 20px;
+    margin: 20px auto 20px;
     border-radius: 50%;
     border: 2px solid rgba(187, 95, 255, 0.5);
     display: flex;
@@ -22,27 +14,4 @@
 .step-icon i {
     font-size: 1.5rem;
     color: #d27cff;
-}
-
-.step-card h5 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.step-card p {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.5;
-    max-width: 220px;
-    margin: 0 auto;
-}
-
-
-/* responsive */
-@media (max-width: 768px) {
-
-    .step-card {
-        padding: 10px;
-    }
 }

@@ -13,7 +13,7 @@ function Layout() {
     <div className="layout">
       <Navbar />
 
-      <main>
+      <main className="bg-dark">
         <Outlet />
       </main>
 

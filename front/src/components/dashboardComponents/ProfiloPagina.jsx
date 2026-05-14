@@ -28,7 +28,11 @@ function ProfiloPagina() {
 
   const getRoleBadge = (role) => {
     const roles = {
-      partecipant: { label: "Utente", cls: "bg-primary", icon: "bi-person-fill" },
+      partecipant: {
+        label: "Utente",
+        cls: "bg-primary",
+        icon: "bi-person-fill",
+      },
       organizer: {
         label: "Organizzatore",
         cls: "bg-success",
@@ -147,7 +151,9 @@ function ProfiloPagina() {
       chiudiModale();
       mostraToast("Profilo aggiornato con successo!");
     } catch (err) {
-      setErroreForm(err.message || "Errore durante l'aggiornamento del profilo.");
+      setErroreForm(
+        err.message || "Errore durante l'aggiornamento del profilo.",
+      );
     } finally {
       setCaricamento(false);
     }
@@ -160,9 +166,11 @@ function ProfiloPagina() {
     try {
       await usersAPI.elimina(utente.id);
       localStorage.removeItem("dashboardTab");
-      window.dispatchEvent(new Event('auth:unauthorized'));
+      window.dispatchEvent(new Event("auth:unauthorized"));
     } catch (err) {
-      setErroreElimina(err.message || "Errore durante l'eliminazione del profilo.");
+      setErroreElimina(
+        err.message || "Errore durante l'eliminazione del profilo.",
+      );
     } finally {
       setCaricamentoElimina(false);
     }
@@ -172,7 +180,10 @@ function ProfiloPagina() {
     <>
       <ProfiloToast toast={toast} onClose={() => setToast(null)} />
 
-      <ProfileHeader apriModale={apriModale} apriModaleElimina={apriModaleElimina} />
+      <ProfileHeader
+        apriModale={apriModale}
+        apriModaleElimina={apriModaleElimina}
+      />
 
       <ProfileCard
         nomeCompleto={nomeCompleto}

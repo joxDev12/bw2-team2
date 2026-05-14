@@ -5,127 +5,59 @@ import img2 from "../../assets/img/2.webp";
 import img3 from "../../assets/img/3.webp";
 import img4 from "../../assets/img/4.webp";
 
+const feedbacks = [
+  {
+    text: "Con EventHub ho scoperto tanti eventi interessanti vicino a me. Piattaforma semplice e veloce da usare.",
+    name: "Giacomo S.",
+    city: "Milano",
+    image: img1,
+  },
+  {
+    text: "EventHub ha una grafica moderna e permette di trovare eventi in pochi clic.",
+    name: "Giulia R.",
+    city: "Roma",
+    image: img2,
+  },
+  {
+    text: "Organizzare eventi su EventHub e' stato davvero intuitivo. Ottima gestione dei partecipanti.",
+    name: "Marco M.",
+    city: "Napoli",
+    image: img3,
+  },
+  {
+    text: "Esperienza molto positiva con EventHub, sia come partecipante che come organizzatrice.",
+    name: "Simona B.",
+    city: "Palermo",
+    image: img4,
+  },
+];
+
 function CardFeedback() {
-    return (
-        <>
-            <h4 className="text-center text-light">Cosa dicono di noi</h4>
-            
-            <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
+  return feedbacks.map((feedback) => (
+    <div
+      className="col-12 col-md-6 col-lg-3"
+      key={`${feedback.name}-${feedback.city}`}
+    >
+      <article className="card bg-soft-dark border-0 shadow-sm h-100">
+        <div className="card-body text-white d-flex flex-column justify-content-between">
+          <p className="card-text feedback-text">{feedback.text}</p>
 
-                    <p className="feedback-text mb-3 text-light">
-                        “Con EventHub ho scoperto tanti eventi interessanti vicino a me. Piattaforma semplice e veloce da usare.”
-                    </p>
+          <div className="d-flex align-items-center gap-3">
+            <img
+              src={feedback.image}
+              alt={feedback.name}
+              className="feedback-avatar"
+            />
 
-                    <div className="feedback-user d-flex align-items-center gap-3">
-                        <img src={img1} alt="Laura B." className="feedback-avatar" />
-
-                        <div>
-                            <h6 className="mb-0 fw-bold">Giacomo S.</h6>
-                            <small>Milano</small>
-                        </div>
-                    </div>
-
-                </div>
+            <div>
+              <h3 className="h6 mb-0">{feedback.name}</h3>
+              <small className="text-light opacity-75">{feedback.city}</small>
             </div>
-
-            <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
-
-                    <p className="feedback-text mb-3 text-light">
-                        “EventHub ha una grafica moderna e permette di trovare eventi in pochi clic.”
-                    </p>
-
-                    <div className="feedback-user d-flex align-items-center gap-3">
-                        <img src={img2} alt="Giulia R." className="feedback-avatar" />
-
-                        <div>
-                            <h6 className="mb-0 fw-bold">Giulia R.</h6>
-                            <small>Roma</small>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
-
-                    <p className="feedback-text mb-3 text-light">
-                        “Organizzare eventi su EventHub è stato davvero intuitivo. Ottima gestione dei partecipanti.”
-                    </p>
-
-                    <div className="feedback-user d-flex align-items-center gap-3">
-                        <img src={img3} alt="Marco M." className="feedback-avatar" />
-
-                        <div>
-                            <h6 className="mb-0 fw-bold">Marco M.</h6>
-                            <small>Napoli</small>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
-
-                    <p className="feedback-text mb-3 text-light">
-                        “Esperienza molto positiva con EventHub, sia come partecipante che come organizzatrice.”
-                    </p>
-
-                    <div className="feedback-user d-flex align-items-center gap-3">
-                        <img src={img4} alt="Simona B." className="feedback-avatar" />
-
-                        <div>
-                            <h6 className="mb-0 fw-bold">Simona B.</h6>
-                            <small>Palermo</small>
-                        </div>
-                    </div>
-
-                </div>
-            </div>     
-
-            <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
-
-                    <p className="feedback-text mb-3 text-light">
-                        “Esperienza molto positiva con EventHub, sia come partecipante che come organizzatrice.”
-                    </p>
-
-                    <div className="feedback-user d-flex align-items-center gap-3">
-                        <img src={img4} alt="Simona B." className="feedback-avatar" />
-
-                        <div>
-                            <h6 className="mb-0 fw-bold">Simona B.</h6>
-                            <small>Palermo</small>
-                        </div>
-                    </div>
-
-                </div>
-            </div> 
-
-            <div className="col-12 col-md-6 col-lg-4">
-                <div className="feedback-card rounded-4 p-4 text-light d-flex flex-column justify-content-between bg-item border-1 border-black h-100">
-
-                    <p className="feedback-text mb-3 text-light">
-                        “Esperienza molto positiva con EventHub, sia come partecipante che come organizzatrice.”
-                    </p>
-
-                    <div className="feedback-user d-flex align-items-center gap-3">
-                        <img src={img4} alt="Simona B." className="feedback-avatar" />
-
-                        <div>
-                            <h6 className="mb-0 fw-bold">Simona B.</h6>
-                            <small>Palermo</small>
-                        </div>
-                    </div>
-
-                </div>
-            </div>        
-        </>
-    );
-
+          </div>
+        </div>
+      </article>
+    </div>
+  ));
 }
 
 export default CardFeedback;

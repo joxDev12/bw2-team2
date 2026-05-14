@@ -17,9 +17,10 @@ function useOrganizerEventsData() {
     const caricaDati = async () => {
       try {
         setCaricamento(true);
-        const dati = utente.role === "admin"
-          ? await eventsAPI.getAll()
-          : await eventsAPI.getByOrganizerId(utente.id);
+        const dati =
+          utente.role === "admin"
+            ? await eventsAPI.getAll()
+            : await eventsAPI.getByOrganizerId(utente.id);
 
         if (!annullato) setEventi(dati);
       } catch (err) {
@@ -28,7 +29,9 @@ function useOrganizerEventsData() {
         if (err.status === 404) {
           setEventi([]);
         } else {
-          setErrore(err.message || "Errore nel caricamento degli eventi creati");
+          setErrore(
+            err.message || "Errore nel caricamento degli eventi creati",
+          );
         }
       } finally {
         if (!annullato) setCaricamento(false);

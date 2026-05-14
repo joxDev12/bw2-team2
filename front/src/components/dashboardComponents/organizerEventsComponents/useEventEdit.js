@@ -43,7 +43,9 @@ function useEventEdit({ eventi, setEventi, mostraToast }) {
   const gestisciCambioImmagine = (e) => {
     const file = e.target.files[0] || null;
     setImmagineEvento(file);
-    setAnteprimaImmagine(file ? URL.createObjectURL(file) : getImmagineEvento(eventoInModifica));
+    setAnteprimaImmagine(
+      file ? URL.createObjectURL(file) : getImmagineEvento(eventoInModifica),
+    );
   };
 
   const gestisciSubmitModifica = async (e) => {
@@ -52,16 +54,25 @@ function useEventEdit({ eventi, setEventi, mostraToast }) {
     setCaricamentoModale(true);
 
     try {
-      const risposta = await eventsAPI.aggiorna(eventoInModifica.id, preparaDatiEvento(datiForm));
+      const risposta = await eventsAPI.aggiorna(
+        eventoInModifica.id,
+        preparaDatiEvento(datiForm),
+      );
       const eventoAggiornato = immagineEvento
         ? await eventsAPI.aggiornaImmagine(eventoInModifica.id, immagineEvento)
         : risposta;
 
-      setEventi(eventi.map((evento) => evento.id === eventoInModifica.id ? eventoAggiornato : evento));
+      setEventi(
+        eventi.map((evento) =>
+          evento.id === eventoInModifica.id ? eventoAggiornato : evento,
+        ),
+      );
       chiudiModale();
       mostraToast("Evento aggiornato con successo!");
     } catch (err) {
-      setErroreModale(err.message || "Errore durante l'aggiornamento dell'evento");
+      setErroreModale(
+        err.message || "Errore durante l'aggiornamento dell'evento",
+      );
     } finally {
       setCaricamentoModale(false);
     }

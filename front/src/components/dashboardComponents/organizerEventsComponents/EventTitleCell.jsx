@@ -14,7 +14,9 @@ function EventTitleCell({ evento, heading = false }) {
         style={{ width: "58px", height: "58px" }}
       />
       <div>
-        <TitleTag className={heading ? "card-title fw-bold mb-0" : "fw-semibold"}>
+        <TitleTag
+          className={heading ? "card-title fw-bold mb-0" : "fw-semibold"}
+        >
           {evento.title}
         </TitleTag>
         {!heading && <br />}

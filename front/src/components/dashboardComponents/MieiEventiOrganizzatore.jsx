@@ -37,7 +37,11 @@ function MieiEventiOrganizzatore() {
   const eliminazione = useEventDelete({ eventi, setEventi, mostraToast });
 
   if (caricamento) {
-    return <div className="text-center py-5"><div className="spinner-border text-primary"></div></div>;
+    return (
+      <div className="text-center py-5">
+        <div className="spinner-border text-primary"></div>
+      </div>
+    );
   }
 
   if (errore) {

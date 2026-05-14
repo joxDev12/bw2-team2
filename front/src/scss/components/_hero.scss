@@ -5,13 +5,7 @@
     background-position: center;
 }
 
-.bg-purple {
-    background-color: #000412;
-}
 
-.bg-item {
-    background-color: #131c31;
-}
 
 .hero-search-results {
     z-index: 10;
@@ -48,15 +42,6 @@
 @media screen and (min-width: 576px) {
     .custom-rounded {
         border-radius: 0 !important;
-    }
-
-    .custom-border {
-        border-radius: 20px;
-
-        box-shadow:
-            0 0 5px rgba(255, 255, 255, 0.25),
-            0 0 10px rgba(255, 255, 255, 0.12),
-            0 0 20px rgba(255, 255, 255, 0.06);
     }
 
 }

@@ -1,6 +1,6 @@
 // Form di login con email, password e link alla registrazione.
 // Riceve stato e handler dalla pagina LoginPage.
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
   return (
@@ -10,9 +10,7 @@ function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
     >
       <div className="text-center mb-4">
         <h2 className="h4 mb-2 fw-bold">Accedi</h2>
-        <p className="text-muted">
-          Inserisci le tue credenziali per continuare
-        </p>
+        <p>Inserisci le tue credenziali per continuare</p>
       </div>
 
       {errore && (
@@ -66,8 +64,8 @@ function LoginForm({ form, errore, caricamento, handleChange, handleSubmit }) {
         </button>
       </form>
 
-      <p className="text-center mt-4 mb-0 text-muted">
-        Non hai un account?{" "}
+      <p className="text-center mt-4 mb-0">
+        Non hai un account?{""}
         <Link to="/register" className="text-decoration-none fw-bold">
           Registrati
         </Link>

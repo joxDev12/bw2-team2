@@ -1,40 +1,38 @@
 // Banner promozionale per invitare l'utente a diventare organizzatore.
 // Mostra una call to action verso le pagine di registrazione/accesso.
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 function BannerOrganizzatore() {
-
-    return (
-        <>
-            <div className="w-100 bg-purple">
-                <section className="container py-5">
-                    <div className="organizer-banner bg-item rounded-4 d-flex align-items-center justify-content-between p-4 text-light gap-3">
-
-
-                        <div className="banner-content">
-                            <h2>Sei un organizzatore?</h2>
-
-                            <p className="m-0 text-light">
-                                Crea e gestisci i tuoi eventi.
-                                Raggiungi il tuo pubblico e fai crescere la tua community.
-                            </p>
-                        </div>
-
-                        <div className="banner-actions d-flex flex-column align-items-center gap-3">
-                            <button className="btn btn bg-primary fw-bold py-2 px-3 text-light">
-                                Crea il tuo evento
-                            </button>
-
-                            <Link to="/about" className="banner-link text-decoration-none text-light">
-                                Scopri di più →
-                            </Link>
-                        </div>
-
-                    </div>
-                </section>
+  return (
+    <section className="py-5">
+      <div className="container">
+        <div className="card bg-soft-dark border-0 shadow-sm">
+          <div className="card-body text-white d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-4 p-4">
+            <div>
+              <h2 className="h3 card-title">Sei un organizzatore?</h2>
+              <p className="card-text mb-0">
+                Crea e gestisci i tuoi eventi. Raggiungi il tuo pubblico e fai
+                crescere la tua community.
+              </p>
             </div>
-        </>
-    );
+
+            <div className="d-flex flex-column align-items-start align-items-md-center gap-3">
+              <Link to="/dashboard" className="btn btn-primary">
+                Crea il tuo evento
+              </Link>
+
+              <Link
+                to="/chi-siamo"
+                className="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover"
+              >
+                Scopri di piu
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default BannerOrganizzatore;

@@ -8,12 +8,16 @@ import DashboardMobileTopbar from "../../components/dashboardComponents/dashboar
 import DashboardSidebar from "../../components/dashboardComponents/dashboardLayoutComponents/DashboardSidebar";
 
 function Dashboard() {
-  const [activeTab, setActiveTab] = useState(() => localStorage.getItem("dashboardTab") || "profilo");
+  const [activeTab, setActiveTab] = useState(
+    () => localStorage.getItem("dashboardTab") || "profilo",
+  );
   const navigate = useNavigate();
   const { utente, logout } = useAuth();
 
   const user = {
-    name: utente?.name ? `${utente.name} ${utente.surname || ""}`.trim() : "Utente",
+    name: utente?.name
+      ? `${utente.name} ${utente.surname || ""}`.trim()
+      : "Utente",
     email: utente?.email || "",
     role: utente?.role || "partecipant",
     avatar: utente?.img_profile || null,
@@ -22,7 +26,11 @@ function Dashboard() {
   const roleBadge = getRoleBadge(user.role);
 
   useEffect(() => {
-    if (activeTab === "registrazioni" && user.role !== "admin" && user.role !== "organizer") {
+    if (
+      activeTab === "registrazioni" &&
+      user.role !== "admin" &&
+      user.role !== "organizer"
+    ) {
       setActiveTab("profilo");
       localStorage.setItem("dashboardTab", "profilo");
       return;
