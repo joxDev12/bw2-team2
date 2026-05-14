@@ -50,7 +50,7 @@ const CardPageEvent = ({ evento, formattaData, badgeColore }) => {
                   Registrati all'evento
                 </button>
 
-                {/* Button non fa azzione */}
+                {/* Button non fa azione */}
 
                 {/* <button
                   className="btn btn-outline-secondary px-4 rounded-pill"
