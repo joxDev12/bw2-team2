@@ -53,7 +53,8 @@ const EventiPage = () => {
   }
   useSEO({
     title: "Tutti gli Eventi",
-    description: "Esplora la nostra vasta selezione di eventi. Usa i filtri per trovare l'evento perfetto per te in base a categoria, luogo o data."
+    description:
+      "Esplora la nostra vasta selezione di eventi. Usa i filtri per trovare l'evento perfetto per te in base a categoria, luogo o data.",
   });
 
   const [eventiData, setEventiData] = useState([]);
@@ -78,7 +79,6 @@ const EventiPage = () => {
     };
     fetchEvents();
   }, []);
-
 
   const aggiornaFiltroLocation = (location) => {
     setSearchParams((params) => {
@@ -108,7 +108,12 @@ const EventiPage = () => {
     });
   };
 
-  const getDataEvento = (date) => new Date(date).toISOString().split("T")[0];
+  const getDataEvento = (date) => {
+    const d = new Date(date);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+      d.getDate(),
+    ).padStart(2, "0")}`;
+  };
 
   const eventiFiltrati = eventiData.filter((evento) => {
     const testo = filtroTesto.toLowerCase().trim();
@@ -151,10 +156,7 @@ const EventiPage = () => {
         </p>
       </div>
 
-      <section
-        className="bg-dark shadow-sm sticky-top"
-        style={{ zIndex: 100 }}
-      >
+      <section className="bg-dark shadow-sm sticky-top" style={{ zIndex: 100 }}>
         <div className="container py-3">
           <div className="row align-items-center g-3">
             <div className="col-12 col-lg-auto">
@@ -251,12 +253,12 @@ const EventiPage = () => {
               )}
               {filtroTesto && (
                 <span className="ms-2">
-                  per {" "}<strong>{filtroTesto}</strong>
+                  per <strong>{filtroTesto}</strong>
                 </span>
               )}
               {filtroLocation && (
                 <span className="ms-2">
-                  a {" "}<strong>{filtroLocation}</strong>
+                  a <strong>{filtroLocation}</strong>
                 </span>
               )}
             </p>
