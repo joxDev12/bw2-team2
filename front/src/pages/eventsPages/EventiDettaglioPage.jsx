@@ -1,16 +1,34 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import eventsPlaceholder from "../../assets/img/events_placeholder.webp";
+import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalRegistrazioneEvento";
+import { Link, useParams } from "react-router-dom";
 import useSEO from "../../hooks/useSEO";
 import { eventsAPI } from "../../services/api";
 
 const EventiDettaglioPage = () => {
+
+  const { utente } = useAuth();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [evento, setEvento] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errore, setErrore] = useState("");
 
+const [showModal, setShowModal] = useState(false);
+
+
+function openModal() {
+
+  setShowModal(true);
+}
+
+function closeModal() {
+  setShowModal(false);
+  
+}
   useSEO({
     title: evento ? evento.title : "Caricamento evento...",
     description: evento ? evento.description : "Dettagli dell'evento su EventHub."
@@ -164,7 +182,28 @@ const EventiDettaglioPage = () => {
             )}
           </div>
 
-          <Link
+<button
+  className={`btn btn-primary btn-lg rounded-pill px-5 btn-pulse ${!evento.available ? "disabled" : ""}`}
+  onClick={() => {
+    if (!evento.available) return;
+
+    if (!utente) {
+      navigate("/login");
+      return;
+    }
+
+    openModal(); // ← открываем модалку
+  }}
+>
+  <i className="bi bi-ticket-perforated me-2"></i>
+  {evento.available ? "Registrati all'evento" : "Evento non disponibile"}
+</button>
+
+
+
+
+
+          {/* <Link
             to="/register"
             className={`btn btn-primary btn-lg rounded-pill px-5 btn-pulse ${!evento.available ? "disabled" : ""}`}
             onClick={(e) => {
@@ -176,7 +215,7 @@ const EventiDettaglioPage = () => {
             {evento.available
               ? "Registrati all'evento"
               : "Evento non disponibile"}
-          </Link>
+          </Link> */}
 
           <div className="d-flex justify-content-start mt-4">
             <Link
@@ -188,6 +227,23 @@ const EventiDettaglioPage = () => {
           </div>
         </div>
       </div>
+
+
+{showModal && (
+  <ModalRegistrazioneEvento
+    show={showModal}
+    onClose={closeModal}
+    evento={evento}
+  />
+)}
+
+
+
+
+
+
+
+
     </div>
   );
 };

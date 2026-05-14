@@ -5,6 +5,8 @@ import useSEO from "../../hooks/useSEO";
 import CardPageEvent from "../../components/eventsComponents/CardPageEvent";
 import { eventsAPI } from "../../services/api";
 
+import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalRegistrazioneEvento";
+
 const categorie = [
   { nome: "Tutti", icona: "bi-grid-fill" },
   { nome: "Musica", icona: "bi-music-note-beamed" },
@@ -38,6 +40,17 @@ function badgeColore(categoria) {
 }
 
 const EventiPage = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [eventoSelezionato, setEventoSelezionato] = useState(null);
+
+  function openModal(evento) {
+    setEventoSelezionato(evento);
+    setShowModal(true);
+  }
+  function closeModal() {
+    setEventoSelezionato(null);
+    setShowModal(false);
+  }
   useSEO({
     title: "Tutti gli Eventi",
     description: "Esplora la nostra vasta selezione di eventi. Usa i filtri per trovare l'evento perfetto per te in base a categoria, luogo o data."
@@ -150,10 +163,11 @@ const EventiPage = () => {
                   <button
                     key={cat.nome}
                     id={`filter-${cat.nome.toLowerCase()}`}
-                    className={`btn btn-sm rounded-pill px-3 fw-semibold ${categoriaAttiva === cat.nome
-                      ? "btn-primary shadow-sm"
-                      : "btn-outline-light"
-                      }`}
+                    className={`btn btn-sm rounded-pill px-3 fw-semibold ${
+                      categoriaAttiva === cat.nome
+                        ? "btn-primary shadow-sm"
+                        : "btn-outline-light"
+                    }`}
                     onClick={() => setCategoriaAttiva(cat.nome)}
                   >
                     <i className={`bi ${cat.icona} me-1`}></i>
@@ -256,6 +270,7 @@ const EventiPage = () => {
                   evento={evento}
                   formattaData={formattaData}
                   badgeColore={badgeColore}
+                  openModal={openModal}
                 />
               ))}
             </div>
@@ -276,6 +291,13 @@ const EventiPage = () => {
                 tutti gli eventi
               </button>
             </div>
+          )}
+          {showModal && (
+            <ModalRegistrazioneEvento
+              show={showModal}
+              onClose={closeModal}
+              evento={eventoSelezionato}
+            />
           )}
         </div>
       </section>

@@ -1,9 +1,23 @@
 // Card evento usata nella pagina Eventi.
 // Mostra immagine, info principali e link al dettaglio.
 import { Link } from "react-router-dom";
+import {useAuth} from "../../context/AuthContext"
+import { useNavigate } from "react-router-dom";
 import eventsPlaceholder from "../../assets/img/events_placeholder.webp";
 
-const CardPageEvent = ({ evento, formattaData, badgeColore }) => {
+const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
+  const { utente} = useAuth();
+  const navigate = useNavigate();
+
+
+  function handleRegistrati() {
+if (!utente) {
+  navigate("/login");
+  return;
+}
+openModal(evento);
+  }
+
   return (
     <div className="col-12">
       <div className="card border-0 shadow-sm overflow-hidden animazione-card">
@@ -45,6 +59,7 @@ const CardPageEvent = ({ evento, formattaData, badgeColore }) => {
                 <button
                   className="btn btn-primary px-4 fw-semibold rounded-pill"
                   id={`registrati-evento-${evento.id}`}
+                  onClick={handleRegistrati}
                 >
                   <i className="bi bi-ticket-perforated me-2"></i>
                   Registrati all'evento
