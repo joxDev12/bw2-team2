@@ -133,7 +133,7 @@ const EventiPage = () => {
 
       <section
         className="bg-dark shadow-sm sticky-top"
-        style={{ zIndex: 1020 }}
+        style={{ zIndex: 100 }}
       >
         <div className="container py-3">
           <div className="row align-items-center g-3">

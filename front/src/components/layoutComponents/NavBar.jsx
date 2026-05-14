@@ -27,7 +27,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow-sm custom-navbar">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow-sm custom-navbar" style={{ zIndex: 1030 }}>
       <div className="container-fluid">
         <NavLink className="navbar-img navbar-brand fw-bold" to="/">
           <img
