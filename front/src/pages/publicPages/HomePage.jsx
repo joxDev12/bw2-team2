@@ -14,7 +14,7 @@ const HomePage = () => {
   });
 
   return (
-    <main className="text-light">
+    <div className="home-page text-light">
       <Hero />
       <ListEvent />
       <ComeFunziona />
@@ -22,7 +22,7 @@ const HomePage = () => {
       <Feedback />
       <Assistenza />
       <Newsletter />
-    </main>
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="navbar navbar-dark bg-dark text-light py-4 shadow-sm custom-footer">
+    <footer className="navbar navbar-dark bg-soft-dark text-light py-4 shadow-sm custom-footer">
       <div className="container">
         <div className="row">
           <div className="col-md-4 mb-3 text-center text-md-start">
