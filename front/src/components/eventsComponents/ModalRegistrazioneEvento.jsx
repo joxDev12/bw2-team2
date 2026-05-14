@@ -23,7 +23,22 @@ const ModalRegistrazioneEvento = ({ show, onClose, evento }) => {
             </div>
 
             <div className="modal-body">
-              ...
+              <div className="modal-body">
+  <h5 className="fw-bold mb-3">{evento?.title}</h5>
+
+  <p className="text-muted mb-2">
+    <i className="bi bi-calendar3 me-2 text-primary"></i>
+    {new Date(evento.date).toLocaleDateString("it-IT")}
+  </p>
+
+  <p className="text-muted mb-4">
+    <i className="bi bi-geo-alt me-2 text-danger"></i>
+    {evento.location}
+  </p>
+
+  <p>{evento.description}</p>
+</div>
+
             </div>
 
             <div className="modal-footer">
@@ -39,7 +54,7 @@ const ModalRegistrazioneEvento = ({ show, onClose, evento }) => {
         </div>
       </div>
 
-      {/* ← Добавляем backdrop вручную */}
+   
       {show && <div className="modal-backdrop fade show"></div>}
     </>
   );
