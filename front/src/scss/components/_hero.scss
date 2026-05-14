@@ -30,8 +30,15 @@
 
 
 @media screen and (min-width: 576px) {
-    .custom-rounded {
+    .custom-rounded-end {
+        border-radius: 0px 15px 15px 0px !important;
+    }
+
+    .custom-rounded-inner {
         border-radius: 0 !important;
     }
 
+    .custom-rounded-start {
+        border-radius: 15px 0px 0px 15px !important;
+    }
 }
