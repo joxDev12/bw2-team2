@@ -10,7 +10,7 @@ function DashboardContent() {
   const { activeTab, user } = useDashboardContext();
 
   return (
-    <div className="dashboard-content p-4">
+    <div className="p-4">
       {activeTab === "profilo" && <ProfiloPagina />}
       {activeTab === "miei-eventi" &&
         (user.role === "partecipant" ? (

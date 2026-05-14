@@ -1,26 +1,62 @@
-// Card evento usata nella lista eventi in evidenza della homepage.
-// Mostra immagine, titolo e dettagli principali dell'evento.
-import Event_culturali from "../../assets/img/Event_culturali.webp";
+import { Link } from "react-router-dom";
 
-function CardListEvent() {
+function CardListEvent({ event }) {
+  if (!event) return null;
+
+  const {
+    id,
+    title,
+    image,
+    category,
+    description,
+    location,
+    price
+  } = event;
+
   return (
-    <div className="col-12 col-md-6 col-lg-4">
-      <article className="card bg-soft-dark border-0 shadow-sm h-100 animazione-card">
-        <div className="card-body text-white">
-          <p className="card-text">
-            Con EventHub ho scoperto tanti eventi interessanti vicino a me.
-            Piattaforma semplice e veloce da usare.
-          </p>
-
-          <img
-            src={Event_culturali}
-            alt="Evento culturale"
-            className="feedback-avatar"
-          />
-        </div>
-      </article>
+    <div className="h-100 px-2">
+      <Link to={`/eventi/${id}`} className="text-decoration-none h-100 d-block">
+        <article className="card bg-soft-dark border-0 shadow-sm h-100 animazione-card">
+          <div className="card-body text-white p-3">
+            <div className="position-relative mb-3">
+              {image ? (
+                <img 
+                  src={image} 
+                  alt={title} 
+                  className="img-fluid rounded" 
+                  style={{ width: '100%', height: '160px', objectFit: 'cover' }}
+                />
+              ) : (
+                <div 
+                  className="bg-secondary rounded d-flex align-items-center justify-content-center" 
+                  style={{ width: '100%', height: '160px' }}
+                >
+                  <i className="bi bi-image text-white fs-1"></i>
+                </div>
+              )}
+              <span className="badge bg-primary position-absolute top-0 start-0 m-2">{category}</span>
+            </div>
+            
+            <h6 className="card-title text-truncate mb-2" title={title}>{title}</h6>
+            <p className="card-text text-truncate-2 small mb-3" style={{ height: '40px' }}>{description}</p>
+            
+            <div className="d-flex flex-column gap-1 mt-auto">
+              <div className="d-flex gap-2 align-items-center">
+                <i className="bi bi-geo-alt text-primary small"></i>
+                <span className="x-small text-truncate">{location}</span>
+              </div>
+              <div className="d-flex gap-2 align-items-center">
+                <i className="bi bi-coin text-primary small"></i>
+                <span className="fw-bold small">{price === 0 ? 'Gratis' : `€ ${price}`}</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </Link>
     </div>
   );
 }
 
 export default CardListEvent;
+
+

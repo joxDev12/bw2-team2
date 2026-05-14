@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import eventsPlaceholder from "../../assets/img/events_placeholder.webp";
 import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalRegistrazioneEvento";
+import { Link, useParams } from "react-router-dom";
+import useSEO from "../../hooks/useSEO";
+import { eventsAPI } from "../../services/api";
 
 const EventiDettaglioPage = () => {
 
@@ -13,9 +14,7 @@ const EventiDettaglioPage = () => {
   const { id } = useParams();
 
   const [evento, setEvento] = useState(null);
-
   const [loading, setLoading] = useState(true);
-
   const [errore, setErrore] = useState("");
 
 const [showModal, setShowModal] = useState(false);
@@ -30,20 +29,17 @@ function closeModal() {
   setShowModal(false);
   
 }
+  useSEO({
+    title: evento ? evento.title : "Caricamento evento...",
+    description: evento ? evento.description : "Dettagli dell'evento su EventHub."
+  });
+
   useEffect(() => {
     const fetchEvento = async () => {
       try {
         setLoading(true);
-
-        const response = await fetch(`http://localhost:3000/api/events/${id}`);
-
-        if (!response.ok) {
-          throw new Error("Evento non trovato");
-        }
-
-        const data = await response.json();
-
-        setEvento(data.dati || data[0] || data);
+        const data = await eventsAPI.getById(id);
+        setEvento(data);
       } catch (error) {
         setErrore(error.message);
       } finally {
@@ -53,6 +49,7 @@ function closeModal() {
 
     fetchEvento();
   }, [id]);
+
 
   if (loading) {
     return (

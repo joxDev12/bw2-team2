@@ -5,10 +5,16 @@ import Assistenza from "../../components/homeComponents/Assistenza";
 import Newsletter from "../../components/homeComponents/Newsletter";
 import BannerOrganizzatore from "../../components/homeComponents/BannerOrganizzatore";
 import ListEvent from "../../components/homeComponents/ListEvent";
+import useSEO from "../../hooks/useSEO";
 
 const HomePage = () => {
+  useSEO({
+    title: "Home",
+    description: "EventHub è la piattaforma ideale per scoprire, creare e organizzare eventi indimenticabili."
+  });
+
   return (
-    <main className="bg-dark text-light">
+    <main className="text-light">
       <Hero />
       <ListEvent />
       <ComeFunziona />

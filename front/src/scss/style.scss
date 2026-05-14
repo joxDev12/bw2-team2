@@ -4,6 +4,7 @@
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
 @import "customs/custom_bootstrap";
+@import "customs/animazioni";
 
 // Pagine
 @import "./pages/eventiPage";
@@ -13,6 +14,7 @@
 // Componenti
 @import "./components/navbar";
 @import "./components/hero";
+@import "./components/slider";
 @import "./components/comeFunziona";
 @import "./components/cardFeedback";
 @import "components/LoginForm";

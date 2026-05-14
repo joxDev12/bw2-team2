@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import useSEO from "../../hooks/useSEO";
 
 import CardPageEvent from "../../components/eventsComponents/CardPageEvent";
+import { eventsAPI } from "../../services/api";
 
 import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalRegistrazioneEvento";
 
@@ -49,6 +51,10 @@ const EventiPage = () => {
     setEventoSelezionato(null);
     setShowModal(false);
   }
+  useSEO({
+    title: "Tutti gli Eventi",
+    description: "Esplora la nostra vasta selezione di eventi. Usa i filtri per trovare l'evento perfetto per te in base a categoria, luogo o data."
+  });
 
   const [eventiData, setEventiData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -61,18 +67,18 @@ const EventiPage = () => {
   const locations = [...new Set(eventiData.map((e) => e.location))].sort();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/events")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("DATA FROM BACKEND:", data);
-
-        setEventiData(data.dati);
-      })
-      .catch((err) => {
+    const fetchEvents = async () => {
+      try {
+        const data = await eventsAPI.getAll();
+        setEventiData(data);
+      } catch (err) {
         console.error("Errore caricamento eventi:", err);
         setEventiData([]);
-      });
+      }
+    };
+    fetchEvents();
   }, []);
+
 
   const aggiornaFiltroLocation = (location) => {
     setSearchParams((params) => {
@@ -147,7 +153,7 @@ const EventiPage = () => {
 
       <section
         className="bg-dark shadow-sm sticky-top"
-        style={{ zIndex: 1020 }}
+        style={{ zIndex: 100 }}
       >
         <div className="container py-3">
           <div className="row align-items-center g-3">
@@ -231,8 +237,7 @@ const EventiPage = () => {
         <div className="container">
           <div className="d-flex justify-content-between align-items-center mb-4">
             <p className="text-white mb-0">
-              <strong>{eventiFiltrati.length}</strong>
-              {""}
+              <strong>{eventiFiltrati.length}</strong>{" "}
               {eventiFiltrati.length === 1
                 ? "evento trovato"
                 : "eventi trovati"}
@@ -246,12 +251,12 @@ const EventiPage = () => {
               )}
               {filtroTesto && (
                 <span className="ms-2">
-                  per <strong>{filtroTesto}</strong>
+                  per {" "}<strong>{filtroTesto}</strong>
                 </span>
               )}
               {filtroLocation && (
                 <span className="ms-2">
-                  a <strong>{filtroLocation}</strong>
+                  a {" "}<strong>{filtroLocation}</strong>
                 </span>
               )}
             </p>

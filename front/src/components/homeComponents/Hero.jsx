@@ -6,7 +6,7 @@ import { SearchProvider } from "../../context/SearchContext";
 function Hero() {
   return (
     <section className="hero-section py-5 text-center d-flex align-items-center justify-content-center flex-column gap-2">
-      <h1 className="display-5 fw-bold text-light">
+      <h1 className="display-3 fw-bold text-light">
         Vivi momenti <br /> che restano.
       </h1>
 
