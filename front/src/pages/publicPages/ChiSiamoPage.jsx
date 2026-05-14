@@ -41,7 +41,7 @@ const ChiSiamoPage = () => {
       <section className="py-5">
         <div className="container py-4">
           <div className="text-center mb-5">
-            <h2 className="fw-bold text-primary">I Nostri Valori</h2>
+            <h2 className="fw-bold text-secondary">I Nostri Valori</h2>
             <p className="text-white">
               Cosa ci guida ogni giorno nella creazione della nostra
               piattaforma.
@@ -100,7 +100,7 @@ const ChiSiamoPage = () => {
       <section className="py-5">
         <div className="container py-4">
           <div className="text-center mb-5">
-            <h2 className="fw-bold text-primary">Il Nostro Team</h2>
+            <h2 className="fw-bold text-secondary">Il Nostro Team</h2>
             <p className="text-white">Le menti creative dietro EventHub.</p>
           </div>
 
@@ -130,14 +130,14 @@ const ChiSiamoPage = () => {
           <div className="d-flex justify-content-center gap-3">
             <Link
               to="/eventi"
-              className="btn btn-primary animazione-button btn-lg px-4 rounded-pill"
+              className="btn btn-secondary animazione-button btn-lg px-4 rounded-pill"
             >
               Esplora Eventi
             </Link>
             {!token && (
               <Link
                 to="/register"
-                className="btn btn-outline-secondary animazione-button btn-lg px-4 rounded-pill"
+                className="btn btn-outline-light animazione-button btn-lg px-4 rounded-pill"
               >
                 Registrati Ora
               </Link>

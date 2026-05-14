@@ -8,7 +8,7 @@ const CardUtenti = ({ name, role, image }) => {
       </div>
       <div className="card-body text-white">
         <h5 className="card-title fw-bold mb-1">{name}</h5>
-        <p className="text-primary mb-0">
+        <p className="text-secondary mb-0">
           <small>{role}</small>
         </p>
       </div>
