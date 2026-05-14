@@ -22,7 +22,7 @@ function Footer() {
           </div>
 
           <div className="col-md-4 mb-3">
-            <h6 className="fw-bold">Navigazione</h6>
+            <h6 className="fw-bold text-secondary">Navigazione</h6>
             <ul className="navbar-nav">
               <li className="nav-item">
                 <NavLink className="nav-link py-0" to="/">
@@ -48,7 +48,7 @@ function Footer() {
           </div>
 
           <div className="col-md-4 mb-3">
-            <h6 className="fw-bold">Contatti</h6>
+            <h6 className="fw-bold text-secondary">Contatti</h6>
 
             <p className="text-light mb-2">
               <i className="bi bi-envelope-fill me-2"></i>

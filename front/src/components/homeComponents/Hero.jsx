@@ -2,10 +2,11 @@
 // Delega tutta la logica della ricerca al componente HeroSearchForm.
 import HeroSearchForm from "./heroComponents/HeroSearchForm";
 import { SearchProvider } from "../../context/SearchContext";
+import bannerStats from "./BannerStats";
 
 function Hero() {
   return (
-    <section className="hero-section py-5 text-center d-flex align-items-center justify-content-center flex-column gap-2">
+    <section className="hero-section pt-5 text-center d-flex align-items-center justify-content-center flex-column gap-2">
       <h1 className="display-3 fw-bold text-light">
         Vivi momenti <br /> che restano.
       </h1>
@@ -18,7 +19,7 @@ function Hero() {
 
         <SearchProvider>
           <HeroSearchForm />
-        </SearchProvider>
+        </SearchProvider>        
       </div>
     </section>
   );
