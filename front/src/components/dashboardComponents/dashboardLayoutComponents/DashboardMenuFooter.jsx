@@ -1,10 +1,16 @@
 // Contiene le azioni finali del menu dashboard: torna al sito e logout.
 // Su mobile aggiunge data-bs-dismiss per chiudere il pannello laterale.
-function DashboardMenuFooter({ handleTornaAlSito, handleLogout, mobile = false }) {
+function DashboardMenuFooter({
+  handleTornaAlSito,
+  handleLogout,
+  mobile = false,
+}) {
   const dismissProps = mobile ? { "data-bs-dismiss": "offcanvas" } : {};
 
   return (
-    <div className={`${mobile ? "offcanvas-footer" : "sidebar-footer"} flex-shrink-0 px-3 py-3 bg-black bg-opacity-10 mt-auto`}>
+    <div
+      className={`${mobile ? "offcanvas-footer" : "sidebar-footer"} flex-shrink-0 px-3 py-3 bg-black bg-opacity-10 mt-auto`}
+    >
       <hr className="my-2 opacity-25 d-lg-none" />
       <button
         type="button"

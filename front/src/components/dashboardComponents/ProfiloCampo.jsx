@@ -12,7 +12,7 @@ function ProfiloCampo({ campo }) {
             <i className={`bi ${campo.icona} fs-3`}></i>
           </div>
           <div className="min-width-0">
-            <small className="text-muted text-uppercase fw-bold d-block mb-1">
+            <small className="text-uppercase fw-bold d-block mb-1">
               {campo.label}
             </small>
             <span className="fw-semibold text-dark fs-5 text-break">

@@ -13,7 +13,9 @@ function ProfileCard({ nomeCompleto, immagineProfilo, roleBadge, campi }) {
           style={{ width: "120px", height: "120px", objectFit: "cover" }}
         />
         <h4 className="mb-2 fw-bold">{nomeCompleto || "Utente"}</h4>
-        <span className={`badge ${roleBadge.cls} rounded-pill px-3 py-2 shadow-sm fs-6`}>
+        <span
+          className={`badge ${roleBadge.cls} rounded-pill px-3 py-2 shadow-sm fs-6`}
+        >
           <i className={`bi ${roleBadge.icon} me-2`}></i>
           {roleBadge.label}
         </span>

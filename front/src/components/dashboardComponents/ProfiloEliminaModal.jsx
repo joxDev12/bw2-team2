@@ -39,7 +39,8 @@ function ProfiloEliminaModal({
             )}
 
             <p className="mb-0">
-              Sei sicuro di voler eliminare il tuo profilo? Questa azione non puo essere annullata.
+              Sei sicuro di voler eliminare il tuo profilo? Questa azione non
+              puo essere annullata.
             </p>
           </div>
 

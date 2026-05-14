@@ -3,18 +3,17 @@
 import CardFeedback from "./CardFeedback";
 
 function Feedback() {
-    return (
-        <>
-            <div className="py-5 px-5 bg-purple">
-                <div className="container">
-                    <div className="row g-4">
-                        <CardFeedback />
-                    </div>
-                </div>
-            </div>
-        </>
-    )
+  return (
+    <section className="py-5">
+      <div className="container">
+        <h2 className="h4 text-center text-light mb-4">Cosa dicono di noi</h2>
 
+        <div className="row g-4">
+          <CardFeedback />
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default Feedback;

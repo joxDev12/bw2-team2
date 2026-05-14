@@ -81,7 +81,7 @@ const EventiDettaglioPage = () => {
             <div className="row g-4 mb-5">
               <div className="col-md-4">
                 <div className="event-info-box h-100">
-                  <div className="text-muted small mb-2">Data Evento</div>
+                  <div className="small mb-2">Data Evento</div>
 
                   <div className="fw-semibold">
                     <i className="bi bi-calendar3 me-2 text-primary"></i>
@@ -98,7 +98,7 @@ const EventiDettaglioPage = () => {
 
               <div className="col-md-4">
                 <div className="event-info-box h-100">
-                  <div className="text-muted small mb-2">Luogo</div>
+                  <div className="small mb-2">Luogo</div>
                   <div className="fw-semibold">
                     <i className="bi bi-geo-alt me-2 text-danger"></i>
                     {evento.location}
@@ -108,7 +108,7 @@ const EventiDettaglioPage = () => {
 
               <div className="col-md-4">
                 <div className="event-info-box h-100">
-                  <div className="text-muted small mb-2">Posti Disponibili</div>
+                  <div className="small mb-2">Posti Disponibili</div>
 
                   <div className="fw-semibold">
                     <i className="bi bi-people me-2 text-success"></i>
@@ -120,7 +120,7 @@ const EventiDettaglioPage = () => {
 
               <div className="col-md-4">
                 <div className="event-info-box h-100">
-                  <div className="text-muted small mb-2">Indirizzo</div>
+                  <div className="small mb-2">Indirizzo</div>
                   <div className="fw-semibold">
                     <i className="bi bi-map me-2 text-warning"></i>
                     {evento.indirizzo}
@@ -130,7 +130,7 @@ const EventiDettaglioPage = () => {
 
               <div className="col-md-4">
                 <div className="event-info-box h-100">
-                  <div className="text-muted small mb-2">Prezzo</div>
+                  <div className="small mb-2">Prezzo</div>
                   <div className="fw-semibold">
                     <i className="bi bi-cash-coin me-2 text-success"></i>
                     {evento.isfree ? "Gratuito" : `${evento.price} €`}
@@ -144,8 +144,8 @@ const EventiDettaglioPage = () => {
                 </span>
               )}
 
-              <div className="text-muted small">
-                Pubblicato il:{" "}
+              <div className="small">
+                Pubblicato il:{""}
                 {new Date(evento.created_at).toLocaleDateString("it-IT")}
               </div>
             </div>
@@ -154,7 +154,7 @@ const EventiDettaglioPage = () => {
           <div className="mb-5">
             <h3 className="fw-bold mb-3">Descrizione Evento</h3>
 
-            <p className="lead text-muted">{evento.description}</p>
+            <p className="lead">{evento.description}</p>
           </div>
 
           <div className="mb-4">
@@ -180,7 +180,7 @@ const EventiDettaglioPage = () => {
               ? "Registrati all'evento"
               : "Evento non disponibile"}
           </Link>
-         
+
           <div className="d-flex justify-content-start mt-4">
             <Link
               to="/eventi"

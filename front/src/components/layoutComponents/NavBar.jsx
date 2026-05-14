@@ -1,16 +1,18 @@
 // Navbar principale del sito con link di navigazione e area utente.
 // Cambia azioni mostrate in base allo stato di login.
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from '../../context/AuthContext';
-import UserBanner from './UserBanner';
-import profilePlaceholder from '../../assets/img/profile_placeholder.webp';
+import { useAuth } from "../../context/AuthContext";
+import UserBanner from "./UserBanner";
+import profilePlaceholder from "../../assets/img/profile_placeholder.webp";
 
 function Navbar() {
   const { utente, logout } = useAuth();
   const navigate = useNavigate();
 
-  const nomeCompleto = [utente?.name, utente?.surname].filter(Boolean).join(' ');
-  const nomeVisualizzato = nomeCompleto || utente?.username || 'Nome Utente';
+  const nomeCompleto = [utente?.name, utente?.surname]
+    .filter(Boolean)
+    .join(" ");
+  const nomeVisualizzato = nomeCompleto || utente?.username || "Nome Utente";
   const immagineProfilo = utente?.img_profile || profilePlaceholder;
   const ruoli = {
     partecipant: "Utente",
@@ -21,14 +23,18 @@ function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/', { replace: true });
+    navigate("/", { replace: true });
   };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow-sm custom-navbar">
       <div className="container-fluid">
         <NavLink className="navbar-img navbar-brand fw-bold" to="/">
-          <img src="../../src/assets/img/logo.png" alt="EventiHub" className="img-logo-navbar" />
+          <img
+            src="../../src/assets/img/logo.png"
+            alt="EventiHub"
+            className="img-logo-navbar"
+          />
         </NavLink>
 
         <div className="d-flex align-items-center gap-2 ms-auto d-lg-none">
@@ -41,7 +47,9 @@ function Navbar() {
           >
             {utente && (
               <>
-                <span className="user-banner__name mb-0 text-white fw-bold">{nomeVisualizzato}</span>
+                <span className="user-banner__name mb-0 text-white fw-bold">
+                  {nomeVisualizzato}
+                </span>
                 <img
                   src={immagineProfilo}
                   alt="Immagine profilo utente"
@@ -79,9 +87,14 @@ function Navbar() {
                   <hr className="border-secondary opacity-50 my-2" />
                 </li>
                 <li className="nav-item d-lg-none">
-                  <NavLink className="nav-link d-flex align-items-center justify-content-between gap-3" to="/dashboard">
+                  <NavLink
+                    className="nav-link d-flex align-items-center justify-content-between gap-3"
+                    to="/dashboard"
+                  >
                     <span>Dashboard</span>
-                    <span className="badge bg-primary rounded-pill">{ruoloVisualizzato}</span>
+                    <span className="badge bg-primary rounded-pill">
+                      {ruoloVisualizzato}
+                    </span>
                   </NavLink>
                 </li>
                 <li className="nav-item d-lg-none">

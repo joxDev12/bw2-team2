@@ -9,9 +9,12 @@ function DashboardContent({ activeTab, userRole }) {
   return (
     <div className="dashboard-content p-4">
       {activeTab === "profilo" && <ProfiloPagina />}
-      {activeTab === "miei-eventi" && (
-        userRole === "partecipant" ? <MieiEventiUtente /> : <MieiEventiOrganizzatore />
-      )}
+      {activeTab === "miei-eventi" &&
+        (userRole === "partecipant" ? (
+          <MieiEventiUtente />
+        ) : (
+          <MieiEventiOrganizzatore />
+        ))}
       {activeTab === "registrazioni" && <RegistrazioniUtenti />}
     </div>
   );

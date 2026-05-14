@@ -41,7 +41,7 @@ function ProfiloModificaModal({
                 >
                   <i className="bi bi-exclamation-triangle-fill"></i>
                   <div>
-                    {erroreForm.split('\n').map((errore) => (
+                    {erroreForm.split("\n").map((errore) => (
                       <div key={errore}>{errore}</div>
                     ))}
                   </div>
@@ -49,7 +49,7 @@ function ProfiloModificaModal({
               )}
 
               <h6
-                className="text-muted text-uppercase fw-bold mb-3"
+                className="text-uppercase fw-bold mb-3"
                 style={{ fontSize: "0.8rem" }}
               >
                 <i className="bi bi-person me-2"></i>Dati Personali
@@ -71,7 +71,10 @@ function ProfiloModificaModal({
                   />
                 </div>
                 <div className="col-12 col-md-6">
-                  <label htmlFor="edit-surname" className="form-label fw-semibold">
+                  <label
+                    htmlFor="edit-surname"
+                    className="form-label fw-semibold"
+                  >
                     Cognome
                   </label>
                   <input
@@ -85,7 +88,10 @@ function ProfiloModificaModal({
                   />
                 </div>
                 <div className="col-12 col-md-6">
-                  <label htmlFor="edit-username" className="form-label fw-semibold">
+                  <label
+                    htmlFor="edit-username"
+                    className="form-label fw-semibold"
+                  >
                     Username
                   </label>
                   <input
@@ -99,7 +105,10 @@ function ProfiloModificaModal({
                   />
                 </div>
                 <div className="col-12 col-md-6">
-                  <label htmlFor="edit-email" className="form-label fw-semibold">
+                  <label
+                    htmlFor="edit-email"
+                    className="form-label fw-semibold"
+                  >
                     Email
                   </label>
                   <input
@@ -113,7 +122,10 @@ function ProfiloModificaModal({
                   />
                 </div>
                 <div className="col-12 col-md-6">
-                  <label htmlFor="edit-location" className="form-label fw-semibold">
+                  <label
+                    htmlFor="edit-location"
+                    className="form-label fw-semibold"
+                  >
                     Localita
                   </label>
                   <input
@@ -126,7 +138,10 @@ function ProfiloModificaModal({
                   />
                 </div>
                 <div className="col-12 col-md-6">
-                  <label htmlFor="edit-indirizzo" className="form-label fw-semibold">
+                  <label
+                    htmlFor="edit-indirizzo"
+                    className="form-label fw-semibold"
+                  >
                     Indirizzo
                   </label>
                   <input
@@ -139,15 +154,17 @@ function ProfiloModificaModal({
                   />
                 </div>
                 <div className="col-12">
-                  <label className="form-label fw-semibold">
-                    Foto profilo
-                  </label>
+                  <label className="form-label fw-semibold">Foto profilo</label>
                   <div className="d-flex align-items-center gap-3 flex-wrap">
                     <img
                       src={anteprimaFoto}
                       alt="Anteprima foto profilo"
                       className="rounded-circle border shadow-sm flex-shrink-0"
-                      style={{ width: "72px", height: "72px", objectFit: "cover" }}
+                      style={{
+                        width: "72px",
+                        height: "72px",
+                        objectFit: "cover",
+                      }}
                     />
                     <div className="d-flex align-items-center gap-2 flex-wrap">
                       <input
@@ -164,7 +181,7 @@ function ProfiloModificaModal({
                       >
                         Scegli la foto
                       </label>
-                      <span className="text-muted small">{nomeFotoProfilo}</span>
+                      <span className="small">{nomeFotoProfilo}</span>
                     </div>
                   </div>
                 </div>
@@ -172,18 +189,21 @@ function ProfiloModificaModal({
 
               <hr className="my-3" />
               <h6
-                className="text-muted text-uppercase fw-bold mb-3"
+                className="text-uppercase fw-bold mb-3"
                 style={{ fontSize: "0.8rem" }}
               >
                 <i className="bi bi-shield-lock me-2"></i>Cambio Password
-                <small className="text-muted fw-normal ms-2">
+                <small className="fw-normal ms-2">
                   (lascia vuoto per non modificarla)
                 </small>
               </h6>
 
               <div className="row g-3">
                 <div className="col-12 col-md-6">
-                  <label htmlFor="edit-password" className="form-label fw-semibold">
+                  <label
+                    htmlFor="edit-password"
+                    className="form-label fw-semibold"
+                  >
                     Nuova Password
                   </label>
                   <input
@@ -198,7 +218,10 @@ function ProfiloModificaModal({
                   />
                 </div>
                 <div className="col-12 col-md-6">
-                  <label htmlFor="edit-conferma" className="form-label fw-semibold">
+                  <label
+                    htmlFor="edit-conferma"
+                    className="form-label fw-semibold"
+                  >
                     Conferma Password
                   </label>
                   <input

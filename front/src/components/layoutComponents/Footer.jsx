@@ -9,7 +9,11 @@ function Footer() {
         <div className="row">
           <div className="col-md-4 mb-3">
             <NavLink className="navbar-brand fw-bold" to="/">
-             <img src="../../src/assets/img/logo.png" alt="EventiHub" className="img-logo-navbar" />
+              <img
+                src="../../src/assets/img/logo.png"
+                alt="EventiHub"
+                className="img-logo-navbar"
+              />
             </NavLink>
             <p className="footer-text text-light py-3 fs-6">
               La piattaforma per scoprire, organizzare e vivere eventi

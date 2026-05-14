@@ -3,21 +3,23 @@
 import Faq from "./Faq";
 import Help from "./Help";
 
-
 function Assistenza() {
-    return (
-        <div className="d-flex align-items-center justify-content-center py-5 px-5 flex-md-row flex-column bg-purple w-100">
+  return (
+    <section className="py-5">
+      <div className="container">
+        <h2 className="h4 text-light mb-4">Domande frequenti</h2>
+        <div className="row g-4 align-items-stretch">
+          <div className="col-12 col-md-7 d-flex">
+            <Faq />
+          </div>
 
-            <div className="col-6 container d-flex justify-content-center align-items-center">
-                <Faq />
-            </div>
-
-            <div className="col-6 container d-flex justify-content-center align-items-center">
-                <Help />
-            </div>
+          <div className="col-12 col-md-5 d-flex">
+            <Help />
+          </div>
         </div>
-    );
-
+      </div>
+    </section>
+  );
 }
 
-export default Assistenza
+export default Assistenza;

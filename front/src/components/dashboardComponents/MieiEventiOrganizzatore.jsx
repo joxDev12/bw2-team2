@@ -30,7 +30,8 @@ function MieiEventiOrganizzatore() {
   const [filtroEventi, setFiltroEventi] = useState("data_avvenimento");
   const [toast, setToast] = useState(null);
 
-  const { eventi, setEventi, caricamento, errore } = useOrganizerEventsData(utente);
+  const { eventi, setEventi, caricamento, errore } =
+    useOrganizerEventsData(utente);
   const eventiFiltrati = ordinaEFiltraEventi(eventi, filtroEventi);
 
   const mostraToast = (messaggio, tipo = "success") => {
@@ -43,7 +44,11 @@ function MieiEventiOrganizzatore() {
   const eliminazione = useEventDelete({ eventi, setEventi, mostraToast });
 
   if (caricamento) {
-    return <div className="text-center py-5"><div className="spinner-border text-primary"></div></div>;
+    return (
+      <div className="text-center py-5">
+        <div className="spinner-border text-primary"></div>
+      </div>
+    );
   }
 
   if (errore) {
@@ -127,7 +132,11 @@ function MieiEventiOrganizzatore() {
 
 // Raggruppa le tre viste responsive della lista eventi.
 // Passa alle viste figlie le stesse funzioni e gli stessi helper.
-function OrganizerEventsViews({ eventiFiltrati, apriModaleModifica, apriModaleElimina }) {
+function OrganizerEventsViews({
+  eventiFiltrati,
+  apriModaleModifica,
+  apriModaleElimina,
+}) {
   const propsComuni = {
     eventi: eventiFiltrati,
     getImmagineEvento,

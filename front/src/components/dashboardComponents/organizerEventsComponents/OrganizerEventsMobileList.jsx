@@ -23,13 +23,20 @@ function OrganizerEventsMobileList({
           <div className="card border-0 shadow-sm rounded-4">
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-start mb-2">
-                <EventTitleCell evento={evento} getImmagineEvento={getImmagineEvento} heading />
-                <Link to={`/eventi/${evento.id}`} className="btn btn-sm btn-light text-primary rounded-pill shadow-sm">
+                <EventTitleCell
+                  evento={evento}
+                  getImmagineEvento={getImmagineEvento}
+                  heading
+                />
+                <Link
+                  to={`/eventi/${evento.id}`}
+                  className="btn btn-sm btn-light text-primary rounded-pill shadow-sm"
+                >
                   <i className="bi bi-eye"></i>
                 </Link>
               </div>
 
-              <div className="d-flex flex-column gap-2 text-muted small mb-3">
+              <div className="d-flex flex-column gap-2 small mb-3">
                 <span className="d-flex align-items-center">
                   <i className="bi bi-calendar3 text-primary me-2"></i>
                   {new Date(evento.date).toLocaleDateString("it-IT")}
@@ -40,7 +47,10 @@ function OrganizerEventsMobileList({
                 </span>
                 <span className="d-flex align-items-center">
                   <i className="bi bi-cash-coin text-success me-2"></i>
-                  <EventPriceBadge evento={evento} getPrezzoEvento={getPrezzoEvento} />
+                  <EventPriceBadge
+                    evento={evento}
+                    getPrezzoEvento={getPrezzoEvento}
+                  />
                 </span>
                 <span className="d-flex align-items-center flex-wrap gap-1">
                   <i className="bi bi-people text-info me-2"></i>

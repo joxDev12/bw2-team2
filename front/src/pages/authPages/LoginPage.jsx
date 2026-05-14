@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { authAPI } from '../../services/api';
-import { useAuth } from '../../context/AuthContext';
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { authAPI } from "../../services/api";
+import { useAuth } from "../../context/AuthContext";
 
-import LoginForm from '../../components/authComponents/LoginForm';
+import LoginForm from "../../components/authComponents/LoginForm";
 
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const destinazione = location.state?.from?.pathname || '/';
+  const destinazione = location.state?.from?.pathname || "/";
 
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [errore, setErrore] = useState(null);
   const [caricamento, setCaricamento] = useState(false);
 
@@ -31,14 +31,14 @@ function LoginPage() {
       login(token);
       navigate(destinazione, { replace: true });
     } catch (err) {
-      setErrore(err.message || 'Credenziali non valide');
+      setErrore(err.message || "Credenziali non valide");
     } finally {
       setCaricamento(false);
     }
   };
 
   return (
-    <div className='auth-container'>
+    <div className="auth-container">
       <LoginForm
         form={form}
         errore={errore}

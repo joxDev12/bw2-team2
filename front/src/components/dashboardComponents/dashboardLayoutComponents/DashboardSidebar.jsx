@@ -25,13 +25,24 @@ function DashboardSidebar({
 
       <hr className="mx-3 my-0 opacity-25" />
 
-      <DashboardUserCard user={user} roleBadge={roleBadge} getInitials={getInitials} />
+      <DashboardUserCard
+        user={user}
+        roleBadge={roleBadge}
+        getInitials={getInitials}
+      />
 
       <hr className="mx-3 my-0 opacity-25" />
 
-      <DashboardNav activeTab={activeTab} cambiaTab={cambiaTab} userRole={user.role} />
+      <DashboardNav
+        activeTab={activeTab}
+        cambiaTab={cambiaTab}
+        userRole={user.role}
+      />
 
-      <DashboardMenuFooter handleTornaAlSito={handleTornaAlSito} handleLogout={handleLogout} />
+      <DashboardMenuFooter
+        handleTornaAlSito={handleTornaAlSito}
+        handleLogout={handleLogout}
+      />
     </aside>
   );
 }

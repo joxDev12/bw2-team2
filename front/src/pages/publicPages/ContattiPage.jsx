@@ -4,7 +4,7 @@ const ContattiPage = () => {
       <div className="row justify-content-center text-center mb-5">
         <div className="col-lg-8">
           <h1 className="display-4 fw-bold mb-3 text-primary">Contattaci</h1>
-          <p className="lead text-muted">
+          <p className="lead">
             Siamo qui per aiutarti! Hai domande sui nostri eventi o hai bisogno
             di assistenza? Compila il modulo sottostante o utilizza i nostri
             recapiti.
@@ -27,7 +27,7 @@ const ContattiPage = () => {
                 </div>
                 <div>
                   <h5 className="mb-1 fw-semibold">Indirizzo</h5>
-                  <p className="mb-0 text-muted">
+                  <p className="mb-0">
                     Via Roma, 123
                     <br />
                     00100 Roma (RM), Italia
@@ -44,7 +44,7 @@ const ContattiPage = () => {
                 </div>
                 <div>
                   <h5 className="mb-1 fw-semibold">Telefono</h5>
-                  <p className="mb-0 text-muted">+39 06 12345678</p>
+                  <p className="mb-0">+39 06 12345678</p>
                 </div>
               </div>
 
@@ -57,7 +57,7 @@ const ContattiPage = () => {
                 </div>
                 <div>
                   <h5 className="mb-1 fw-semibold">Email</h5>
-                  <p className="mb-0 text-muted">info@eventhub.it</p>
+                  <p className="mb-0">info@eventhub.it</p>
                 </div>
               </div>
 

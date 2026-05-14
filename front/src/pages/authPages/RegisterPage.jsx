@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { authAPI } from '../../services/api';
-import { useAuth } from '../../context/AuthContext';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { authAPI } from "../../services/api";
+import { useAuth } from "../../context/AuthContext";
 
-import RegisterForm from '../../components/authComponents/RegisterForm';
+import RegisterForm from "../../components/authComponents/RegisterForm";
 
 function RegisterPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    name: '',
-    surname: '',
-    username: '',
-    email: '',
-    role: 'partecipant',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    surname: "",
+    username: "",
+    email: "",
+    role: "partecipant",
+    password: "",
+    confirmPassword: "",
   });
   const [errore, setErrore] = useState(null);
   const [caricamento, setCaricamento] = useState(false);
@@ -32,7 +32,7 @@ function RegisterPage() {
     setCaricamento(true);
 
     if (form.password !== form.confirmPassword) {
-      setErrore('Le password non coincidono.');
+      setErrore("Le password non coincidono.");
       setCaricamento(false);
       return;
     }
@@ -51,16 +51,16 @@ function RegisterPage() {
 
       const token = await authAPI.login(form.email, form.password);
       login(token);
-      navigate('/', { replace: true });
+      navigate("/", { replace: true });
     } catch (err) {
-      setErrore(err.message || 'Errore durante la registrazione');
+      setErrore(err.message || "Errore durante la registrazione");
     } finally {
       setCaricamento(false);
     }
   };
 
   return (
-    <div className='auth-container'>
+    <div className="auth-container">
       <RegisterForm
         form={form}
         errore={errore}

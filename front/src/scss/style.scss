@@ -1,57 +1,19 @@
-@use "customs/colors" as *;
-@use "customs/fonts" as *;
+@import "../../node_modules/bootstrap/scss/functions";
+@import "customs/bootstrap_variables";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+@import "customs/custom_bootstrap";
 
 // Pagine
-@use "./pages/eventiPage";
-@use "./pages/dashboard";
-@use "./pages/dettaglioPage";
+@import "./pages/eventiPage";
+@import "./pages/dashboard";
+@import "./pages/dettaglioPage";
 
-
-//componenti
-@use "./components/navbar";
-@use "./components/hero";
-@use "./components/comeFunziona";
-@use "./components/cardFeedback";
-@use "./components/bannerOrganizzatore";
-@use "./components/faq";
-@use "./components/help";
-@use "./components/newsletter";
-@use "components/LoginForm";
-@use "components/registerForm";
-
-
-
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
-@import "customs/bootstrap_variables"; // per cambiare le variabili generiche di bootstrap
-
-$theme-colors: (
-    // le variabili predefinite di bootstrap abbinate ai temi prefediniti delle classi bootstrap
-    "primary": $primary,
-    "secondary": $secondary,
-    "success": $success,
-    "info": $info,
-    "warning": $warning,
-    "danger": $danger,
-    "light": $light,
-    "dark": $dark
-);
-
-$custom-colors: (
-    // eventuali nuove classi se si voglio introdurre
-    // "custom_color": $red1 // abbiamo creato una nuova variabile di tema e la abbiamo abbinata ad uno nostro colore custom, questo vuol dire che puo essere abbinata alle classi bootstrap
-    // adesso se fate potete usere l'abbinamento a btn-  , bg-     , text-    , esempio btn-custom_color.
-);
-
-
-$theme-colors: map-merge($theme-colors, $custom-colors);
-// map merge e' una utilita' di scss che ci permette di unire nuovi temi ai predefiniti di bootstrap/
-
-
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
-
-@import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
-
-//@import "customs/custom_bootstrap"; // qui non facciamo cambio variabile ma solo il comportamento delle classi.
-
-// il file di customizzazione deve essere importato dopo il file bootstrap oppure le modifiche facciamo vengono sovrascritte da quelle predefinite di bootstrap
+// Componenti
+@import "./components/navbar";
+@import "./components/hero";
+@import "./components/comeFunziona";
+@import "./components/cardFeedback";
+@import "components/LoginForm";
+@import "components/registerForm";

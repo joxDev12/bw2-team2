@@ -1,4 +1,3 @@
-//FONT
 $font-heading: 'Plus Jakarta Sans', sans-serif; // title
 $font-body: 'Inter', sans-serif; // text
 
