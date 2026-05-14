@@ -66,10 +66,10 @@ function MieiEventiUtente() {
     <div className="miei-eventi-utente">
       <div className="d-flex justify-content-between align-items-start mb-4">
         <div>
-          <h2 className="fw-bold mb-1">
-            I Miei <span className="text-primary">Eventi</span>
+          <h2 className="fw-bold text-white mb-1">
+            I Miei <span className="text-secondary">Eventi</span>
           </h2>
-          <p className="mb-0">Visualizza gli eventi a cui sei iscritto</p>
+          <p className="text-white mb-0">Visualizza gli eventi a cui sei iscritto</p>
         </div>
       </div>
 
@@ -86,7 +86,7 @@ function MieiEventiUtente() {
         <div className="row g-4">
           {registrazioni.map((reg) => (
             <div key={reg.id} className="col-12 col-md-6 col-lg-4">
-              <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+              <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden animazione-card">
                 <div className="card-body p-4 d-flex flex-column">
                   <span className="badge bg-primary bg-opacity-10 text-primary mb-3 align-self-start rounded-pill px-3 py-2">
                     {reg.event_category || "Evento"}

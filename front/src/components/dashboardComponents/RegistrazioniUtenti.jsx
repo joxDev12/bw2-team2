@@ -92,8 +92,8 @@ function RegistrazioniUtenti() {
   return (
     <div className="registrazioni-container">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="fw-bold mb-0">
-          <i className="bi bi-people-fill me-2 text-primary"></i>
+        <h2 className="fw-bold text-white mb-0">
+          <i className="bi bi-people-fill me-2 text-secondary"></i>
           {utente?.role === "admin"
             ? "Tutte le Registrazioni"
             : "Registrazioni ai tuoi Eventi"}
@@ -111,7 +111,7 @@ function RegistrazioniUtenti() {
       ) : (
         <div className="table-responsive bg-white rounded-4 shadow-sm border">
           <table className="table table-hover table-borderless align-middle mb-0">
-            <thead className="table-light border-bottom">
+            <thead className="table-primary border-bottom">
               <tr>
                 <th className="px-4 py-3">Data</th>
                 <th className="px-4 py-3">Utente</th>
@@ -160,7 +160,7 @@ function RegistrazioniUtenti() {
                     </small>
                   </td>
                   <td className="px-4 py-3 text-center">
-                    <span className="badge bg-secondary rounded-pill px-3 py-2">
+                    <span className="badge bg-primary rounded-pill px-3 py-2">
                       {reg.seats}
                     </span>
                   </td>

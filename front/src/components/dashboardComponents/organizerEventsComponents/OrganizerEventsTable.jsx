@@ -16,7 +16,7 @@ function OrganizerEventsTable() {
   return (
     <div className="table-responsive bg-white rounded-4 shadow-sm border border-light d-none d-xl-block">
       <table className="table table-hover align-middle mb-0 border-0">
-        <thead className="table-light">
+        <thead className="table-primary">
           <tr>
             <th className="px-4 py-3 border-0 rounded-start-3">Titolo</th>
             <th className="px-4 py-3 border-0">Data</th>

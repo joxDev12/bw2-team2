@@ -24,9 +24,9 @@ function Footer() {
             </p>
           </div>
 
-          <div className="col-md-4 mb-3">
-            <h6 className="fw-bold text-secondary">Navigazione</h6>
-            <ul className="navbar-nav">
+          <div className="col-12 col-md-4 mb-3">
+            <h6 className="fw-bold text-secondary text-center text-md-start">Navigazione</h6>
+            <ul className="navbar-nav justify-content-center align-items-center justify-content-md-start align-items-md-start">
               <li className="nav-item">
                 <NavLink className="nav-link py-0" to="/">
                   Esplora
