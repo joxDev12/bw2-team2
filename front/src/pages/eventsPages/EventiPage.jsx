@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import useSEO from "../../hooks/useSEO";
+
 import CardPageEvent from "../../components/eventsComponents/CardPageEvent";
 import { eventsAPI } from "../../services/api";
 
@@ -36,6 +38,11 @@ function badgeColore(categoria) {
 }
 
 const EventiPage = () => {
+  useSEO({
+    title: "Tutti gli Eventi",
+    description: "Esplora la nostra vasta selezione di eventi. Usa i filtri per trovare l'evento perfetto per te in base a categoria, luogo o data."
+  });
+
   const [eventiData, setEventiData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -133,7 +140,7 @@ const EventiPage = () => {
 
       <section
         className="bg-dark shadow-sm sticky-top"
-        style={{ zIndex: 1020 }}
+        style={{ zIndex: 100 }}
       >
         <div className="container py-3">
           <div className="row align-items-center g-3">

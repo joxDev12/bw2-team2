@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import eventsPlaceholder from "../../assets/img/events_placeholder.webp";
+import useSEO from "../../hooks/useSEO";
 import { eventsAPI } from "../../services/api";
 
 const EventiDettaglioPage = () => {
@@ -9,6 +10,11 @@ const EventiDettaglioPage = () => {
   const [evento, setEvento] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errore, setErrore] = useState("");
+
+  useSEO({
+    title: evento ? evento.title : "Caricamento evento...",
+    description: evento ? evento.description : "Dettagli dell'evento su EventHub."
+  });
 
   useEffect(() => {
     const fetchEvento = async () => {
