@@ -8,7 +8,7 @@ function RegisterPage() {
   });
 
   return (
-    <div className="auth-container">
+    <div className="auth-container d-flex justify-content-center align-items-center flex-grow-1 py-5">
       <RegisterForm />
     </div>
   );

@@ -10,10 +10,10 @@ function Layout() {
   //   togliere commento quando si implementa il contesto
 
   return (
-    <div className="layout">
+    <div className="layout d-flex flex-column min-vh-100">
       <Navbar />
 
-      <main className="bg-dark">
+      <main className="bg-dark flex-grow-1 d-flex flex-column">
         <Outlet />
       </main>
 
