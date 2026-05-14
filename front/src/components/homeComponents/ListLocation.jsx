@@ -88,14 +88,14 @@ function ListLocations() {
                     {totalItems > itemsToShow && (
                         <div className="d-flex gap-2">
                             <button
-                                className="btn btn-outline-primary btn-sm rounded-circle"
+                                className="btn btn-outline-secondary btn-sm rounded-circle"
                                 onClick={prevSlide}
                                 disabled={currentIndex === 0}
                             >
                                 <i className="bi bi-chevron-left"></i>
                             </button>
                             <button
-                                className="btn btn-outline-primary btn-sm rounded-circle"
+                                className="btn btn-outline-secondary btn-sm rounded-circle"
                                 onClick={nextSlide}
                                 disabled={currentIndex >= totalItems - itemsToShow}
                             >

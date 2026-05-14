@@ -74,7 +74,7 @@ const EventiPage = () => {
   const [eventiData, setEventiData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [categoriaAttiva, setCategoriaAttiva] = useState("Tutti");
+  const [categoriaAttiva, setCategoriaAttiva] = useState(searchParams.get("category") || "Tutti");
   const filtroTesto = searchParams.get("q") || "";
   const filtroLocation = searchParams.get("location") || "";
   const filtroData = searchParams.get("date") || "";
@@ -97,6 +97,10 @@ const EventiPage = () => {
     fetchEvents();
   }, []);
 
+  useEffect(() => {
+    setCategoriaAttiva(searchParams.get("category") || "Tutti");
+  }, [searchParams]);
+
 
   const aggiornaFiltroLocation = (location) => {
     setSearchParams((params) => {
@@ -106,6 +110,21 @@ const EventiPage = () => {
         nuoviParams.set("location", location);
       } else {
         nuoviParams.delete("location");
+      }
+
+      return nuoviParams;
+    });
+  };
+
+  const aggiornaFiltroCategoria = (categoria) => {
+    setCategoriaAttiva(categoria);
+    setSearchParams((params) => {
+      const nuoviParams = new URLSearchParams(params);
+
+      if (categoria !== "Tutti") {
+        nuoviParams.set("category", categoria);
+      } else {
+        nuoviParams.delete("category");
       }
 
       return nuoviParams;
@@ -181,7 +200,7 @@ const EventiPage = () => {
                 ? "btn-primary shadow-sm"
                 : "btn-outline-light"
                 }`}
-              onClick={() => setCategoriaAttiva("Tutti")}
+              onClick={() => aggiornaFiltroCategoria("Tutti")}
             >
               <i className="bi bi-grid-fill me-1"></i>
               Tutti
@@ -195,7 +214,7 @@ const EventiPage = () => {
                   ? "btn-primary shadow-sm"
                   : bottoneCategoriaColore(cat)
                   }`}
-                onClick={() => setCategoriaAttiva(cat)}
+                onClick={() => aggiornaFiltroCategoria(cat)}
               >
                 <i className={`bi ${iconeCategorie[cat] || "bi-grid-fill"} me-1`}></i>
                 {cat}

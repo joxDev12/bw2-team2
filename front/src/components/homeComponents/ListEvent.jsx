@@ -32,8 +32,7 @@ function ListEvent() {
       try {
         setLoading(true);
         const data = await eventsAPI.getAll();
-        // Prendiamo fino a 8 eventi come richiesto
-        setEvents(data.slice(0, 8));
+        setEvents(data);
         setError(null);
       } catch (err) {
         console.error("Errore nel caricamento degli eventi:", err);
@@ -47,7 +46,10 @@ function ListEvent() {
   }, []);
 
   // Il numero totale di item è events.length + 1 (la card "Vedi tutti")
-  const totalItems = events.length + 1;
+  // Prendiamo fino a 8 eventi come richiesto
+  const eventiSlider = events.slice(0, 8);
+
+  const totalItems = eventiSlider.length + 1;
 
   const nextSlide = () => {
     if (currentIndex < totalItems - itemsToShow) {
@@ -97,7 +99,7 @@ function ListEvent() {
           <div className="alert alert-danger" role="alert">
             {error}
           </div>
-        ) : events.length === 0 ? (
+        ) : eventiSlider.length === 0 ? (
           <div className="text-center py-5">
             <p className="text-muted">Nessun evento disponibile al momento.</p>
           </div>
@@ -109,7 +111,7 @@ function ListEvent() {
                 transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`,
               }}
             >
-              {events.map((event) => (
+              {eventiSlider.map((event) => (
                 <div key={event.id} className="slider-item">
                   <CardListEvent event={event} />
                 </div>
