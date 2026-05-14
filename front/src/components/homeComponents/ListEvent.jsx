@@ -104,7 +104,7 @@ function ListEvent() {
         ) : (
           <div className="slider-container">
             <div
-              className="slider-track"
+              className="slider-track py-3"
               style={{
                 transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`,
               }}
@@ -122,15 +122,15 @@ function ListEvent() {
                     to="/eventi"
                     className="text-decoration-none h-100 d-block"
                   >
-                    <article className="card bg-primary border-0 shadow-sm h-100 animazione-card d-flex align-items-center justify-content-center text-center p-3">
+                    <article className="card bg-primary animazione-card-x border-0 shadow-sm h-100 d-flex align-items-center justify-content-center text-center p-3">
                       <div className="card-body d-flex flex-column align-items-center justify-content-center text-white p-0">
-                        <div 
-                          className="rounded-circle bg-white bg-opacity-25 d-flex align-items-center justify-content-center mb-3 transition-all" 
+                        <div
+                          className="rounded-circle bg-white bg-opacity-25 d-flex align-items-center justify-content-center mb-3 transition-all"
                           style={{ width: '60px', height: '60px' }}
                         >
                           <i className="bi bi-arrow-right fs-3"></i>
                         </div>
-                        <h6 className="fw-bold mb-0">Scopri tutti<br/>gli eventi</h6>
+                        <h6 className="fw-bold mb-0">Scopri tutti<br />gli eventi</h6>
                       </div>
                     </article>
                   </Link>

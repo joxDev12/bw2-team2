@@ -6,10 +6,10 @@ import { DashboardProvider } from "../../context/DashboardContext";
 function Dashboard() {
   return (
     <DashboardProvider>
-      <div className="dashboard-wrapper d-flex vh-100">
+      <div className="d-flex vh-100">
         <DashboardSidebar />
 
-        <main className="dashboard-main flex-grow-1 overflow-auto">
+        <main className="bg-soft-dark min-vh-100 flex-grow-1 overflow-auto">
           <DashboardNav />
           <DashboardContent />
         </main>
