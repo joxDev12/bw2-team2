@@ -53,14 +53,20 @@ function Footer() {
           <div className="col-md-4 mb-3 text-center text-md-start">
             <p className="text-light mb-2">
               <i className="bi bi-envelope-fill me-2"></i>
-              <a href="mailto:info@eventhub.com" className="text-light text-decoration-none">info@eventhub.com</a>
+              <a
+                href="mailto:info@eventhub.com"
+                className="text-light text-decoration-none"
+              >
+                info@eventhub.com
+              </a>
             </p>
 
             <p className="text-light mb-3">
               <i className="bi bi-geo-alt-fill me-2"></i>
-              Milano, Italia
+              P.za del Duomo, 20123 Milano MI
             </p>
           </div>
+
           <hr
             className="bg-secondary border-0 opacity-50 w-100 my-4"
             style={{ height: "1px" }}
