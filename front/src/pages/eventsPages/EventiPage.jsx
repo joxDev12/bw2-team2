@@ -38,22 +38,17 @@ function badgeColore(categoria) {
 }
 
 const EventiPage = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [eventoSelezionato, setEventoSelezionato] = useState(null);
 
-const [showModal, setShowModal] = useState(false);
-const [eventoSelezionato, setEventoSelezionato] = useState(null);
-
-
-function openModal(evento) {
-  setEventoSelezionato(evento);
-  setShowModal(true);
-}
-function closeModal() {
-  setEventoSelezionato(null);
-  setShowModal(false);
-}
-
-
-
+  function openModal(evento) {
+    setEventoSelezionato(evento);
+    setShowModal(true);
+  }
+  function closeModal() {
+    setEventoSelezionato(null);
+    setShowModal(false);
+  }
 
   const [eventiData, setEventiData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -162,10 +157,11 @@ function closeModal() {
                   <button
                     key={cat.nome}
                     id={`filter-${cat.nome.toLowerCase()}`}
-                    className={`btn btn-sm rounded-pill px-3 fw-semibold ${categoriaAttiva === cat.nome
-                      ? "btn-primary shadow-sm"
-                      : "btn-outline-light"
-                      }`}
+                    className={`btn btn-sm rounded-pill px-3 fw-semibold ${
+                      categoriaAttiva === cat.nome
+                        ? "btn-primary shadow-sm"
+                        : "btn-outline-light"
+                    }`}
                     onClick={() => setCategoriaAttiva(cat.nome)}
                   >
                     <i className={`bi ${cat.icona} me-1`}></i>
@@ -272,11 +268,6 @@ function closeModal() {
                   openModal={openModal}
                 />
               ))}
-
-
-
-
-
             </div>
           ) : (
             <div className="text-center py-5">
@@ -296,18 +287,13 @@ function closeModal() {
               </button>
             </div>
           )}
-{showModal && (
-  <ModalRegistrazioneEvento
-    show={showModal}
-    onClose={closeModal}
-    evento={eventoSelezionato}
-  />
-)}
-
-
-
-
-
+          {showModal && (
+            <ModalRegistrazioneEvento
+              show={showModal}
+              onClose={closeModal}
+              evento={eventoSelezionato}
+            />
+          )}
         </div>
       </section>
     </div>

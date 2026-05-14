@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import eventsPlaceholder from "../../assets/img/events_placeholder.webp";
 
 const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
-  const { user } = useAuth();
+  const { utente} = useAuth();
   const navigate = useNavigate();
 
 
   function handleRegistrati() {
-if (!user) {
+if (!utente) {
   navigate("/login");
   return;
 }
