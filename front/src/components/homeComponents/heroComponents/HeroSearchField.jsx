@@ -12,7 +12,7 @@ function HeroSearchField() {
     <>
       <div className="form-floating flex-fill position-relative">
         <input
-          className="form-control custom-rounded rounded-start-3"
+          className="form-control custom-rounded-start rounded-start-3"
           type="search"
           id="search"
           placeholder=" "
@@ -39,7 +39,7 @@ function HeroSearchField() {
 
       <div className="form-floating flex-fill position-relative">
         <input
-          className="form-control custom-rounded"
+          className="form-control custom-rounded-inner"
           type="search"
           id="geo"
           placeholder=" "
@@ -57,7 +57,7 @@ function HeroSearchField() {
 
       <div className="form-floating flex-fill position-relative">
         <input
-          className="form-control custom-rounded"
+          className="form-control custom-rounded-inner"
           type="search"
           id="date"
           placeholder=" "

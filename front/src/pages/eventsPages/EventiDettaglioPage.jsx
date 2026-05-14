@@ -192,24 +192,9 @@ const EventiDettaglioPage = () => {
             }}
           >
             <i className="bi bi-ticket-perforated me-2"></i>
-            {evento.available
-              ? "Registrati all'evento"
-              : "Evento non disponibile"}
+            {evento.available ? "Registrati all'evento" : "Evento non disponibile"}
           </button>
 
-          {/* <Link
-            to="/register"
-            className={`btn btn-primary btn-lg rounded-pill px-5 btn-pulse ${!evento.available ? "disabled" : ""}`}
-            onClick={(e) => {
-              if (!evento.available) e.preventDefault();
-            }}
-          >
-            <i className="bi bi-ticket-perforated me-2"></i>
-
-            {evento.available
-              ? "Registrati all'evento"
-              : "Evento non disponibile"}
-          </Link> */}
 
           <div className="d-flex justify-content-start mt-4">
             <Link

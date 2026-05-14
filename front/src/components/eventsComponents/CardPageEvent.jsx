@@ -10,11 +10,13 @@ const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
   const navigate = useNavigate();
 
   function handleRegistrati() {
-    if (!utente) {
-      navigate("/login");
-      return;
-    }
-    openModal(evento);
+if (!evento.available) return;
+
+if (!utente) {
+  navigate("/login");
+  return;
+}
+openModal(evento);
   }
 
   return (
@@ -35,6 +37,11 @@ const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
             >
               {evento.category}
             </span>
+            {!evento.available && (
+              <span className="badge bg-danger px-4 py-3 fs-6 position-absolute top-0 end-0 m-3">
+                Sold Out
+              </span>
+            )}
           </div>
 
           <div className="col-md-8">
@@ -56,12 +63,12 @@ const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
 
               <div className="d-flex gap-3 mt-4 pt-3 border-top align-items-center">
                 <button
-                  className="btn btn-primary btn-lg rounded-pill d-flex align-items-center gap-2"
+                  className={`btn btn-primary px-4 fw-semibold rounded-pill ${!evento.available ? "disabled" : ""}`}
                   id={`registrati-evento-${evento.id}`}
                   onClick={handleRegistrati}
                 >
-                  <i className="bi bi-ticket-perforated"></i>
-                  Registrati all'evento
+                  <i className="bi bi-ticket-perforated me-2"></i>
+                  {evento.available ? "Registrati all'evento" : "Evento non disponibile"}
                 </button>
 
                 <Link

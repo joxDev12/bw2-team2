@@ -41,7 +41,14 @@ const preparaDatiEvento = (form) => ({
 const creaFormDaEvento = (evento) => ({
   title: evento.title || "",
   description: evento.description || "",
-  date: evento.date ? new Date(evento.date).toISOString().split("T")[0] : "",
+  date: evento.date
+    ? (() => {
+        const d = new Date(evento.date);
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+          d.getDate(),
+        ).padStart(2, "0")}`;
+      })()
+    : "",
   location: evento.location || "",
   indirizzo: evento.indirizzo || "",
   price: evento.price ?? "",

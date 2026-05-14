@@ -7,13 +7,13 @@ import { eventsAPI } from "../../services/api";
 
 import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalRegistrazioneEvento";
 
-const categorie = [
-  { nome: "Tutti", icona: "bi-grid-fill" },
-  { nome: "Musica", icona: "bi-music-note-beamed" },
-  { nome: "Spettacolo", icona: "bi-stars" },
-  { nome: "Sport", icona: "bi-trophy" },
-  { nome: "Tecnologia", icona: "bi-cpu" },
-];
+const iconeCategorie = {
+  Musica: "bi-music-note-beamed",
+  Sport: "bi-trophy",
+  Tecnologia: "bi-cpu",
+  "Cultura e Spettacolo": "bi-stars",
+  Enogastronomia: "bi-cup-hot",
+};
 
 function formattaData(dataStr) {
   const data = new Date(dataStr);
@@ -28,7 +28,7 @@ function badgeColore(categoria) {
   switch (categoria) {
     case "Musica":
       return "bg-primary";
-    case "Spettacolo":
+    case "Cultura e Spettacolo":
       return "bg-danger";
     case "Sport":
       return "bg-success";
@@ -36,6 +36,21 @@ function badgeColore(categoria) {
       return "bg-info text-dark";
     default:
       return "bg-secondary";
+  }
+}
+
+function bottoneCategoriaColore(categoria) {
+  switch (categoria) {
+    case "Musica":
+      return "btn-outline-primary";
+    case "Cultura e Spettacolo":
+      return "btn-outline-danger";
+    case "Sport":
+      return "btn-outline-success";
+    case "Tecnologia":
+      return "btn-outline-info";
+    default:
+      return "btn-outline-secondary";
   }
 }
 
@@ -53,17 +68,21 @@ const EventiPage = () => {
   }
   useSEO({
     title: "Tutti gli Eventi",
-    description: "Esplora la nostra vasta selezione di eventi. Usa i filtri per trovare l'evento perfetto per te in base a categoria, luogo o data."
+    description:
+      "Esplora la nostra vasta selezione di eventi. Usa i filtri per trovare l'evento perfetto per te in base a categoria, luogo o data.",
   });
 
   const [eventiData, setEventiData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [categoriaAttiva, setCategoriaAttiva] = useState("Tutti");
+  const [categoriaAttiva, setCategoriaAttiva] = useState(searchParams.get("category") || "Tutti");
   const filtroTesto = searchParams.get("q") || "";
   const filtroLocation = searchParams.get("location") || "";
   const filtroData = searchParams.get("date") || "";
 
+  const categorie = [...new Set(eventiData.map((e) => e.category))]
+    .filter(Boolean)
+    .sort();
   const locations = [...new Set(eventiData.map((e) => e.location))].sort();
 
   useEffect(() => {
@@ -79,6 +98,10 @@ const EventiPage = () => {
     fetchEvents();
   }, []);
 
+  useEffect(() => {
+    setCategoriaAttiva(searchParams.get("category") || "Tutti");
+  }, [searchParams]);
+
 
   const aggiornaFiltroLocation = (location) => {
     setSearchParams((params) => {
@@ -88,6 +111,21 @@ const EventiPage = () => {
         nuoviParams.set("location", location);
       } else {
         nuoviParams.delete("location");
+      }
+
+      return nuoviParams;
+    });
+  };
+
+  const aggiornaFiltroCategoria = (categoria) => {
+    setCategoriaAttiva(categoria);
+    setSearchParams((params) => {
+      const nuoviParams = new URLSearchParams(params);
+
+      if (categoria !== "Tutti") {
+        nuoviParams.set("category", categoria);
+      } else {
+        nuoviParams.delete("category");
       }
 
       return nuoviParams;
@@ -108,7 +146,12 @@ const EventiPage = () => {
     });
   };
 
-  const getDataEvento = (date) => new Date(date).toISOString().split("T")[0];
+  const getDataEvento = (date) => {
+    const d = new Date(date);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+      d.getDate(),
+    ).padStart(2, "0")}`;
+  };
 
   const eventiFiltrati = eventiData.filter((evento) => {
     const testo = filtroTesto.toLowerCase().trim();
@@ -151,59 +194,61 @@ const EventiPage = () => {
         </p>
       </div>
 
-      <section
-        className="bg-dark shadow-sm sticky-top"
-        style={{ zIndex: 100 }}
-      >
+      <section className="bg-dark shadow-sm sticky-top" style={{ zIndex: 100 }}>
         <div className="container py-3">
-          <div className="row align-items-center g-3">
-            <div className="col-12 col-lg-auto">
-              <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-lg-start">
-                {categorie.map((cat) => (
-                  <button
-                    key={cat.nome}
-                    id={`filter-${cat.nome.toLowerCase()}`}
-                    className={`btn btn-sm rounded-pill px-3 fw-semibold ${
-                      categoriaAttiva === cat.nome
-                        ? "btn-primary shadow-sm"
-                        : "btn-outline-light"
-                    }`}
-                    onClick={() => setCategoriaAttiva(cat.nome)}
-                  >
-                    <i className={`bi ${cat.icona} me-1`}></i>
-                    {cat.nome}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-2 gap-md-3">
+            <button
+              id="filter-tutti"
+              className={`btn btn-sm rounded-pill px-3 fw-semibold ${categoriaAttiva === "Tutti"
+                ? "btn-primary shadow-sm"
+                : "btn-outline-light"
+                }`}
+              onClick={() => aggiornaFiltroCategoria("Tutti")}
+            >
+              <i className="bi bi-grid-fill me-1"></i>
+              Tutti
+            </button>
 
-            <div className="d-none d-lg-block col-lg-auto">
-              <div className="vr" style={{ height: "30px" }}></div>
-            </div>
+            {categorie.map((cat) => (
+              <button
+                key={cat}
+                id={`filter-${cat.toLowerCase()}`}
+                className={`btn btn-sm rounded-pill px-3 fw-semibold ${categoriaAttiva === cat
+                  ? "btn-primary shadow-sm"
+                  : bottoneCategoriaColore(cat)
+                  }`}
+                onClick={() => aggiornaFiltroCategoria(cat)}
+              >
+                <i className={`bi ${iconeCategorie[cat] || "bi-grid-fill"} me-1`}></i>
+                {cat}
+              </button>
+            ))}
 
-            <div className="col-6 col-sm-auto">
-              <div className="input-group input-group-sm">
-                <span className="input-group-text border-end-0">
+            <div className="d-none d-lg-block"></div>
+
+            <div className="col-auto">
+              <div className="input-group input-group-sm rounded-pill">
+                <span className="input-group-text bg-dark text-light border-light rounded-start-pill">
                   <i className="bi bi-calendar3"></i>
                 </span>
                 <input
                   type="date"
                   id="filter-data"
-                  className="form-control border-start-0"
+                  className="form-control bg-dark text-light border-light border-start-0 rounded-end-pill fw-semibold w-auto"
                   value={filtroData}
                   onChange={(e) => aggiornaFiltroData(e.target.value)}
                 />
               </div>
             </div>
 
-            <div className="col-6 col-sm-auto">
-              <div className="input-group input-group-sm">
-                <span className="input-group-text bg-white border-end-0">
+            <div className="col-auto">
+              <div className="input-group input-group-sm rounded-pill w-auto">
+                <span className="input-group-text bg-dark text-light border-light rounded-start-pill">
                   <i className="bi bi-geo-alt"></i>
                 </span>
                 <select
                   id="filter-location"
-                  className="form-select border-start-0"
+                  className="form-select bg-dark text-light border-light border-start-0 rounded-end-pill fw-semibold w-auto"
                   value={filtroLocation}
                   onChange={(e) => aggiornaFiltroLocation(e.target.value)}
                 >
@@ -251,12 +296,12 @@ const EventiPage = () => {
               )}
               {filtroTesto && (
                 <span className="ms-2">
-                  per {" "}<strong>{filtroTesto}</strong>
+                  per <strong>{filtroTesto}</strong>
                 </span>
               )}
               {filtroLocation && (
                 <span className="ms-2">
-                  a {" "}<strong>{filtroLocation}</strong>
+                  a <strong>{filtroLocation}</strong>
                 </span>
               )}
             </p>
