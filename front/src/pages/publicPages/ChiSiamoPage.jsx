@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import CardUtenti from "../../components/sharedComponents/CardUtenti";
+import { useAuth } from "../../context/AuthContext";
 
 const ChiSiamoPage = () => {
+  const { token } = useAuth();
+
   return (
     <div className="chi-siamo-page">
       <section className="py-5 text-center">
@@ -120,12 +123,14 @@ const ChiSiamoPage = () => {
             >
               Esplora Eventi
             </Link>
-            <Link
-              to="/register"
-              className="btn btn-outline-secondary btn-lg px-4 rounded-pill"
-            >
-              Registrati Ora
-            </Link>
+            {!token && (
+              <Link
+                to="/register"
+                className="btn btn-outline-secondary btn-lg px-4 rounded-pill"
+              >
+                Registrati Ora
+              </Link>
+            )}
           </div>
         </div>
       </section>
