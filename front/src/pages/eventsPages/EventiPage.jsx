@@ -36,6 +36,23 @@ function badgeColore(categoria) {
 }
 
 const EventiPage = () => {
+
+const [showModal, setShowModal] = useState(false);
+const [eventoSelezionato, setEventoSelezionato] = useState(null);
+
+
+function openModal(evento) {
+  setEventoSelezionato(evento);
+  setShowModal(true);
+}
+function closeModal() {
+  setEventoSelezionato(null);
+  setShowModal(false);
+}
+
+
+
+
   const [eventiData, setEventiData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
