@@ -60,13 +60,12 @@ function Footer() {
               Milano, Italia
             </p>
           </div>
-
           <hr
-            className="bg-secondary border-0 opacity-50"
+            className="bg-secondary border-0 opacity-50 w-100 my-4"
             style={{ height: "1px" }}
           />
 
-          <div className="text-center text-lig fs-6">
+          <div className="text-center text-light fs-6 w-100">
             © {new Date().getFullYear()} EventiHub — Tutti i diritti riservati
           </div>
         </div>
