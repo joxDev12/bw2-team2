@@ -8,7 +8,6 @@ import useSEO from "../../hooks/useSEO";
 import { eventsAPI } from "../../services/api";
 
 const EventiDettaglioPage = () => {
-
   const { utente } = useAuth();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -19,19 +18,18 @@ const EventiDettaglioPage = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-
   function openModal() {
-
     setShowModal(true);
   }
 
   function closeModal() {
     setShowModal(false);
-
   }
   useSEO({
     title: evento ? evento.title : "Caricamento evento...",
-    description: evento ? evento.description : "Dettagli dell'evento su EventHub."
+    description: evento
+      ? evento.description
+      : "Dettagli dell'evento su EventHub.",
   });
 
   useEffect(() => {
@@ -49,7 +47,6 @@ const EventiDettaglioPage = () => {
 
     fetchEvento();
   }, [id]);
-
 
   if (loading) {
     return (
@@ -101,7 +98,6 @@ const EventiDettaglioPage = () => {
                   <div className="fw-semibold">
                     <i className="bi bi-calendar3 me-2 text-primary"></i>
 
-                    {/* {new Date(evento.date).toLocaleDateString("it-IT")} */}
                     {new Date(evento.date).toLocaleDateString("it-IT", {
                       day: "numeric",
                       month: "long",
@@ -200,23 +196,6 @@ const EventiDettaglioPage = () => {
           </button>
 
 
-
-
-
-          {/* <Link
-            to="/register"
-            className={`btn btn-primary btn-lg rounded-pill px-5 btn-pulse ${!evento.available ? "disabled" : ""}`}
-            onClick={(e) => {
-              if (!evento.available) e.preventDefault();
-            }}
-          >
-            <i className="bi bi-ticket-perforated me-2"></i>
-
-            {evento.available
-              ? "Registrati all'evento"
-              : "Evento non disponibile"}
-          </Link> */}
-
           <div className="d-flex justify-content-start mt-4">
             <Link
               to="/eventi"
@@ -228,7 +207,6 @@ const EventiDettaglioPage = () => {
         </div>
       </div>
 
-
       {showModal && (
         <ModalRegistrazioneEvento
           show={showModal}
@@ -236,14 +214,6 @@ const EventiDettaglioPage = () => {
           evento={evento}
         />
       )}
-
-
-
-
-
-
-
-
     </div>
   );
 };
