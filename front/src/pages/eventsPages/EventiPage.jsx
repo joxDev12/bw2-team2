@@ -3,6 +3,8 @@ import { useSearchParams } from "react-router-dom";
 
 import CardPageEvent from "../../components/eventsComponents/CardPageEvent";
 
+import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalRegistrazioneEvento";
+
 const categorie = [
   { nome: "Tutti", icona: "bi-grid-fill" },
   { nome: "Musica", icona: "bi-music-note-beamed" },
@@ -267,8 +269,14 @@ function closeModal() {
                   evento={evento}
                   formattaData={formattaData}
                   badgeColore={badgeColore}
+                  openModal={openModal}
                 />
               ))}
+
+
+
+
+
             </div>
           ) : (
             <div className="text-center py-5">
@@ -288,6 +296,18 @@ function closeModal() {
               </button>
             </div>
           )}
+{showModal && (
+  <ModalRegistrazioneEvento
+    show={showModal}
+    onClose={closeModal}
+    evento={eventoSelezionato}
+  />
+)}
+
+
+
+
+
         </div>
       </section>
     </div>
