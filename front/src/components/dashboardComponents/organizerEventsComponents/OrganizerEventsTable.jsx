@@ -5,16 +5,10 @@ import EventPriceBadge from "./EventPriceBadge";
 import EventSeatsBadges from "./EventSeatsBadges";
 import EventTitleCell from "./EventTitleCell";
 
-function OrganizerEventsTable({
-  eventi,
-  getImmagineEvento,
-  getPrezzoEvento,
-  getPostiPrenotati,
-  getPostiDisponibili,
-  getPostiTotali,
-  apriModaleModifica,
-  apriModaleElimina,
-}) {
+import { useOrganizerEventsContext } from "./OrganizerEventsContext";
+
+function OrganizerEventsTable() {
+  const { eventi } = useOrganizerEventsContext();
   return (
     <div className="table-responsive bg-white rounded-4 shadow-sm border border-light d-none d-xl-block">
       <table className="table table-hover align-middle mb-0 border-0">
@@ -34,10 +28,7 @@ function OrganizerEventsTable({
           {eventi.map((evento) => (
             <tr key={evento.id}>
               <td className="px-4 py-3 border-bottom-0">
-                <EventTitleCell
-                  evento={evento}
-                  getImmagineEvento={getImmagineEvento}
-                />
+                <EventTitleCell evento={evento} />
               </td>
               <td className="px-4 py-3 border-bottom-0">
                 {new Date(evento.date).toLocaleDateString("it-IT")}
@@ -48,24 +39,16 @@ function OrganizerEventsTable({
                 <small>{evento.indirizzo || "-"}</small>
               </td>
               <td className="px-4 py-3 border-bottom-0">
-                <EventPriceBadge
-                  evento={evento}
-                  getPrezzoEvento={getPrezzoEvento}
-                />
+                <EventPriceBadge evento={evento} />
               </td>
               <td className="px-4 py-3 border-bottom-0">
                 <EventSeatsBadges
                   evento={evento}
-                  getPostiPrenotati={getPostiPrenotati}
-                  getPostiDisponibili={getPostiDisponibili}
-                  getPostiTotali={getPostiTotali}
                 />
               </td>
               <td className="px-4 py-3 border-bottom-0 text-end text-nowrap">
                 <EventActionButtons
                   evento={evento}
-                  apriModaleModifica={apriModaleModifica}
-                  apriModaleElimina={apriModaleElimina}
                 />
               </td>
             </tr>

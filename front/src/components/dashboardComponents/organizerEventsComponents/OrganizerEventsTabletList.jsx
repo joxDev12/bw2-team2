@@ -5,16 +5,10 @@ import EventPriceBadge from "./EventPriceBadge";
 import EventSeatsBadges from "./EventSeatsBadges";
 import EventTitleCell from "./EventTitleCell";
 
-function OrganizerEventsTabletList({
-  eventi,
-  getImmagineEvento,
-  getPrezzoEvento,
-  getPostiPrenotati,
-  getPostiDisponibili,
-  getPostiTotali,
-  apriModaleModifica,
-  apriModaleElimina,
-}) {
+import { useOrganizerEventsContext } from "./OrganizerEventsContext";
+
+function OrganizerEventsTabletList() {
+  const { eventi } = useOrganizerEventsContext();
   return (
     <div className="d-none d-md-block d-xl-none">
       <div className="d-flex flex-column gap-3">
@@ -23,10 +17,7 @@ function OrganizerEventsTabletList({
             <div className="card-body">
               <div className="row g-3 align-items-center pb-3 border-bottom">
                 <div className="col-5">
-                  <EventTitleCell
-                    evento={evento}
-                    getImmagineEvento={getImmagineEvento}
-                  />
+                  <EventTitleCell evento={evento} />
                 </div>
                 <div className="col-3 small">
                   <i className="bi bi-calendar3 text-primary me-2"></i>
@@ -44,24 +35,16 @@ function OrganizerEventsTabletList({
 
               <div className="row g-3 align-items-center pt-3">
                 <div className="col-2">
-                  <EventPriceBadge
-                    evento={evento}
-                    getPrezzoEvento={getPrezzoEvento}
-                  />
+                  <EventPriceBadge evento={evento} />
                 </div>
                 <div className="col-6">
                   <EventSeatsBadges
                     evento={evento}
-                    getPostiPrenotati={getPostiPrenotati}
-                    getPostiDisponibili={getPostiDisponibili}
-                    getPostiTotali={getPostiTotali}
                   />
                 </div>
                 <div className="col-4">
                   <EventActionButtons
                     evento={evento}
-                    apriModaleModifica={apriModaleModifica}
-                    apriModaleElimina={apriModaleElimina}
                   />
                 </div>
               </div>

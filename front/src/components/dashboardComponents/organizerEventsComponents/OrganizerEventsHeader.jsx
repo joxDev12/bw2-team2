@@ -1,10 +1,9 @@
 // Header della gestione eventi con titolo, filtro e bottone crea.
 // Riceve stato filtro e azione di apertura modale dal componente padre.
-function OrganizerEventsHeader({
-  filtroEventi,
-  setFiltroEventi,
-  apriModaleCreazione,
-}) {
+import { useOrganizerEventsContext } from "./OrganizerEventsContext";
+
+function OrganizerEventsHeader() {
+  const { filtroEventi, setFiltroEventi, apriModaleCreazione } = useOrganizerEventsContext();
   return (
     <div className="row align-items-start mb-4 g-3">
       <div className="col-md-4">
