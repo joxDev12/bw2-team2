@@ -1,6 +1,12 @@
 // Toast riutilizzabile per messaggi di successo o errore nel profilo.
-// Viene chiuso dal componente padre tramite callback.
-function ProfiloToast({ toast, onClose }) {
+// Usa ProfileContext nel profilo, ma accetta props dove viene riusato.
+import { useProfileContext } from "../../context/ProfileContext";
+
+function ProfiloToast({ toast: toastProp, onClose }) {
+  const profile = useProfileContext();
+  const toast = toastProp ?? profile?.toast;
+  const chiudiToast = onClose ?? profile?.chiudiToast;
+
   if (!toast) return null;
 
   return (
@@ -17,7 +23,7 @@ function ProfiloToast({ toast, onClose }) {
             type="button"
             className="btn-close btn-close-white me-2 m-auto"
             aria-label="Chiudi"
-            onClick={onClose}
+            onClick={chiudiToast}
           ></button>
         </div>
       </div>

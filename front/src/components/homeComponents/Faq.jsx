@@ -1,31 +1,6 @@
 // Blocco FAQ con domande frequenti e risposte rapide.
 // Viene usato dentro la sezione Assistenza della homepage.
-const faqItems = [
-  {
-    id: "tickets",
-    question: "Come posso acquistare i biglietti?",
-    answer:
-      "Per acquistare i biglietti, basta cliccare sul pulsante Acquista accanto all'evento desiderato e seguire le istruzioni.",
-  },
-  {
-    id: "refund",
-    question: "Posso ottenere un rimborso?",
-    answer:
-      "Le politiche di rimborso variano in base all'evento. Controlla i dettagli dell'evento o contatta il servizio clienti.",
-  },
-  {
-    id: "publish",
-    question: "Come posso pubblicare il mio evento?",
-    answer:
-      "Crea un account organizzatore, entra nella dashboard e compila le informazioni richieste per pubblicare l'evento.",
-  },
-  {
-    id: "price",
-    question: "L'evento e' gratuito o a pagamento?",
-    answer:
-      "La piattaforma ospita eventi gratuiti e a pagamento. Puoi usare i filtri per trovare quelli piu adatti a te.",
-  },
-];
+import { faqItems } from "./homeContent";
 
 function Faq() {
   return (
@@ -61,7 +36,6 @@ function Faq() {
         );
       })}
     </div>
-
   );
 }
 

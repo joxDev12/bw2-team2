@@ -1,11 +1,15 @@
 // Vista desktop degli eventi organizzatore in formato tabella.
 // Usa componenti piccoli per titolo, prezzo, posti e azioni.
-import EventActionButtons from "./EventActionButtons";
-import EventPriceBadge from "./EventPriceBadge";
-import EventSeatsBadges from "./EventSeatsBadges";
-import EventTitleCell from "./EventTitleCell";
-
-import { useOrganizerEventsContext } from "./OrganizerEventsContext";
+import {
+  EventActionButtons,
+  EventPriceBadge,
+  EventSeatsBadges,
+  EventTitleCell,
+} from "./OrganizerEventParts";
+import {
+  OrganizerEventProvider,
+  useOrganizerEventsContext,
+} from "../../../context/OrganizerEventsContext.jsx";
 
 function OrganizerEventsTable() {
   const { eventi } = useOrganizerEventsContext();
@@ -26,32 +30,32 @@ function OrganizerEventsTable() {
         </thead>
         <tbody>
           {eventi.map((evento) => (
-            <tr key={evento.id}>
-              <td className="px-4 py-3 border-bottom-0">
-                <EventTitleCell evento={evento} />
-              </td>
-              <td className="px-4 py-3 border-bottom-0">
-                {new Date(evento.date).toLocaleDateString("it-IT")}
-              </td>
-              <td className="px-4 py-3 border-bottom-0">
-                <span className="fw-semibold text-dark">{evento.location}</span>
-                <br />
-                <small>{evento.indirizzo || "-"}</small>
-              </td>
-              <td className="px-4 py-3 border-bottom-0">
-                <EventPriceBadge evento={evento} />
-              </td>
-              <td className="px-4 py-3 border-bottom-0">
-                <EventSeatsBadges
-                  evento={evento}
-                />
-              </td>
-              <td className="px-4 py-3 border-bottom-0 text-end text-nowrap">
-                <EventActionButtons
-                  evento={evento}
-                />
-              </td>
-            </tr>
+            <OrganizerEventProvider key={evento.id} evento={evento}>
+              <tr>
+                <td className="px-4 py-3 border-bottom-0">
+                  <EventTitleCell />
+                </td>
+                <td className="px-4 py-3 border-bottom-0">
+                  {new Date(evento.date).toLocaleDateString("it-IT")}
+                </td>
+                <td className="px-4 py-3 border-bottom-0">
+                  <span className="fw-semibold text-dark">
+                    {evento.location}
+                  </span>
+                  <br />
+                  <small>{evento.indirizzo || "-"}</small>
+                </td>
+                <td className="px-4 py-3 border-bottom-0">
+                  <EventPriceBadge />
+                </td>
+                <td className="px-4 py-3 border-bottom-0">
+                  <EventSeatsBadges />
+                </td>
+                <td className="px-4 py-3 border-bottom-0 text-end text-nowrap">
+                  <EventActionButtons />
+                </td>
+              </tr>
+            </OrganizerEventProvider>
           ))}
         </tbody>
       </table>

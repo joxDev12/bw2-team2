@@ -1,6 +1,7 @@
 // Sezione hero della homepage con titolo e barra di ricerca.
 // Delega tutta la logica della ricerca al componente HeroSearchForm.
 import HeroSearchForm from "./heroComponents/HeroSearchForm";
+import { SearchProvider } from "../../context/SearchContext";
 
 function Hero() {
   return (
@@ -15,7 +16,9 @@ function Hero() {
           partecipa.
         </p>
 
-        <HeroSearchForm />
+        <SearchProvider>
+          <HeroSearchForm />
+        </SearchProvider>
       </div>
     </section>
   );

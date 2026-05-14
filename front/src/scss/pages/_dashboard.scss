@@ -33,13 +33,6 @@ $sidebar-width: 280px;
   height: auto;
 }
 
-.sidebar-avatar-placeholder {
-  transition: transform 0.3s ease;
-  &:hover {
-    transform: scale(1.05);
-  }
-}
-
 .nav-link {
   &.transition-all {
     transition: all 0.2s ease-in-out;

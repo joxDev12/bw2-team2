@@ -1,6 +1,10 @@
 // Header della pagina profilo con titolo e bottoni azione.
-// Apre le modali di modifica ed eliminazione account.
-function ProfileHeader({ apriModale, apriModaleElimina }) {
+// Apre le modali leggendo le azioni da ProfileContext.
+import { useProfileContext } from "../../../context/ProfileContext";
+
+function ProfileHeader() {
+  const { apriModale, apriModaleElimina } = useProfileContext();
+
   return (
     <div className="d-flex justify-content-between align-items-start mb-4">
       <div>
