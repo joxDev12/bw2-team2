@@ -57,7 +57,7 @@ openModal(evento);
 
               <div className="d-flex gap-3 mt-4 pt-3 border-top">
                 <button
-                  className="btn btn-primary px-4 fw-semibold rounded-pill"
+                  className="btn btn-secondary px-4 fw-semibold rounded-pill"
                   id={`registrati-evento-${evento.id}`}
                   onClick={handleRegistrati}
                 >
@@ -79,7 +79,7 @@ openModal(evento);
                 {/* Link reindirizza alla routhe */}
                 <Link
                   to={`/eventi/${evento.id}`}
-                  className="btn btn-outline-secondary px-4 rounded-pill"
+                  className="btn btn-outline-light px-4 rounded-pill"
                   id={`info-evento-${evento.id}`}
                   title="Maggiori Informazioni"
                 >

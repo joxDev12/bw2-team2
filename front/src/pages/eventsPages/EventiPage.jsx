@@ -140,8 +140,8 @@ const EventiPage = () => {
 
   return (
     <div className="eventi-page">
-      <div className="container py-4">
-        <h1 className="display-5 fw-bold text-secondary">
+      <div className="container py-4 text-secondary">
+        <h1 className="display-5 fw-bold">
           <i className="bi bi-calendar-event me-3"></i>
           Tutti gli Eventi
         </h1>
