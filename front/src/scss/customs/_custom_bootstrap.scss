@@ -10,7 +10,7 @@
   --bs-btn-active-border-color: #{$brand-primary-hover};
   --bs-btn-color: #{$brand-white};
   --bs-btn-hover-color: #{$brand-white};
-  
+
 }
 
 .btn-secondary {
@@ -56,11 +56,6 @@
   font-weight: $brand-font-weight-medium;
   padding-inline: .75rem;
   transition: color .2s ease, background-color .2s ease;
-
-  &:hover,
-  &:focus {
-    background-color: rgba($brand-secondary, .08);
-  }
 
   &.active,
   &.show {

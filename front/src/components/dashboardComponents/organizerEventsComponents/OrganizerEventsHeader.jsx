@@ -7,16 +7,16 @@ function OrganizerEventsHeader() {
   return (
     <div className="row align-items-start mb-4 g-3">
       <div className="col-md-8">
-        <h2 className="fw-bold mb-1">
-          Gestione <span className="text-primary">Eventi</span>
+        <h2 className="fw-bold text-white mb-1">
+          Gestione <span className="text-secondary">Eventi</span>
         </h2>
-        <p className="mb-0">Visualizza e modifica gli eventi che hai creato</p>
+        <p className="mb-0 text-white">Visualizza e modifica gli eventi che hai creato</p>
       </div>
 
       <div className="col-md-4 d-flex justify-content-center justify-content-md-end">
         <button
           type="button"
-          className="btn btn-primary rounded-pill px-4"
+          className="btn btn-secondary rounded-pill px-4"
           onClick={apriModaleCreazione}
         >
           <i className="bi bi-plus-lg me-2"></i>

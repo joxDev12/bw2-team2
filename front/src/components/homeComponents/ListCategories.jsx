@@ -25,16 +25,24 @@ function bottoneCategoriaColore(categoria) {
 
 function ListCategories({ categorie }) {
   return (
-    <div className="d-flex flex-wrap align-items-center justify-content-around mt-4">
+    <div className="row row-cols-5 justify-content-center flex-nowrap g-2 mt-4">
       {categorie.map((cat) => (
-        <Link
-          key={cat}
-          to={`/eventi?category=${encodeURIComponent(cat)}`}
-          className={`btn fw-semibold d-flex align-items-center justify-content-center ${bottoneCategoriaColore(cat)}`}
-          title={cat}
-        >
-          <i className={`bi ${iconeCategorie[cat] || "bi-grid-fill"} fs-3`}></i>
-        </Link>
+        <div key={cat} className="col">
+          <Link
+            to={`/eventi?category=${encodeURIComponent(cat)}`}
+            className="d-flex flex-column align-items-center text-decoration-none"
+            title={cat}
+          >
+            <span className="ratio ratio-1x1 w-75 mx-auto">
+              <span
+                className={`btn rounded-3 d-flex align-items-center justify-content-center ${bottoneCategoriaColore(cat)}`}
+              >
+                <i className={`bi ${iconeCategorie[cat] || "bi-grid-fill"} fs-3`}></i>
+              </span>
+            </span>
+            <span className="small lh-sm text-center text-light mt-2">{cat}</span>
+          </Link>
+        </div>
       ))}
     </div>
   );

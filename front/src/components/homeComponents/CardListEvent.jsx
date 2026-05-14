@@ -1,5 +1,20 @@
 import { Link } from "react-router-dom";
 
+function badgeColore(categoria) {
+  switch (categoria) {
+    case "Musica":
+      return "bg-primary";
+    case "Cultura e Spettacolo":
+      return "bg-warning text-dark";
+    case "Sport":
+      return "bg-success";
+    case "Tecnologia":
+      return "bg-info text-dark";
+    default:
+      return "bg-secondary";
+  }
+}
+
 function CardListEvent({ event }) {
   if (!event) return null;
 
@@ -20,26 +35,28 @@ function CardListEvent({ event }) {
           <div className="card-body text-white p-3">
             <div className="position-relative mb-3">
               {image ? (
-                <img 
-                  src={image} 
-                  alt={title} 
-                  className="img-fluid rounded" 
+                <img
+                  src={image}
+                  alt={title}
+                  className="img-fluid rounded"
                   style={{ width: '100%', height: '160px', objectFit: 'cover' }}
                 />
               ) : (
-                <div 
-                  className="bg-secondary rounded d-flex align-items-center justify-content-center" 
+                <div
+                  className="bg-secondary rounded d-flex align-items-center justify-content-center"
                   style={{ width: '100%', height: '160px' }}
                 >
                   <i className="bi bi-image text-white fs-1"></i>
                 </div>
               )}
-              <span className="badge bg-primary position-absolute top-0 start-0 m-2">{category}</span>
+              <span className={`badge ${badgeColore(category)} position-absolute top-0 start-0 m-2`}>
+                {category}
+              </span>
             </div>
-            
+
             <h6 className="card-title text-truncate mb-2" title={title}>{title}</h6>
             <p className="card-text text-truncate-2 small mb-3" style={{ height: '40px' }}>{description}</p>
-            
+
             <div className="d-flex flex-column gap-1 mt-auto">
               <div className="d-flex gap-2 align-items-center">
                 <i className="bi bi-geo-alt text-primary small"></i>
@@ -47,7 +64,7 @@ function CardListEvent({ event }) {
               </div>
               <div className="d-flex gap-2 align-items-center">
                 <i className="bi bi-coin text-primary small"></i>
-                <span className="fw-bold small">{price === 0 ? 'Gratis' : `€ ${price}`}</span>
+                <span className="fw-bold small">{price === "0.00" ? 'Gratuito' : `€ ${price}`}</span>
               </div>
             </div>
           </div>
@@ -58,5 +75,4 @@ function CardListEvent({ event }) {
 }
 
 export default CardListEvent;
-
 

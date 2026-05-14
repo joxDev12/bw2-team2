@@ -81,35 +81,40 @@ function Navbar() {
                   Contatti
                 </NavLink>
               </li>
+            </ul>
+            {utente && (
+              <>
 
-              {utente && (
-                <>
-                  <li className="nav-item d-lg-none py-2">
-                    <hr className="border-secondary opacity-50 my-2" />
-                  </li>
-                  <li className="nav-item d-lg-none">
+                <div className="d-flex d-flex flex-column d-lg-none gap-2">
+                  {/*                   <span className="badge fw-bold">  // prove fatto con text-end oppure text-start mx-2/3
+                    {ruoloVisualizzato}
+                  </span> */}
+                  <div className="d-flex gap-3">
                     <NavLink
-                      className="nav-link d-flex align-items-center justify-content-between gap-3"
+                      className="btn btn-secondary d-flex align-items-center justify-content-between gap-3"
                       to="/dashboard"
                     >
                       <span>Dashboard</span>
-                      <span className="badge bg-primary rounded-pill">
-                        {ruoloVisualizzato}
-                      </span>
+                      {/* // mi sembra brutto mostrarlo in mobile
+                    <span className="badge bg-primary rounded-pill">
+                      {ruoloVisualizzato}
+                    </span> 
+                    */}
                     </NavLink>
-                  </li>
-                  <li className="nav-item d-lg-none">
+
+
                     <button
                       type="button"
-                      className="nav-link text-danger border-0 bg-transparent px-0"
+                      className="btn btn-outline-danger"
                       onClick={handleLogout}
                     >
                       Logout
                     </button>
-                  </li>
-                </>
-              )}
-            </ul>
+                  </div>
+                </div>
+              </>
+            )}
+
 
             {utente ? (
               <div className="d-none d-lg-block">

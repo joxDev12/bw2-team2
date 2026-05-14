@@ -83,9 +83,21 @@ const EventiDettaglioPage = () => {
         />
 
         <div className="card-body p-5">
-          <span className="badge bg-primary px-3 py-2 mb-3">
-            {evento.category}
-          </span>
+          <div className="d-flex justify-content-between align-items-center">
+            <span className="badge rounded-pill d-block bg-primary px-3 py-2 mb-3">
+              {evento.category}
+            </span>
+
+            <div className="mb-4">
+              {evento.available ? (
+                <span className="badge bg-success px-4 py-3 fs-6 badge-glow">
+                  Disponibile
+                </span>
+              ) : (
+                <span className="badge bg-danger px-4 py-3 fs-6">Sold Out</span>
+              )}
+            </div>
+          </div>
 
           <h1 className="fw-bold mb-4">{evento.title}</h1>
 
@@ -140,20 +152,14 @@ const EventiDettaglioPage = () => {
               </div>
 
               <div className="col-md-4">
-                <div className="event-info-box h-100">
+                <div className={`event-info-box h-100 ${evento.price === "0.00" ? "bg-success text-white" : ""}`}>
                   <div className="small mb-2">Prezzo</div>
                   <div className="fw-semibold">
-                    <i className="bi bi-cash-coin me-2 text-success"></i>
-                    {evento.isfree ? "Gratuito" : `${evento.price} €`}
+                    <i className={`bi bi-cash-coin me-2 ${evento.price === "0.00" ? "text-white" : "text-success"}`}></i>
+                    {evento.price === "0.00" ? "Gratuito" : `€ ${evento.price}`}
                   </div>
                 </div>
               </div>
-
-              {evento.isfree && (
-                <span className="badge bg-info text-dark px-3 py-2 mb-3">
-                  Evento gratuito
-                </span>
-              )}
 
               <div className="small">
                 Pubblicato il:{""}
@@ -168,32 +174,35 @@ const EventiDettaglioPage = () => {
             <p className="lead">{evento.description}</p>
           </div>
 
-          <div className="mb-4">
-            {evento.available ? (
-              <span className="badge bg-success px-4 py-3 fs-6 badge-glow">
-                Disponibile
-              </span>
-            ) : (
-              <span className="badge bg-danger px-4 py-3 fs-6">Sold Out</span>
-            )}
+          <div className="d-flex gap-3">
+            {/*             
+            <div className="mb-4">
+              {evento.available ? (
+                <span className="badge bg-success px-4 py-3 fs-6 badge-glow">
+                  Disponibile
+                </span>
+              ) : (
+                <span className="badge bg-danger px-4 py-3 fs-6">Sold Out</span>
+              )}
+            </div> */}
+
+            <button
+              className={`btn btn-primary btn-lg rounded-pill px-5 btn-pulse ${!evento.available ? "disabled" : ""}`}
+              onClick={() => {
+                if (!evento.available) return;
+
+                if (!utente) {
+                  navigate("/login");
+                  return;
+                }
+
+                openModal(); // ← открываем модалку
+              }}
+            >
+              <i className="bi bi-ticket-perforated me-2"></i>
+              {evento.available ? "Registrati all'evento" : "Evento non disponibile"}
+            </button>
           </div>
-
-          <button
-            className={`btn btn-primary btn-lg rounded-pill px-5 btn-pulse ${!evento.available ? "disabled" : ""}`}
-            onClick={() => {
-              if (!evento.available) return;
-
-              if (!utente) {
-                navigate("/login");
-                return;
-              }
-
-              openModal(); // ← открываем модалку
-            }}
-          >
-            <i className="bi bi-ticket-perforated me-2"></i>
-            {evento.available ? "Registrati all'evento" : "Evento non disponibile"}
-          </button>
 
 
           <div className="d-flex justify-content-start mt-4">

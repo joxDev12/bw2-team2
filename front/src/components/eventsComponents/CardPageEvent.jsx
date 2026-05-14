@@ -10,13 +10,13 @@ const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
   const navigate = useNavigate();
 
   function handleRegistrati() {
-if (!evento.available) return;
+    if (!evento.available) return;
 
-if (!utente) {
-  navigate("/login");
-  return;
-}
-openModal(evento);
+    if (!utente) {
+      navigate("/login");
+      return;
+    }
+    openModal(evento);
   }
 
   return (
@@ -33,7 +33,7 @@ openModal(evento);
             <span
               className={`badge ${badgeColore(
                 evento.category,
-              )} position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill text-white shadow-sm`}
+              )} position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm`}
             >
               {evento.category}
             </span>
@@ -45,7 +45,7 @@ openModal(evento);
           </div>
 
           <div className="col-md-8">
-            <div className="card-body text-white d-flex flex-column h-100 p-4">
+            <div className="card-body bg-mid-dark text-white d-flex flex-column h-100 p-4">
               <h4 className="card-title fw-bold mb-3">{evento.title}</h4>
 
               <div className="d-flex flex-wrap gap-4 small mb-4">
@@ -63,33 +63,23 @@ openModal(evento);
 
               <div className="d-flex gap-3 mt-4 pt-3 border-top align-items-center">
                 <button
-                  className={`btn btn-primary px-4 fw-semibold rounded-pill ${!evento.available ? "disabled" : ""}`}
+                  className={`btn px-4 fw-semibold rounded-pill ${!evento.available ? "disabled btn-danger" : "btn-secondary"}`}
                   id={`registrati-evento-${evento.id}`}
                   onClick={handleRegistrati}
                 >
                   <i className="bi bi-ticket-perforated me-2"></i>
-                  {evento.available ? "Registrati all'evento" : "Evento non disponibile"}
+                  {evento.available ? "Registrati" : "Sold Out"}
                 </button>
 
                 <Link
                   to={`/eventi/${evento.id}`}
-                  className="btn btn-outline-secondary btn-lg rounded-pill d-flex align-items-center gap-2"
+                  className="btn btn-outline-light rounded-pill d-flex align-items-center gap-2"
                   id={`info-evento-${evento.id}`}
                   title="Maggiori Informazioni"
                 >
                   <i className="bi bi-info-circle"></i>
                   Maggiori Info
                 </Link>
-
-                {evento.available ? (
-                  <span className="badge bg-success rounded-pill fs-6 py-2 px-3 d-flex align-items-center">
-                    Disponibile
-                  </span>
-                ) : (
-                  <span className="badge bg-danger rounded-pill fs-6 py-2 px-3 d-flex align-items-center">
-                    Sold Out
-                  </span>
-                )}
               </div>
             </div>
           </div>

@@ -122,19 +122,19 @@ const ModalRegistrazioneEvento = ({ show, onClose, evento }) => {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-outline-danger"
                 onClick={onClose}
               >
-                Chiudi
+                Annulla
               </button>
 
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-success"
                 disabled={loading}
                 onClick={handleSubmit}
               >
-                {loading ? "Invio..." : "Conferma registrazione"}
+                {loading ? "Invio..." : "Acquista"}
               </button>
             </div>
           </div>
