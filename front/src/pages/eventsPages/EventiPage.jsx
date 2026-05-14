@@ -216,8 +216,7 @@ const EventiPage = () => {
         <div className="container">
           <div className="d-flex justify-content-between align-items-center mb-4">
             <p className="text-white mb-0">
-              <strong>{eventiFiltrati.length}</strong>
-              {""}
+              <strong>{eventiFiltrati.length}</strong>{" "}
               {eventiFiltrati.length === 1
                 ? "evento trovato"
                 : "eventi trovati"}
@@ -231,12 +230,12 @@ const EventiPage = () => {
               )}
               {filtroTesto && (
                 <span className="ms-2">
-                  per <strong>{filtroTesto}</strong>
+                  per {" "}<strong>{filtroTesto}</strong>
                 </span>
               )}
               {filtroLocation && (
                 <span className="ms-2">
-                  a <strong>{filtroLocation}</strong>
+                  a {" "}<strong>{filtroLocation}</strong>
                 </span>
               )}
             </p>

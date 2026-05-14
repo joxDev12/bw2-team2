@@ -4,7 +4,7 @@ import { faqItems } from "./homeContent";
 
 function Faq() {
   return (
-    <div className="accordion" id="homeFaq">
+    <div className="accordion w-100" id="homeFaq">
       {faqItems.map((item, index) => {
         const collapseId = `homeFaq-${item.id}`;
         const headingId = `homeFaq-heading-${item.id}`;
