@@ -10,6 +10,7 @@ function MieiEventiUtente() {
   const [registrazioni, setRegistrazioni] = useState([]);
   const [caricamento, setCaricamento] = useState(true);
   const [errore, setErrore] = useState(null);
+  const [cancellazioneId, setCancellazioneId] = useState(null);
 
   useEffect(() => {
     let annullato = false;
@@ -40,6 +41,18 @@ function MieiEventiUtente() {
       annullato = true;
     };
   }, [utente.id]);
+
+  const cancellaRegistrazione = async (id) => {
+    try {
+      setCancellazioneId(id);
+      await registrationsAPI.elimina(id);
+      setRegistrazioni((prev) => prev.filter((reg) => reg.id !== id));
+    } catch (err) {
+      setErrore(err.message || "Errore nella cancellazione della registrazione");
+    } finally {
+      setCancellazioneId(null);
+    }
+  };
 
   if (caricamento)
     return (
@@ -94,12 +107,34 @@ function MieiEventiUtente() {
                       <strong className="ms-1">{reg.seats}</strong>
                     </span>
                   </div>
-                  <Link
-                    to={`/eventi/${reg.event_id}`}
-                    className="btn btn-outline-primary w-100 rounded-pill mt-auto"
-                  >
-                    Vai all'evento
-                  </Link>
+                  <div className="d-flex flex-column gap-2 mt-auto">
+                    <Link
+                      to={`/eventi/${reg.event_id}`}
+                      className="btn btn-outline-primary w-100 rounded-pill"
+                    >
+                      Vai all'evento
+                    </Link>
+
+                    {utente?.role === "partecipant" && (
+                      <button
+                        className="btn btn-outline-danger w-100 rounded-pill"
+                        onClick={() => cancellaRegistrazione(reg.id)}
+                        disabled={cancellazioneId === reg.id}
+                      >
+                        {cancellazioneId === reg.id ? (
+                          <>
+                            <span className="spinner-border spinner-border-sm me-2"></span>
+                            Cancellazione...
+                          </>
+                        ) : (
+                          <>
+                            <i className="bi bi-trash me-2"></i>
+                            Cancella iscrizione
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

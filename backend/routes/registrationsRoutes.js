@@ -9,6 +9,7 @@ const {
   soloPartecipant,
   soloAdminOOrganizerProprietarioEvento,
   soloAdminOProprietarioRegistrazione,
+  soloPartecipantProprietarioRegistrazione,
 } = require('../middlewares/auth');
 
 // Regole di validazione
@@ -33,6 +34,6 @@ router.get('/event/:id/public', regolaId, validate, controller.getPublicByEventI
 router.get('/event/:id', autenticato, regolaId, validate, soloAdminOOrganizerProprietarioEvento, controller.getAllByEventId);
 router.get('/user/:id', autenticato, regolaId, validate, soloAdminOStessoUtente, controller.getAllByUserId);
 router.get('/:id', autenticato, regolaId, validate, soloAdminOProprietarioRegistrazione, controller.getById);
-router.delete('/:id', autenticato, regolaId, validate, soloAdminOProprietarioRegistrazione, controller.elimina);
+router.delete('/:id', autenticato, regolaId, validate, soloPartecipantProprietarioRegistrazione, controller.elimina);
 
 module.exports = router;

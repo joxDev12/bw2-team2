@@ -166,6 +166,35 @@ const soloAdminOProprietarioRegistrazione = async (req, res, next) => {
   }
 };
 
+// DELETE /api/registrations/:id
+const soloPartecipantProprietarioRegistrazione = async (req, res, next) => {
+  const registrationId = parseInt(req.params.id);
+
+  try {
+    const result = await registrationsModel.findById(registrationId);
+    const registration = result.rows[0];
+
+    if (!registration) {
+      return res.status(404).json({ successo: false, errore: 'Registrazione non trovata' });
+    }
+
+    const isPartecipant = req.user?.role === 'partecipant';
+    const isProprietarioRegistrazione = registration.user_id === req.user?.id;
+
+    if (!isPartecipant || !isProprietarioRegistrazione) {
+      return res.status(403).json({
+        successo: false,
+        errore: 'Puoi cancellare solo le tue registrazioni da partecipante'
+      });
+    }
+
+    req.registration = registration;
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Variante piu permissiva:
 // admin, proprietario della registrazione, oppure organizer proprietario dell'evento.
 // Potrebbe servire se vuoi permettere a un organizer di vedere una singola iscrizione
@@ -208,5 +237,6 @@ module.exports = {
   soloPartecipant,
   soloAdminOOrganizerProprietarioEvento,
   soloAdminOProprietarioRegistrazione,
+  soloPartecipantProprietarioRegistrazione,
   soloAdminOProprietarioRegistrazioneOOrganizerEvento
 };
