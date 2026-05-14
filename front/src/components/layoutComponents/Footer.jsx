@@ -52,7 +52,7 @@ function Footer() {
 
             <p className="text-light mb-2">
               <i className="bi bi-envelope-fill me-2"></i>
-              info@eventihub.com
+              info@eventhub.com
             </p>
 
             <p className="text-light mb-3">
