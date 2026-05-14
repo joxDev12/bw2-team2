@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import CardListEvent from "./CardListEvent";
 import { eventsAPI } from "../../services/api";
 
@@ -8,8 +9,7 @@ function ListEvent() {
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Calcoliamo quanti item mostrare in base alla larghezza (approssimativo, gestito meglio via CSS)
-  // Ma ci serve per la logica dei bottoni
+  // Calcoliamo quanti item mostrare in base alla larghezza
   const [itemsToShow, setItemsToShow] = useState(5);
 
   useEffect(() => {
@@ -46,8 +46,11 @@ function ListEvent() {
     fetchEvents();
   }, []);
 
+  // Il numero totale di item è events.length + 1 (la card "Vedi tutti")
+  const totalItems = events.length + 1;
+
   const nextSlide = () => {
-    if (currentIndex < events.length - itemsToShow) {
+    if (currentIndex < totalItems - itemsToShow) {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -63,20 +66,20 @@ function ListEvent() {
       <div className="container">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2 className="h4 text-light mb-0">Eventi in evidenza</h2>
-          
-          {!loading && events.length > itemsToShow && (
+
+          {!loading && totalItems > itemsToShow && (
             <div className="d-flex gap-2">
-              <button 
+              <button
                 className="btn btn-outline-primary btn-sm rounded-circle"
                 onClick={prevSlide}
                 disabled={currentIndex === 0}
               >
                 <i className="bi bi-chevron-left"></i>
               </button>
-              <button 
+              <button
                 className="btn btn-outline-primary btn-sm rounded-circle"
                 onClick={nextSlide}
-                disabled={currentIndex >= events.length - itemsToShow}
+                disabled={currentIndex >= totalItems - itemsToShow}
               >
                 <i className="bi bi-chevron-right"></i>
               </button>
@@ -100,15 +103,39 @@ function ListEvent() {
           </div>
         ) : (
           <div className="slider-container">
-            <div 
+            <div
               className="slider-track"
-              style={{ transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)` }}
+              style={{
+                transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`,
+              }}
             >
               {events.map((event) => (
                 <div key={event.id} className="slider-item">
                   <CardListEvent event={event} />
                 </div>
               ))}
+
+              {/* Card "Vedi tutti" */}
+              <div className="slider-item">
+                <div className="h-100 px-2">
+                  <Link
+                    to="/eventi"
+                    className="text-decoration-none h-100 d-block"
+                  >
+                    <article className="card bg-primary border-0 shadow-sm h-100 animazione-card d-flex align-items-center justify-content-center text-center p-3">
+                      <div className="card-body d-flex flex-column align-items-center justify-content-center text-white p-0">
+                        <div 
+                          className="rounded-circle bg-white bg-opacity-25 d-flex align-items-center justify-content-center mb-3 transition-all" 
+                          style={{ width: '60px', height: '60px' }}
+                        >
+                          <i className="bi bi-arrow-right fs-3"></i>
+                        </div>
+                        <h6 className="fw-bold mb-0">Scopri tutti<br/>gli eventi</h6>
+                      </div>
+                    </article>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -118,5 +145,3 @@ function ListEvent() {
 }
 
 export default ListEvent;
-
-
