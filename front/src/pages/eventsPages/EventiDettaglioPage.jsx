@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import eventsPlaceholder from "../../assets/img/events_placeholder.webp";
 import useSEO from "../../hooks/useSEO";
+import { eventsAPI } from "../../services/api";
 
 const EventiDettaglioPage = () => {
   const { id } = useParams();
 
   const [evento, setEvento] = useState(null);
-
   const [loading, setLoading] = useState(true);
-
   const [errore, setErrore] = useState("");
 
   useSEO({
@@ -22,16 +20,8 @@ const EventiDettaglioPage = () => {
     const fetchEvento = async () => {
       try {
         setLoading(true);
-
-        const response = await fetch(`http://localhost:3000/api/events/${id}`);
-
-        if (!response.ok) {
-          throw new Error("Evento non trovato");
-        }
-
-        const data = await response.json();
-
-        setEvento(data.dati || data[0] || data);
+        const data = await eventsAPI.getById(id);
+        setEvento(data);
       } catch (error) {
         setErrore(error.message);
       } finally {
@@ -41,6 +31,7 @@ const EventiDettaglioPage = () => {
 
     fetchEvento();
   }, [id]);
+
 
   if (loading) {
     return (

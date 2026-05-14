@@ -7,7 +7,7 @@ function ProfileHeader() {
 
   return (
     <div className="d-flex justify-content-between align-items-start mb-4">
-      <div>
+      <div className="text-light">
         <h2 className="fw-bold mb-1">
           Il mio <span className="text-primary">Profilo</span>
         </h2>

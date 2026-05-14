@@ -16,14 +16,13 @@ function DashboardSidebar() {
   } = useDashboardContext();
 
   const getClassName = (tab) =>
-    `nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all border-0 w-100 text-start ${
-      activeTab === tab
-        ? "active shadow-sm"
-        : "text-white-50 link-light bg-transparent"
+    `nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 transition-all border-0 w-100 text-start ${activeTab === tab
+      ? "active shadow-sm"
+      : "text-white-50 link-light bg-transparent"
     }`;
 
   return (
-    <aside className="dashboard-sidebar d-none d-lg-flex flex-column bg-dark text-white border-end shadow-sm overflow-y-auto custom-scrollbar">
+    <aside className="dashboard-sidebar d-none d-lg-flex flex-column bg-dark text-white shadow-sm overflow-y-auto custom-scrollbar">
       <div className="sidebar-brand px-3 py-4 text-center">
         <NavLink to="/" className="text-white text-decoration-none d-block">
           <img src={logo} alt="EventiHub Logo" className="dashboard-logo" />

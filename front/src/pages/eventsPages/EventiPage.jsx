@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import useSEO from "../../hooks/useSEO";
 
 import CardPageEvent from "../../components/eventsComponents/CardPageEvent";
+import { eventsAPI } from "../../services/api";
 
 const categorie = [
   { nome: "Tutti", icona: "bi-grid-fill" },
@@ -53,18 +54,18 @@ const EventiPage = () => {
   const locations = [...new Set(eventiData.map((e) => e.location))].sort();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/events")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("DATA FROM BACKEND:", data);
-
-        setEventiData(data.dati);
-      })
-      .catch((err) => {
+    const fetchEvents = async () => {
+      try {
+        const data = await eventsAPI.getAll();
+        setEventiData(data);
+      } catch (err) {
         console.error("Errore caricamento eventi:", err);
         setEventiData([]);
-      });
+      }
+    };
+    fetchEvents();
   }, []);
+
 
   const aggiornaFiltroLocation = (location) => {
     setSearchParams((params) => {

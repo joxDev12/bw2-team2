@@ -14,7 +14,7 @@ const HomePage = () => {
   });
 
   return (
-    <main className="bg-dark text-light">
+    <main className="text-light">
       <Hero />
       <ListEvent />
       <ComeFunziona />
