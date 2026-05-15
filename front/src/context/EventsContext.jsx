@@ -6,7 +6,7 @@ const EventsContext = createContext(null);
 
 export const getPostiPrenotati = (evento) =>
   Number(evento.seats_prenotati ?? 0);
-export const getPostiDisponibili = (evento) => Number(evento.max_seats ?? 0);
+export const getPostiDisponibili = (evento) => Number(evento.seats_available ?? 0);
 export const getPostiTotali = (evento) =>
   getPostiPrenotati(evento) + getPostiDisponibili(evento);
 export const getPrezzoEvento = (evento) =>

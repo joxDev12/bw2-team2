@@ -155,6 +155,12 @@ const aggiorna = async (id, dati) => {
     }
   }
 
+  if(dati.password_hash){
+    const hash = await bcrypt.hash(dati.password_hash, SALT_ROUND);
+    await usersModel.updatePassword(id, hash);
+    delete dati.password_hash
+  }
+  
   if (errori.length) {
     const err = new Error(errori.join('\n'));
     err.statusCode = 409;

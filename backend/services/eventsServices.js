@@ -73,21 +73,11 @@ const getById = async (id) => {
 
 const getAllByCategory = async (category) => {
   const result = await eventsModel.findByCategory(category);
-  if (!result.rows.length) {
-    const err = new Error('Evento non trovato');
-    err.statusCode = 404;
-    throw err;
-  }
   return result.rows;
 };
 
 const getAllByOrganizerId = async (id) => {
   const result = await eventsModel.findByOrganizerId(id);
-  if (!result.rows.length) {
-    const err = new Error('Evento non trovato');
-    err.statusCode = 404;
-    throw err;
-  }
   return result.rows;
 };
 

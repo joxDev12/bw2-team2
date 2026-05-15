@@ -15,7 +15,6 @@ const seedRegistrationsPlaceholder = require('./utils/seederRegistrationsPlaceho
 
 const cors = require('cors');
 
-require('dotenv').config();
 
 //model per creare le tabelle 
 const usersModel   = require('./models/usersModel');

@@ -136,7 +136,7 @@ const EventiDettaglioPage = () => {
                   <div className="fw-semibold">
                     <i className="bi bi-people me-2 text-success"></i>
 
-                    {evento.max_seats}
+                    {evento.seats_available}
                   </div>
                 </div>
               </div>

@@ -91,7 +91,7 @@ const create = (id, { title, image, description, date, location, indirizzo, pric
   pool.query(
     `INSERT INTO events
        (title, image, description, date, location, indirizzo,
-        price, is_free, total_seats, seats_available, available, category, organizer_id)
+        price, is_free, total_seats, seats_available, "available", category, organizer_id)
      VALUES ($1, $2, $3, $4, $5, $6,
              COALESCE($7, 0), COALESCE($7, 0) = 0,
              $8, $8, $8 > 0,
@@ -112,20 +112,23 @@ const update = (id, { title, image, description, date, location, indirizzo, pric
          indirizzo       = COALESCE($6, indirizzo),
          price           = COALESCE($7, price),
          is_free         = CASE WHEN $7 IS NULL THEN is_free ELSE $7 = 0 END,
-         seats_available = COALESCE($8, seats_available),
-         available       = CASE WHEN $8 IS NULL THEN available ELSE $8 > 0 END,
+         seats_available = CASE WHEN $8::INTEGER IS NULL THEN seats_available
+                                ELSE GREATEST(0, $8::INTEGER - (total_seats - seats_available)) END,
+         total_seats     = COALESCE($8::INTEGER, total_seats),
+         "available"     = CASE WHEN $8::INTEGER IS NULL THEN "available"
+                                ELSE ($8::INTEGER > (total_seats - seats_available)) END,
          category        = COALESCE($9, category)
      WHERE id = $10
      RETURNING *`,
     [title, image, description, date, location, indirizzo, price, max_seats, category, id]
   );
-
+  
 const decrementa = (id, seats = 1) =>
   pool.query(
     `UPDATE events
      SET seats_available = seats_available - $2,
-         available       = CASE WHEN seats_available - $2 <= 0 THEN false ELSE true END
-     WHERE id = $1 AND seats_available >= $2 AND available = true
+    "available"     = CASE WHEN seats_available - $2 <= 0 THEN false ELSE true END
+WHERE id = $1 AND seats_available >= $2 AND "available" = true
      RETURNING *`,
     [id, seats]
   );
@@ -134,7 +137,7 @@ const incrementa = (id, seats = 1) =>
   pool.query(
     `UPDATE events
      SET seats_available = seats_available + $2,
-         available       = true
+    "available"     = true
      WHERE id = $1
      RETURNING *`,
     [id, seats]

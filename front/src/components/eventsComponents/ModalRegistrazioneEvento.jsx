@@ -1,8 +1,7 @@
-// Placeholder della modale di registrazione a un evento.
-// Potra contenere il form di iscrizione o prenotazione posti.
 import { useState } from "react";
 import { useRegistrations } from "../../context/RegistrationsContext";
 import { useAuth } from "../../context/AuthContext";
+import { registrationsAPI } from "../../services/api";
 
 const ModalRegistrazioneEvento = ({ show, onClose, evento }) => {
   const [posti, setPosti] = useState(1);
@@ -10,7 +9,7 @@ const ModalRegistrazioneEvento = ({ show, onClose, evento }) => {
   const [errore, setErrore] = useState("");
   const [successo, setSuccesso] = useState(false);
 
-  const maxPrenotabili = evento.max_seats;
+  const maxPrenotabili = evento.seats_available;
   const { caricaRegistrazioniEvento } = useRegistrations();
   const { token } = useAuth();
 
@@ -29,19 +28,7 @@ const ModalRegistrazioneEvento = ({ show, onClose, evento }) => {
       setErrore("");
       setSuccesso(false);
 
-      const response = await fetch("http://localhost:3000/api/registrations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          event_id: evento.id,
-          seats: posti,
-        }),
-      });
-
-      if (!response.ok) throw new Error("Errore durante la registrazione");
+      await registrationsAPI.crea({event_id: evento.id, seats: posti})
 
       setSuccesso(true);
       await caricaRegistrazioniEvento(evento.id);
@@ -103,9 +90,9 @@ const ModalRegistrazioneEvento = ({ show, onClose, evento }) => {
                 />
               </div>
 
-              {!evento.isfree && (
+              {!evento.is_free && (
                 <p className="mt-3 fw-semibold">
-                  Totale: {posti * evento.price} €
+                  Totale: {(posti * Number(evento.price)).toFixed(2)} €
                 </p>
               )}
 
