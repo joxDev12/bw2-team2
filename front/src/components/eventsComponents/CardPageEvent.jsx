@@ -57,6 +57,12 @@ const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
                   <i className="bi bi-geo-alt fs-5 me-2 text-danger"></i>
                   <span className="fs-6">{evento.location}</span>
                 </span>
+                <span className="d-flex align-items-center">
+                  <i className="bi bi-people fs-5 me-2 text-secondary"></i>
+                  <span className="fs-6">
+                    {evento.seats_available} posti disponibili
+                  </span>
+                </span>
               </div>
 
               <p className="card-text fs-5 flex-grow-1">{evento.description}</p>

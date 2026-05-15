@@ -1,19 +1,24 @@
 import { useState } from "react";
 import { useRegistrations } from "../../context/RegistrationsContext";
-import { useAuth } from "../../context/AuthContext";
 import { registrationsAPI } from "../../services/api";
 
-const ModalRegistrazioneEvento = ({ show, onClose, evento, onAcquistoCompletato }) => {
+const ModalRegistrazioneEvento = ({
+  show,
+  onClose,
+  evento,
+  onAcquistoCompletato,
+  onSuccessoRegistrazione,
+}) => {
   const [posti, setPosti] = useState(1);
   const [loading, setLoading] = useState(false);
   const [errore, setErrore] = useState("");
-  const [successo, setSuccesso] = useState(false);
 
   const maxPrenotabili = evento.seats_available;
   const { caricaRegistrazioniEvento } = useRegistrations();
-  const { token } = useAuth();
 
   async function handleSubmit() {
+    if (loading) return;
+
     if (posti < 1) {
       setErrore("Inserisci almeno 1 posto");
       return;
@@ -26,15 +31,13 @@ const ModalRegistrazioneEvento = ({ show, onClose, evento, onAcquistoCompletato 
     try {
       setLoading(true);
       setErrore("");
-      setSuccesso(false);
 
       await registrationsAPI.crea({ event_id: evento.id, seats: posti });
 
-      setSuccesso(true);
       onAcquistoCompletato?.(posti);
-      await caricaRegistrazioniEvento(evento.id);
-
-      setTimeout(() => onClose(), 1500);
+      onSuccessoRegistrazione?.();
+      caricaRegistrazioniEvento(evento.id);
+      onClose();
     } catch (err) {
       setErrore(err.message);
     } finally {
@@ -99,11 +102,6 @@ const ModalRegistrazioneEvento = ({ show, onClose, evento, onAcquistoCompletato 
 
               {errore && (
                 <div className="alert alert-danger mt-3">{errore}</div>
-              )}
-              {successo && (
-                <div className="alert alert-success mt-3">
-                  Registrazione completata!
-                </div>
               )}
             </div>
 

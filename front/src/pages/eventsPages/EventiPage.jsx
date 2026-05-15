@@ -6,6 +6,7 @@ import CardPageEvent from "../../components/eventsComponents/CardPageEvent";
 import { eventsAPI } from "../../services/api";
 
 import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalRegistrazioneEvento";
+import ProfiloToast from "../../components/dashboardComponents/ProfiloToast";
 
 const iconeCategorie = {
   Musica: "bi-music-note-beamed",
@@ -83,6 +84,7 @@ function creaGiorniCalendario(meseCalendario) {
 const EventiPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [eventoSelezionato, setEventoSelezionato] = useState(null);
+  const [toast, setToast] = useState(null);
   const filtriRef = useRef(null);
   const [pannelloDataAperto, setPannelloDataAperto] = useState(false);
   const [pannelloLocationAperto, setPannelloLocationAperto] = useState(false);
@@ -96,6 +98,50 @@ const EventiPage = () => {
     setEventoSelezionato(null);
     setShowModal(false);
   }
+
+  function mostraToastRegistrazione() {
+    setToast({
+      messaggio: "Registrazione completata!",
+      tipo: "success",
+    });
+
+    setTimeout(() => setToast(null), 3500);
+  }
+
+  function aggiornaPostiEvento(postiAcquistati) {
+    setEventiData((eventiAttuali) =>
+      eventiAttuali.map((evento) => {
+        if (evento.id !== eventoSelezionato?.id) return evento;
+
+        const postiRimasti = Math.max(
+          0,
+          Number(evento.seats_available) - Number(postiAcquistati),
+        );
+
+        return {
+          ...evento,
+          seats_available: postiRimasti,
+          available: postiRimasti > 0,
+        };
+      }),
+    );
+
+    setEventoSelezionato((eventoPrecedente) => {
+      if (!eventoPrecedente) return eventoPrecedente;
+
+      const postiRimasti = Math.max(
+        0,
+        Number(eventoPrecedente.seats_available) - Number(postiAcquistati),
+      );
+
+      return {
+        ...eventoPrecedente,
+        seats_available: postiRimasti,
+        available: postiRimasti > 0,
+      };
+    });
+  }
+
   useSEO({
     title: "Tutti gli Eventi",
     description:
@@ -250,6 +296,7 @@ const EventiPage = () => {
 
   return (
     <div className="eventi-page">
+      <ProfiloToast toast={toast} onClose={() => setToast(null)} />
       <div className="container py-4 text-secondary">
         <h1 className="display-5 fw-bold">
           <i className="bi bi-calendar-event me-3"></i>
@@ -497,6 +544,8 @@ const EventiPage = () => {
               show={showModal}
               onClose={closeModal}
               evento={eventoSelezionato}
+              onAcquistoCompletato={aggiornaPostiEvento}
+              onSuccessoRegistrazione={mostraToastRegistrazione}
             />
           )}
         </div>

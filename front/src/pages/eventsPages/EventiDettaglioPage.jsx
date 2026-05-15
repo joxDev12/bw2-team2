@@ -6,6 +6,7 @@ import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalReg
 import { Link, useParams } from "react-router-dom";
 import useSEO from "../../hooks/useSEO";
 import { eventsAPI } from "../../services/api";
+import ProfiloToast from "../../components/dashboardComponents/ProfiloToast";
 
 const EventiDettaglioPage = () => {
   const { utente } = useAuth();
@@ -17,6 +18,7 @@ const EventiDettaglioPage = () => {
   const [errore, setErrore] = useState("");
 
   const [showModal, setShowModal] = useState(false);
+  const [toast, setToast] = useState(null);
 
   function openModal() {
     setShowModal(true);
@@ -24,6 +26,15 @@ const EventiDettaglioPage = () => {
 
   function closeModal() {
     setShowModal(false);
+  }
+
+  function mostraToastRegistrazione() {
+    setToast({
+      messaggio: "Registrazione completata!",
+      tipo: "success",
+    });
+
+    setTimeout(() => setToast(null), 3500);
   }
 
   function aggiornaPostiEvento(postiAcquistati) {
@@ -88,6 +99,7 @@ const EventiDettaglioPage = () => {
   }
   return (
     <div className="container py-5">
+      <ProfiloToast toast={toast} onClose={() => setToast(null)} />
       <div className="card border-0 shadow-lg overflow-hidden event-card">
         <img
           src={evento.image || eventsPlaceholder}
@@ -239,6 +251,7 @@ const EventiDettaglioPage = () => {
           onClose={closeModal}
           evento={evento}
           onAcquistoCompletato={aggiornaPostiEvento}
+          onSuccessoRegistrazione={mostraToastRegistrazione}
         />
       )}
     </div>
