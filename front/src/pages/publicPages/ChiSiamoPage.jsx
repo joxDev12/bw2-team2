@@ -10,7 +10,7 @@ const imageGiorgio = "./src/assets/img/foto_giorgio.webp";
 
 const ChiSiamoPage = () => {
   const { token } = useAuth();
-  
+
   useSEO({
     title: "Chi Siamo",
     description: "Scopri il team e i valori dietro EventHub, la piattaforma che connette le persone attraverso esperienze indimenticabili."
@@ -106,13 +106,38 @@ const ChiSiamoPage = () => {
 
           <div className="row g-4 justify-content-center">
             {[
-              { name: "Ievgeniia", role: "Admin", image: imageIevgeniia },
-              { name: "Santi", role: "Admin", image: imageSanti },
-              { name: "Alessandro", role: "Admin", image: imageAlessandro },
-              { name: "Giorgio", role: "Admin", image: imageGiorgio },
+              {
+                name: "Ievgeniia",
+                role: "Admin",
+                image: imageIevgeniia,
+                github: "https://github.com/Ievgeniia23",
+              },
+              {
+                name: "Santi",
+                role: "Admin",
+                image: imageSanti,
+                github: "https://github.com/santie96",
+              },
+              {
+                name: "Alessandro",
+                role: "Admin",
+                image: imageAlessandro,
+                github: "https://github.com/AlessRizz",
+              },
+              {
+                name: "Giorgio",
+                role: "Admin",
+                image: imageGiorgio,
+                github: "https://github.com/joxDev12",
+              },
             ].map((member, index) => (
               <div className="col-md-3 col-sm-6" key={index}>
-                <CardUtenti name={member.name} role={member.role} image={member.image} />
+                <CardUtenti
+                  name={member.name}
+                  role={member.role}
+                  image={member.image}
+                  github={member.github}
+                />
               </div>
             ))}
           </div>
