@@ -70,6 +70,15 @@ function RegistrazioniUtenti() {
     }
   }, [utente, token]);
 
+  const eliminaRegistrazione = async (id) => {
+    try {
+      await registrationsAPI.elimina(id);
+      setRegistrazioni((prev) => prev.filter((reg) => reg.id !== id));
+    } catch (err) {
+      setError(err.message || "Errore nella cancellazione della registrazione");
+    }
+  };
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center p-5">
@@ -119,6 +128,9 @@ function RegistrazioniUtenti() {
                   <th className="px-4 py-3">Utente</th>
                   <th className="px-4 py-3">Evento</th>
                   <th className="px-4 py-3 text-center">Posti</th>
+                  {utente?.role === "organizer" && (
+                    <th className="px-4 py-3 text-end">Azioni</th>
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -166,6 +178,18 @@ function RegistrazioniUtenti() {
                         {reg.seats}
                       </span>
                     </td>
+                    {utente?.role === "organizer" && (
+                      <td className="px-4 py-3 text-end">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline-danger rounded-pill"
+                          onClick={() => eliminaRegistrazione(reg.id)}
+                        >
+                          <i className="bi bi-trash me-1"></i>
+                          Elimina
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -231,6 +255,17 @@ function RegistrazioniUtenti() {
                         </span>
                       </div>
                     </div>
+
+                    {utente?.role === "organizer" && (
+                      <button
+                        type="button"
+                        className="btn btn-outline-danger rounded-pill w-100 mt-3"
+                        onClick={() => eliminaRegistrazione(reg.id)}
+                      >
+                        <i className="bi bi-trash me-2"></i>
+                        Elimina registrazione
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

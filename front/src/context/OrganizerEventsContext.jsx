@@ -259,6 +259,7 @@ export function OrganizerEventsProvider({ children }) {
   const value = {
     caricamento,
     errore,
+    utente,
     eventi,
     toast,
     nascondiToast: () => setToast(null),
