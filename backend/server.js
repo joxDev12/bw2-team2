@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 const express      = require('express');
 const errorHandler = require('./middlewares/errorHandler')
 const helmet       = require('helmet');
@@ -80,10 +80,10 @@ const start = async () => {
     await eventsModel.init();
     await registrationsModel.init();
 
-    await seedUsersPlaceholder();
-    // seedAdmin va dopo perchè il usersPlaceholder fa il truncate della tabella facendo ripartire sempre da ID 1
-    await seedAdmin(); 
 
+    // Seeder attivi in development — commentare prima del deploy in produzione
+    await seedUsersPlaceholder();
+    await seedAdmin(); 
     await seedEventsPlaceholder();
     await seedRegistrationsPlaceholder()
 

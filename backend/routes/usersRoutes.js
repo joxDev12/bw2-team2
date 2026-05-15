@@ -3,6 +3,8 @@ const { body, param } = require('express-validator');
 const validate = require('../middlewares/validate');
 const controller = require('../controllers/usersControllers');
 const upload = require('../middlewares/upload');
+const buildImageUrl = require('../middlewares/buildImageUrl');
+
 const {
   autenticato,
   soloAdmin,
@@ -144,8 +146,13 @@ router.get('/:id', autenticato, regolaId, validate, soloAdminOStessoUtente, cont
 // puo modificare un profilo
 router.patch('/:id', autenticato, regolaAggiorna, validate, soloAdminOStessoUtente, controller.aggiorna);
 
-router.patch('/:id/img-profile', autenticato, regolaId, validate, soloAdminOStessoUtente, upload.profile.single('img_profile'), controller.aggiornaImmagineProfilo);
-
+router.patch('/:id/img-profile',
+  autenticato, regolaId, validate,
+  soloAdminOStessoUtente,
+  upload.profile.single('img_profile'),
+  buildImageUrl('profiles'),   
+  controller.aggiornaImmagineProfilo
+);
 router.patch('/:id/promuovi', autenticato, soloAdmin, regolaPromuovi, validate, controller.aggiorna);
 
 // Solo admin puo eliminare un utente

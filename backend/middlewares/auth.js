@@ -3,10 +3,6 @@ const usersModel = require('../models/usersModel');
 const eventsModel = require('../models/eventsModel');
 const registrationsModel = require('../models/registrationsModel');
 
-// FILE DI PROVA
-// Questo file NON e' collegato alle routes.
-// Serve solo come esempio di come separare meglio autenticazione e autorizzazioni.
-
 const autenticato = async (req, res, next) => {
   const auth = req.headers.authorization;
 

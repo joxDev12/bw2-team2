@@ -48,19 +48,20 @@ const aggiorna = async (req, res, next) => {
 const aggiornaImmagineProfilo = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
-    const vecchioUser = await usersService.getById(id);
 
-    if (!req.file) {
+    if (!req.imageUrl) {
       const err = new Error('Immagine profilo obbligatoria');
       err.statusCode = 400;
       throw err;
     }
 
-    const img_profile = `${req.protocol}://${req.get('host')}/uploads/profiles/${id}/${req.file.filename}`;
-    const user = await usersService.aggiorna(id, { img_profile });
-    if (vecchioUser.img_profile !== img_profile) {
+    const vecchioUser = await usersService.getById(id);
+    const user = await usersService.aggiorna(id, { img_profile: req.imageUrl });
+
+    if (vecchioUser.img_profile !== req.imageUrl) {
       usersService.eliminaImmagineProfilo(vecchioUser.img_profile);
     }
+
     const isStessoUtente = req.user?.id === id;
     const token = isStessoUtente ? usersService.generaToken(user) : null;
     res.json({ successo: true, dati: token ? { user, token } : user });

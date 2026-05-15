@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
     role         VARCHAR(20)   NOT NULL DEFAULT 'partecipant'
                   CHECK (role IN ('admin', 'partecipant', 'organizer')),
     token_version INTEGER       NOT NULL DEFAULT 0,
-    created_at date DEFAULT CURRENT_TIMESTAMP NOT NULL
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 `;
 

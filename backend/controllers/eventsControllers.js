@@ -56,18 +56,17 @@ const aggiorna = async (req, res, next) => {
 const aggiornaImmagine = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
-    const vecchioEvento = await eventsService.getById(id);
 
-    if (!req.file) {
+    if (!req.imageUrl) {
       const err = new Error('Immagine evento obbligatoria');
       err.statusCode = 400;
       throw err;
     }
 
-    const image = `${req.protocol}://${req.get('host')}/uploads/events/${id}/${req.file.filename}`;
-    const event = await eventsService.aggiorna(id, { image });
+    const vecchioEvento = await eventsService.getById(id);
+    const event = await eventsService.aggiorna(id, { image: req.imageUrl });
 
-    if (vecchioEvento.image !== image) {
+    if (vecchioEvento.image !== req.imageUrl) {
       eventsService.eliminaImmagineEvento(vecchioEvento.image);
     }
 
