@@ -3,7 +3,7 @@ import { useRegistrations } from "../../context/RegistrationsContext";
 import { useAuth } from "../../context/AuthContext";
 import { registrationsAPI } from "../../services/api";
 
-const ModalRegistrazioneEvento = ({ show, onClose, evento }) => {
+const ModalRegistrazioneEvento = ({ show, onClose, evento, onAcquistoCompletato }) => {
   const [posti, setPosti] = useState(1);
   const [loading, setLoading] = useState(false);
   const [errore, setErrore] = useState("");
@@ -28,9 +28,10 @@ const ModalRegistrazioneEvento = ({ show, onClose, evento }) => {
       setErrore("");
       setSuccesso(false);
 
-      await registrationsAPI.crea({event_id: evento.id, seats: posti})
+      await registrationsAPI.crea({ event_id: evento.id, seats: posti });
 
       setSuccesso(true);
+      onAcquistoCompletato?.(posti);
       await caricaRegistrazioniEvento(evento.id);
 
       setTimeout(() => onClose(), 1500);

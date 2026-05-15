@@ -25,6 +25,23 @@ const EventiDettaglioPage = () => {
   function closeModal() {
     setShowModal(false);
   }
+
+  function aggiornaPostiEvento(postiAcquistati) {
+    setEvento((eventoPrecedente) => {
+      if (!eventoPrecedente) return eventoPrecedente;
+
+      const postiRimasti = Math.max(
+        0,
+        Number(eventoPrecedente.seats_available) - Number(postiAcquistati)
+      );
+
+      return {
+        ...eventoPrecedente,
+        seats_available: postiRimasti,
+        available: postiRimasti > 0,
+      };
+    });
+  }
   useSEO({
     title: evento ? evento.title : "Caricamento evento...",
     description: evento
@@ -221,6 +238,7 @@ const EventiDettaglioPage = () => {
           show={showModal}
           onClose={closeModal}
           evento={evento}
+          onAcquistoCompletato={aggiornaPostiEvento}
         />
       )}
     </div>
