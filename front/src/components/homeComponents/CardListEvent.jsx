@@ -25,8 +25,12 @@ function CardListEvent({ event }) {
     category,
     description,
     location,
-    price
+    price,
+    date
   } = event;
+  const dataEvento = new Date(date);
+  const giornoEvento = String(dataEvento.getDate()).padStart(2, "0");
+  const meseEvento = dataEvento.toLocaleDateString("it-IT", { month: "short" });
 
   return (
     <div className="h-100 px-2">
@@ -49,6 +53,10 @@ function CardListEvent({ event }) {
                   <i className="bi bi-image text-white fs-1"></i>
                 </div>
               )}
+              <span className="position-absolute bottom-0 start-0 m-2 bg-light text-dark rounded-2 d-flex flex-column align-items-center justify-content-center shadow-sm lh-1" style={{ width: "42px", height: "46px" }}>
+                <span className="fw-bold small">{giornoEvento}</span>
+                <span className="x-small text-uppercase fw-semibold">{meseEvento}</span>
+              </span>
               <span className={`badge ${badgeColore(category)} position-absolute top-0 start-0 m-2`}>
                 {category}
               </span>
@@ -59,11 +67,11 @@ function CardListEvent({ event }) {
 
             <div className="d-flex flex-column gap-1 mt-auto">
               <div className="d-flex gap-2 align-items-center">
-                <i className="bi bi-geo-alt text-primary small"></i>
+                <i className="bi bi-geo-alt text-secondary small"></i>
                 <span className="x-small text-truncate">{location}</span>
               </div>
               <div className="d-flex gap-2 align-items-center">
-                <i className="bi bi-coin text-primary small"></i>
+                <i className="bi bi-coin text-secondary small"></i>
                 <span className="fw-bold small">{price === "0.00" ? 'Gratuito' : `€ ${price}`}</span>
               </div>
             </div>

@@ -5,7 +5,7 @@ import { feedbacks } from "./homeContent";
 function CardFeedback() {
   return feedbacks.map((feedback) => (
     <div
-      className="col-12 col-md-6 col-lg-3"
+      className="col-12 col-md-6 col-lg-3 animazione-card"
       key={`${feedback.name}-${feedback.city}`}
     >
       <article className="card bg-soft-dark border-0 shadow-sm h-100">

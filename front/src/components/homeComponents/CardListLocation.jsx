@@ -25,6 +25,10 @@ function CardListLocation({ location }) {
                                         className="img-fluid rounded"
                                         style={{ width: '100%', height: '160px', objectFit: 'cover' }}
                                     />
+                                    <span
+                                        className="position-absolute top-0 start-0 w-100 h-100 rounded"
+                                        style={{ backgroundColor: "rgba(0, 0, 0, 0.32)" }}
+                                    ></span>
                                 </div>
                             ) : (
                                 <div
@@ -34,7 +38,15 @@ function CardListLocation({ location }) {
                                     <i className="bi bi-image text-white fs-1"></i>
                                 </div>
                             )}
-                            <span className="badge bg-primary position-absolute top-0 start-0 m-2">{nome}</span>
+                            <span
+                                className="position-absolute bottom-0 start-0 m-2 text-white fw-semibold"
+                                style={{
+                                    fontSize: "1rem",
+                                    textShadow: "0 2px 6px #000, 0 4px 14px rgba(0, 0, 0, 0.95)",
+                                }}
+                            >
+                                {nome}
+                            </span>
                         </div>
                     </div>
                 </article>

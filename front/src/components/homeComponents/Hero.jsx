@@ -5,6 +5,7 @@ import HeroSearchForm from "./heroComponents/HeroSearchForm";
 import ListCategories from "./ListCategories";
 import { SearchProvider } from "../../context/SearchContext";
 import { eventsAPI } from "../../services/api";
+import logo from "../../assets/img/logo.png";
 function Hero() {
   const [categorie, setCategorie] = useState([]);
 
@@ -27,6 +28,8 @@ function Hero() {
 
   return (
     <section className="hero-section text-center py-5 d-flex align-items-center justify-content-center flex-column gap-3">
+      <img src={logo} alt="EventiHub" className="hero-logo" />
+
       <h1 className="display-3 fw-bold text-light mb-2 mt-5">
         Vivi momenti <br /> che restano.
       </h1>
