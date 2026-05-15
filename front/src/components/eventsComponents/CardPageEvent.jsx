@@ -28,7 +28,7 @@ const CardPageEvent = ({ evento, formattaData, badgeColore, openModal }) => {
               src={evento.image || eventsPlaceholder}
               className="img-fluid w-100 h-100"
               alt={evento.title}
-              style={{ objectFit: "cover", minHeight: "220px" }}
+              style={{ objectFit: "cover", aspectRatio: "4 / 3" }}
             />
             <span
               className={`badge ${badgeColore(
