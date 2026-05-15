@@ -56,6 +56,13 @@ const creaFormDaEvento = (evento) => ({
   category: evento.category || "",
 });
 
+const dataOggi = () => {
+  const oggi = new Date();
+  return `${oggi.getFullYear()}-${String(oggi.getMonth() + 1).padStart(2, "0")}-${String(
+    oggi.getDate(),
+  ).padStart(2, "0")}`;
+};
+
 const OrganizerEventsContext = createContext(null);
 const OrganizerEventItemContext = createContext(null);
 
@@ -135,6 +142,12 @@ export function OrganizerEventsProvider({ children }) {
   const gestisciSubmitCreazione = async (e) => {
     e.preventDefault();
     setErroreModaleCreazione(null);
+
+    if (datiFormCreazione.date < dataOggi()) {
+      mostraToast("La data è precedente a quella di oggi.", "danger");
+      return;
+    }
+
     setCaricamentoModaleCreazione(true);
 
     try {

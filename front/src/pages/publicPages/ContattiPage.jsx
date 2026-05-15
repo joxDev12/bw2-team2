@@ -1,13 +1,42 @@
+import { useState } from "react";
 import useSEO from "../../hooks/useSEO";
+import ProfiloToast from "../../components/dashboardComponents/ProfiloToast";
 
 const ContattiPage = () => {
+  const [toast, setToast] = useState(null);
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   useSEO({
     title: "Contatti",
     description: "Contatta il team di EventHub per assistenza, informazioni o collaborazioni."
   });
 
+  const inviaMessaggio = (e) => {
+    e.preventDefault();
+    const email = e.currentTarget.querySelector("#email");
+    email.setCustomValidity("");
+
+    if (!emailRegex.test(email.value.trim())) {
+      email.setCustomValidity("Inserisci un indirizzo email valido.");
+    }
+
+    if (!e.currentTarget.checkValidity()) {
+      e.currentTarget.reportValidity();
+      return;
+    }
+
+    setToast({
+      messaggio: "Grazie per averci contattato!",
+      tipo: "success",
+    });
+    e.currentTarget.reset();
+    setTimeout(() => setToast(null), 3500);
+  };
+
   return (
     <div className="container py-5">
+      <ProfiloToast toast={toast} onClose={() => setToast(null)} />
+
       <div className="row justify-content-center text-center mb-5">
         <div className="col-lg-8">
           <h1 className="display-4 fw-bold mb-3 text-secondary">Contattaci</h1>
@@ -109,7 +138,7 @@ const ContattiPage = () => {
           <div className="card border-0 shadow-sm p-4">
             <div className="card-body">
               <h3 className="h4 fw-bold mb-4">Inviaci un messaggio</h3>
-              <form onSubmit={(e) => e.preventDefault()}>
+              <form onSubmit={inviaMessaggio} noValidate>
                 <div className="row g-3 mb-3">
                   <div className="col-md-6">
                     <label htmlFor="nome" className="form-label fw-medium">
@@ -146,6 +175,7 @@ const ContattiPage = () => {
                     className="form-control"
                     id="email"
                     placeholder="nome@esempio.com"
+                    onInput={(e) => e.target.setCustomValidity("")}
                     required
                   />
                 </div>

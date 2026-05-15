@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import useSEO from "../../hooks/useSEO";
 
@@ -54,9 +54,39 @@ function bottoneCategoriaColore(categoria) {
   }
 }
 
+function getDataInput(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
+    date.getDate(),
+  ).padStart(2, "0")}`;
+}
+
+function formattaFiltroData(data) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(data)) return data;
+  const [anno, mese, giorno] = data.split("-");
+  return `${giorno}/${mese}/${anno}`;
+}
+
+function creaGiorniCalendario(meseCalendario) {
+  const anno = meseCalendario.getFullYear();
+  const mese = meseCalendario.getMonth();
+  const primoGiorno = new Date(anno, mese, 1);
+  const giornoSettimana = primoGiorno.getDay() || 7;
+  const inizio = new Date(anno, mese, 2 - giornoSettimana);
+
+  return Array.from({ length: 42 }, (_, index) => {
+    const giorno = new Date(inizio);
+    giorno.setDate(inizio.getDate() + index);
+    return giorno;
+  });
+}
+
 const EventiPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [eventoSelezionato, setEventoSelezionato] = useState(null);
+  const filtriRef = useRef(null);
+  const [pannelloDataAperto, setPannelloDataAperto] = useState(false);
+  const [pannelloLocationAperto, setPannelloLocationAperto] = useState(false);
+  const [meseCalendario, setMeseCalendario] = useState(new Date());
 
   function openModal(evento) {
     setEventoSelezionato(evento);
@@ -102,6 +132,18 @@ const EventiPage = () => {
     setCategoriaAttiva(searchParams.get("category") || "Tutti");
   }, [searchParams]);
 
+  useEffect(() => {
+    const chiudiPannelli = (e) => {
+      if (!filtriRef.current?.contains(e.target)) {
+        setPannelloDataAperto(false);
+        setPannelloLocationAperto(false);
+      }
+    };
+
+    document.addEventListener("mousedown", chiudiPannelli);
+    return () => document.removeEventListener("mousedown", chiudiPannelli);
+  }, []);
+
 
   const aggiornaFiltroLocation = (location) => {
     setSearchParams((params) => {
@@ -146,6 +188,27 @@ const EventiPage = () => {
     });
   };
 
+  const cambiaMeseCalendario = (numero) => {
+    setMeseCalendario(
+      new Date(meseCalendario.getFullYear(), meseCalendario.getMonth() + numero, 1),
+    );
+  };
+
+  const selezionaData = (date) => {
+    aggiornaFiltroData(getDataInput(date));
+    setPannelloDataAperto(false);
+  };
+
+  const apriPannelloData = () => {
+    setPannelloLocationAperto(false);
+    setPannelloDataAperto(true);
+  };
+
+  const togglePannelloLocation = () => {
+    setPannelloDataAperto(false);
+    setPannelloLocationAperto(!pannelloLocationAperto);
+  };
+
   const getDataEvento = (date) => {
     const d = new Date(date);
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
@@ -155,6 +218,10 @@ const EventiPage = () => {
 
   const eventiFiltrati = eventiData.filter((evento) => {
     const testo = filtroTesto.toLowerCase().trim();
+    const location = filtroLocation.toLowerCase().trim();
+    const data = filtroData.toLowerCase().trim();
+    const dataEvento = getDataEvento(evento.date);
+    const dataEventoTesto = formattaData(evento.date).toLowerCase();
     const matchCategoria =
       categoriaAttiva === "Tutti" || evento.category === categoriaAttiva;
     const matchTesto =
@@ -164,9 +231,9 @@ const EventiPage = () => {
       evento.organizer_username?.toLowerCase().includes(testo) ||
       evento.location?.toLowerCase().includes(testo);
     const matchData =
-      filtroData === "" || getDataEvento(evento.date) === filtroData;
+      data === "" || dataEvento.includes(data) || dataEventoTesto.includes(data);
     const matchLocation =
-      filtroLocation === "" || evento.location === filtroLocation;
+      location === "" || evento.location?.toLowerCase().trim().includes(location);
     return matchCategoria && matchTesto && matchData && matchLocation;
   });
 
@@ -196,7 +263,10 @@ const EventiPage = () => {
 
       <section className="bg-dark shadow-sm sticky-top" style={{ zIndex: 100 }}>
         <div className="container py-3">
-          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-2 gap-md-3">
+          <div
+            ref={filtriRef}
+            className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-2 gap-md-3"
+          >
             <button
               id="filter-tutti"
               className={`btn btn-sm rounded-pill px-3 fw-semibold ${categoriaAttiva === "Tutti"
@@ -227,38 +297,123 @@ const EventiPage = () => {
             <div className="d-none d-lg-block"></div>
 
             <div className="col-auto">
-              <div className="input-group input-group-sm rounded-pill">
+              <div className="input-group input-group-sm rounded-pill position-relative">
                 <span className="input-group-text bg-dark text-light border-light rounded-start-pill">
                   <i className="bi bi-calendar3"></i>
                 </span>
                 <input
-                  type="date"
+                  type="text"
                   id="filter-data"
                   className="form-control bg-dark text-light border-light border-start-0 rounded-end-pill fw-semibold w-auto"
-                  value={filtroData}
+                  placeholder="dd/mm/yyyy"
+                  value={formattaFiltroData(filtroData)}
+                  onClick={apriPannelloData}
+                  onFocus={apriPannelloData}
                   onChange={(e) => aggiornaFiltroData(e.target.value)}
                 />
+                {pannelloDataAperto && (
+                  <div className="event-filter-panel event-filter-date-panel shadow">
+                    <div className="d-flex align-items-center justify-content-between mb-3">
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-ghost text-light"
+                        onClick={() => cambiaMeseCalendario(-1)}
+                      >
+                        <i className="bi bi-chevron-left"></i>
+                      </button>
+                      <span className="fw-bold text-light text-capitalize">
+                        {meseCalendario.toLocaleDateString("it-IT", {
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </span>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-ghost text-light"
+                        onClick={() => cambiaMeseCalendario(1)}
+                      >
+                        <i className="bi bi-chevron-right"></i>
+                      </button>
+                    </div>
+
+                    <div className="event-filter-calendar">
+                      {["Lu", "Ma", "Me", "Gi", "Ve", "Sa", "Do"].map((giorno) => (
+                        <span key={giorno} className="event-filter-calendar__label">
+                          {giorno}
+                        </span>
+                      ))}
+
+                      {creaGiorniCalendario(meseCalendario).map((giorno) => {
+                        const dataGiorno = getDataInput(giorno);
+                        const meseCorrente =
+                          giorno.getMonth() === meseCalendario.getMonth();
+                        const attivo = dataGiorno === filtroData;
+
+                        return (
+                          <button
+                            key={dataGiorno}
+                            type="button"
+                            className={`event-filter-calendar__day ${!meseCorrente ? "text-white-50" : ""} ${attivo ? "active" : ""}`}
+                            onClick={() => selezionaData(giorno)}
+                          >
+                            {giorno.getDate()}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="d-flex justify-content-between mt-3">
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-ghost text-secondary"
+                        onClick={() => aggiornaFiltroData("")}
+                      >
+                        Pulisci
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-ghost text-secondary"
+                        onClick={() => selezionaData(new Date())}
+                      >
+                        Oggi
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="col-auto">
-              <div className="input-group input-group-sm rounded-pill w-auto">
+              <div className="input-group input-group-sm rounded-pill w-auto position-relative">
                 <span className="input-group-text bg-dark text-light border-light rounded-start-pill">
                   <i className="bi bi-geo-alt"></i>
                 </span>
-                <select
+                <button
+                  type="button"
                   id="filter-location"
-                  className="form-select bg-dark text-light border-light border-start-0 rounded-end-pill fw-semibold w-auto"
-                  value={filtroLocation}
-                  onChange={(e) => aggiornaFiltroLocation(e.target.value)}
+                  className="form-select bg-dark text-light border-light border-start-0 rounded-end-pill fw-semibold w-auto text-start"
+                  onClick={togglePannelloLocation}
                 >
-                  <option value="">Tutte le città</option>
-                  {locations.map((loc) => (
-                    <option key={loc} value={loc}>
-                      {loc}
-                    </option>
-                  ))}
-                </select>
+                  {filtroLocation || "Tutte le città"}
+                </button>
+
+                {pannelloLocationAperto && (
+                  <div className="event-filter-panel event-filter-location-panel shadow">
+                    {["", ...locations].map((loc) => (
+                      <button
+                        key={loc || "tutte"}
+                        type="button"
+                        className={`event-filter-option ${filtroLocation === loc ? "active" : ""}`}
+                        onClick={() => {
+                          aggiornaFiltroLocation(loc);
+                          setPannelloLocationAperto(false);
+                        }}
+                      >
+                        {loc || "Tutte le città"}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 

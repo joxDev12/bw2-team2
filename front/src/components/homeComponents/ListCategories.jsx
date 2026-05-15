@@ -33,9 +33,9 @@ function ListCategories({ categorie }) {
             className="d-flex flex-column align-items-center text-decoration-none"
             title={cat}
           >
-            <span className="ratio ratio-1x1 w-75 mx-auto">
+            <span className="d-block mx-auto" style={{ width: "86px", height: "86px" }}>
               <span
-                className={`btn rounded-3 d-flex align-items-center justify-content-center ${bottoneCategoriaColore(cat)}`}
+                className={`btn rounded-3 w-100 h-100 d-flex align-items-center justify-content-center ${bottoneCategoriaColore(cat)}`}
               >
                 <i className={`bi ${iconeCategorie[cat] || "bi-grid-fill"} fs-3`}></i>
               </span>
