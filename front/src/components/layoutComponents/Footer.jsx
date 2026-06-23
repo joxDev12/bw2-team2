@@ -1,6 +1,7 @@
 // Footer del sito con link principali e informazioni finali.
 // Viene mostrato nel layout pubblico sotto alle pagine.
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/img/logo.png";
 
 function Footer() {
   return (
@@ -13,7 +14,7 @@ function Footer() {
               to="/"
             >
               <img
-                src="../../src/assets/img/logo.png"
+                src={logo}
                 alt="EventiHub"
                 className="img-logo-navbar"
               />
