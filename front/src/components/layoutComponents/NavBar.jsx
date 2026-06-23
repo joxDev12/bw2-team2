@@ -3,6 +3,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import UserBanner from "./UserBanner";
+import logo from "../../assets/img/logo.png";
 import profilePlaceholder from "../../assets/img/profile_placeholder.webp";
 
 function Navbar() {
@@ -31,7 +32,7 @@ function Navbar() {
       <div className="container-fluid">
         <NavLink className="navbar-img navbar-brand fw-bold" to="/">
           <img
-            src="../../src/assets/img/logo.png"
+            src={logo}
             alt="EventiHub"
             className="img-logo-navbar"
           />
