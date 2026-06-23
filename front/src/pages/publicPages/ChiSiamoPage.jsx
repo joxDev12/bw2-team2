@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import CardUtenti from "../../components/sharedComponents/CardUtenti";
 import { useAuth } from "../../context/AuthContext";
 import useSEO from "../../hooks/useSEO";
-
-const imageIevgeniia = "./src/assets/img/foto_ievgeniia.webp";
-const imageSanti = "./src/assets/img/foto_santi.webp";
-const imageAlessandro = "./src/assets/img/foto_alessandro.webp";
-const imageGiorgio = "./src/assets/img/foto_giorgio.webp";
+import logo from "../../assets/img/logo.png";
+import imageIevgeniia from "../../assets/img/foto_ievgeniia.webp";
+import imageSanti from "../../assets/img/foto_santi.webp";
+import imageAlessandro from "../../assets/img/foto_alessandro.webp";
+import imageGiorgio from "../../assets/img/foto_giorgio.webp";
 
 const ChiSiamoPage = () => {
   const { token } = useAuth();
@@ -21,7 +21,7 @@ const ChiSiamoPage = () => {
       <section className="py-5 text-center">
         <div className="container mt-4">
           <img
-            src="../../src/assets/img/logo.png"
+            src={logo}
             alt="EventiHub"
             className="img-fluid w-75"
           />
