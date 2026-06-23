@@ -1,35 +1,43 @@
 require('dotenv').config();
 const express      = require('express');
-const errorHandler = require('./middlewares/errorHandler')
+const errorHandler = require('./middlewares/errorHandler');
 const helmet       = require('helmet');
 const path         = require('path');
 /* const rateLimit    = require('express-rate-limit'); */
 
-//seeds DA COMMENTARE DEL TRY UNA VOLTA MESSI NEL DB!!
-// vanno rimossi perchè i js placeholders xke fanno il trucate della tabella, senno la relazione organizer_id ed eventi non combacia
+// Seeders usati solo in sviluppo locale.
+// In produzione non devono partire, altrimenti possono sporcare o resettare dati reali.
 const seedAdmin = require('./middlewares/seeder');
 const seedUsersPlaceholder = require('./utils/seederUsersPlaceholder');
 const seedEventsPlaceholder = require('./utils/seederEventsPlaceholder');
 const seedRegistrationsPlaceholder = require('./utils/seederRegistrationsPlaceholder');
 
-
 const cors = require('cors');
 
-
-//model per creare le tabelle 
-const usersModel   = require('./models/usersModel');
-const eventsModel    = require('./models/eventsModel');
+// model per creare le tabelle
+const usersModel = require('./models/usersModel');
+const eventsModel = require('./models/eventsModel');
 const registrationsModel = require('./models/registrationsModel');
 
-//routes
-const usersRoutes   = require('./routes/usersRoutes');
-const eventsRoutes    = require('./routes/eventsRoutes');
+// routes
+const usersRoutes = require('./routes/usersRoutes');
+const eventsRoutes = require('./routes/eventsRoutes');
 const registrationsRoutes = require('./routes/registrationsRoutes');
 
+const app = express();
 
-const app  = express();
-const port = process.env.SERVER_PORT;
+// Render espone la porta tramite process.env.PORT.
+// In locale continua a funzionare con SERVER_PORT oppure con fallback 3000.
+const port = process.env.PORT || process.env.SERVER_PORT || 3000;
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  ...(process.env.FRONTEND_ORIGIN || '')
+    .split(',')
+    .map(origin => origin.trim())
+    .filter(Boolean),
+];
 
 /* const limiterGlobale = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -43,13 +51,22 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 
-
 app.use(cors({
-  origin: process.env.FRONTEND_ORIGIN,
+  origin: (origin, callback) => {
+    // Permette richieste server-to-server, Postman, curl e health checks senza Origin.
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`Origine non consentita da CORS: ${origin}`));
+  },
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
 
 /* app.use(limiterGlobale); */
 
@@ -60,11 +77,9 @@ app.get('/health', (req, res) => {
 });
 
 // APIs
-app.use('/api/users',   usersRoutes);
-app.use('/api/events',    eventsRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/events', eventsRoutes);
 app.use('/api/registrations', registrationsRoutes);
-
-
 
 app.use((req, res) => {
   res.status(404).json({ successo: false, errore: 'Endpoint non trovato' });
@@ -72,19 +87,18 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-
 const start = async () => {
   try {
     await usersModel.init();
     await eventsModel.init();
     await registrationsModel.init();
 
-
-    // Seeder attivi in development — commentare prima del deploy in produzione
-    await seedUsersPlaceholder();
-    await seedAdmin(); 
-    await seedEventsPlaceholder();
-    await seedRegistrationsPlaceholder()
+    if (process.env.NODE_ENV === 'development') {
+      await seedUsersPlaceholder();
+      await seedAdmin();
+      await seedEventsPlaceholder();
+      await seedRegistrationsPlaceholder();
+    }
 
     console.log('Tabelle sincronizzate');
 
