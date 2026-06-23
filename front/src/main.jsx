@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { AuthProvider } from './context/AuthContext';
 import { EventsProvider } from './context/EventsContext';
 import { RegistrationsProvider } from './context/RegistrationsContext';
