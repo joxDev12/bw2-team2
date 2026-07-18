@@ -152,7 +152,7 @@ export function AuthProvider({ children }) {
       username: registerForm.username,
       email: registerForm.email,
       role: registerForm.role,
-      password_hash: registerForm.password,
+      password: registerForm.password,
     };
 
     try {

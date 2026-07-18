@@ -127,7 +127,7 @@ export function ProfileProvider({ children }) {
         indirizzo: form.indirizzo,
       };
 
-      if (form.password) dati.password_hash = form.password;
+      if (form.password) dati.password = form.password;
 
       const risposta = await usersAPI.aggiorna(utente.id, dati);
       const rispostaFoto = fotoProfilo

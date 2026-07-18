@@ -74,7 +74,7 @@ const eliminaCartellaProfilo = (id) => {
 };
 
 // Registrazione
-const registra = async ({ name, surname, email, username, location, indirizzo, img_profile, role, password_hash }) => {
+const registra = async ({ name, surname, email, username, location, indirizzo, img_profile, role, password }) => {
   const errori = [];
 
   const emailExists = await usersModel.findByEmail(email);
@@ -93,7 +93,7 @@ const registra = async ({ name, surname, email, username, location, indirizzo, i
     throw err;
   }
 
-  const hash   = await bcrypt.hash(password_hash, SALT_ROUND);
+  const hash   = await bcrypt.hash(password, SALT_ROUND);
 
   const result = await usersModel.create({ name, surname, email, username, location, indirizzo, img_profile, role, password_hash: hash });
   return result.rows[0];
@@ -155,10 +155,10 @@ const aggiorna = async (id, dati) => {
     }
   }
 
-  if(dati.password_hash){
-    const hash = await bcrypt.hash(dati.password_hash, SALT_ROUND);
+  if(dati.password){
+    const hash = await bcrypt.hash(dati.password, SALT_ROUND);
     await usersModel.updatePassword(id, hash);
-    delete dati.password_hash
+    delete dati.password
   }
   
   if (errori.length) {

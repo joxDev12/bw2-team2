@@ -58,7 +58,7 @@ const regolaRegistra = [
     .notEmpty().withMessage('Il ruolo e obbligatorio')
     .isIn(['partecipant', 'organizer']).withMessage('Il ruolo deve essere partecipant o organizer'),
 
-  body('password_hash')
+  body('password')
     .notEmpty().withMessage('La password e obbligatoria')
     .isLength({ min: 8 }).withMessage('La password deve avere almeno 8 caratteri')
     .isLength({ max: 100 }).withMessage('La password non puo superare 100 caratteri')
