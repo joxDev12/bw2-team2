@@ -52,7 +52,7 @@ const creaFormDaEvento = (evento) => ({
   location: evento.location || "",
   indirizzo: evento.indirizzo || "",
   price: evento.price ?? "",
-  max_seats: evento.seats_available ?? "",
+  max_seats: evento.total_seats ?? "",
   category: evento.category || "",
 });
 
