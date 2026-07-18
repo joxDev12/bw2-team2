@@ -14,6 +14,13 @@ const crea = async ({ event_id, seats = 1 }, user_id) => {
     throw err;
   }
 
+  const giaRegistrato = await registrationsModel.findByUserAndEvent(user_id, event_id);
+  if (giaRegistrato.rows.length) {
+    const err = new Error('Sei gia registrato a questo evento');
+    err.statusCode = 409;
+    throw err;
+  }
+
   // Usa seats_available (colonna rinominata da max_seats)
   if (event.rows[0].seats_available === 0 || !event.rows[0].available) {
     const err = new Error('Evento non disponibile');
