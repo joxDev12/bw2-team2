@@ -121,6 +121,16 @@ const regolaAggiorna = [
     .isURL().withMessage('L\'immagine profilo deve essere un URL valido')
     .isLength({ max: 500 }).withMessage('L\'immagine profilo non puo superare 500 caratteri'),
 
+  body('password')
+    .optional()
+    .isLength({ min: 8 }).withMessage('La password deve avere almeno 8 caratteri')
+    .isLength({ max: 100 }).withMessage('La password non puo superare 100 caratteri')
+    .custom(v => {
+      if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?`~])/.test(v))
+        throw new Error('La password deve contenere almeno una maiuscola, una minuscola, un numero e un carattere speciale');
+      return true;
+    }),
+
   body('role')
     .not().exists().withMessage('Il ruolo non puo essere cambiato da questa rotta'),
 ];
