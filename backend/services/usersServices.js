@@ -3,6 +3,7 @@ const bcrypt      = require('bcrypt');
 const jwt         = require('jsonwebtoken');
 const fs          = require('fs');
 const path        = require('path');
+const pool        = require('../config/db');
 const usersModel = require('../models/usersModel');
 
 const SALT_ROUND = 12;
@@ -155,16 +156,31 @@ const aggiorna = async (id, dati) => {
     }
   }
 
-  if(dati.password){
-    const hash = await bcrypt.hash(dati.password, SALT_ROUND);
-    await usersModel.updatePassword(id, hash);
-    delete dati.password
-  }
-  
   if (errori.length) {
     const err = new Error(errori.join('\n'));
     err.statusCode = 409;
     throw err;
+  }
+
+  if (dati.password) {
+    const hash = await bcrypt.hash(dati.password, SALT_ROUND);
+    delete dati.password;
+
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      await usersModel.updatePassword(id, hash, client);
+      const result = await usersModel.update(id, dati, client);
+      await client.query('COMMIT');
+      return result.rows[0];
+    } catch (err) {
+      try {
+        await client.query('ROLLBACK');
+      } catch (_) {}
+      throw err;
+    } finally {
+      client.release();
+    }
   }
 
   const result = await usersModel.update(id, dati);

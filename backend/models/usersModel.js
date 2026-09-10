@@ -48,8 +48,8 @@ const create = ({ name, surname, email, username, location, indirizzo, img_profi
     [name, surname, email, username, location, indirizzo, img_profile, password_hash, role]
   );
 
-const update = (id, { name, surname, email, username, location, indirizzo, img_profile, role }) =>
-  pool.query(
+const update = (id, { name, surname, email, username, location, indirizzo, img_profile, role }, client = pool) =>
+  client.query(
     `UPDATE users
       SET name    = COALESCE($1, name),
           surname = COALESCE($2, surname),
@@ -66,8 +66,8 @@ const update = (id, { name, surname, email, username, location, indirizzo, img_p
   );
 
 
-const updatePassword = (id, hashedPassword) =>
-  pool.query(
+const updatePassword = (id, hashedPassword, client = pool) =>
+  client.query(
     `UPDATE users
       SET password_hash     = $1,
           token_version = token_version + 1
