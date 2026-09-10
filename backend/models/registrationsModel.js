@@ -39,8 +39,8 @@ const findAll = () =>
     ORDER BY reg.registered_at DESC`
   );
 
-const findById = (id) =>
-  pool.query(
+const findById = (id, client = pool) =>
+  client.query(
     `SELECT
       reg.*,
       u.name || ' ' || u.surname AS user_fullname,
@@ -130,19 +130,19 @@ const findPublicByEventId = (id) =>
     [id]
   );
 
-const findByUserAndEvent = (user_id, event_id) =>
-  pool.query('SELECT * FROM registrations WHERE user_id = $1 AND event_id = $2', [user_id, event_id]);
+const findByUserAndEvent = (user_id, event_id, client = pool) =>
+  client.query('SELECT * FROM registrations WHERE user_id = $1 AND event_id = $2', [user_id, event_id]);
 
-const create = ({ user_id, event_id, seats }) =>
-  pool.query(
+const create = ({ user_id, event_id, seats }, client = pool) =>
+  client.query(
     `INSERT INTO registrations (user_id, event_id, seats)
     VALUES ($1, $2, $3)
     RETURNING *`,
     [user_id, event_id, seats]
   );
 
-const remove = (id) =>
-  pool.query('DELETE FROM registrations WHERE id = $1 RETURNING id', [id]);
+const remove = (id, client = pool) =>
+  client.query('DELETE FROM registrations WHERE id = $1 RETURNING id', [id]);
 
 module.exports = {
   init, findAll, findById, findByEventId, findByUserId,

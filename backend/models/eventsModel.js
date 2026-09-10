@@ -38,8 +38,8 @@ const findAll = () =>
     ORDER BY e.date ASC`
   );
 
-const findById = (id) =>
-  pool.query(
+const findById = (id, client = pool) =>
+  client.query(
     `SELECT
       e.*,
       u.name || ' ' || u.surname AS organizer_fullname,
@@ -123,8 +123,8 @@ const update = (id, { title, image, description, date, location, indirizzo, pric
     [title, image, description, date, location, indirizzo, price, max_seats, category, id]
   );
 
-const decrementa = (id, seats = 1) =>
-  pool.query(
+const decrementa = (id, seats = 1, client = pool) =>
+  client.query(
     `UPDATE events
       SET seats_available = seats_available - $2,
     "available"     = CASE WHEN seats_available - $2 <= 0 THEN false ELSE true END
@@ -133,8 +133,8 @@ WHERE id = $1 AND seats_available >= $2 AND "available" = true
     [id, seats]
   );
 
-const incrementa = (id, seats = 1) =>
-  pool.query(
+const incrementa = (id, seats = 1, client = pool) =>
+  client.query(
     `UPDATE events
       SET seats_available = LEAST(seats_available + $2, total_seats),
     "available"     = true

@@ -27,8 +27,8 @@ const findAll = () =>
     'SELECT id, name, surname, email, username, location, indirizzo, img_profile, role FROM users ORDER BY id'
   );
 
-const findById = (id) =>
-  pool.query(
+const findById = (id, client = pool) =>
+  client.query(
     'SELECT id, name, surname, email, username, location, indirizzo, img_profile, role, token_version FROM users WHERE id = $1',
     [id]
   );
@@ -43,25 +43,25 @@ const findByUsername = (username) =>
 const create = ({ name, surname, email, username, location, indirizzo, img_profile, password_hash, role }) =>
   pool.query(
     `INSERT INTO users (name, surname, email, username, location, indirizzo, img_profile, password_hash, role)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-     RETURNING id, name, surname, email, username, location, indirizzo, img_profile, role`,
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      RETURNING id, name, surname, email, username, location, indirizzo, img_profile, role`,
     [name, surname, email, username, location, indirizzo, img_profile, password_hash, role]
   );
 
 const update = (id, { name, surname, email, username, location, indirizzo, img_profile, role }) =>
   pool.query(
     `UPDATE users
-     SET name    = COALESCE($1, name),
-         surname = COALESCE($2, surname),
-         email   = COALESCE($3, email),
-         username  = COALESCE($4, username),
-         location = COALESCE($5, location),
-         indirizzo = COALESCE($6, indirizzo),
-         img_profile = COALESCE($7, img_profile),
-         role = COALESCE($8, role),
-         token_version = token_version + CASE WHEN $8 IS NULL THEN 0 ELSE 1 END
-     WHERE id = $9
-     RETURNING id, name, surname, email, username, location, indirizzo, img_profile, role, token_version`,
+      SET name    = COALESCE($1, name),
+          surname = COALESCE($2, surname),
+          email   = COALESCE($3, email),
+          username  = COALESCE($4, username),
+          location = COALESCE($5, location),
+          indirizzo = COALESCE($6, indirizzo),
+          img_profile = COALESCE($7, img_profile),
+          role = COALESCE($8, role),
+          token_version = token_version + CASE WHEN $8 IS NULL THEN 0 ELSE 1 END
+      WHERE id = $9
+      RETURNING id, name, surname, email, username, location, indirizzo, img_profile, role, token_version`,
     [name, surname, email, username, location, indirizzo, img_profile, role, id]
   );
 
@@ -69,10 +69,10 @@ const update = (id, { name, surname, email, username, location, indirizzo, img_p
 const updatePassword = (id, hashedPassword) =>
   pool.query(
     `UPDATE users
-     SET password_hash     = $1,
-     token_version = token_version + 1
-     WHERE id = $2
-     RETURNING id`,
+      SET password_hash     = $1,
+          token_version = token_version + 1
+      WHERE id = $2
+      RETURNING id`,
     [hashedPassword, id]
   );
 

@@ -1,3 +1,4 @@
+const pool               = require('../config/db');
 const registrationsModel = require('../models/registrationsModel');
 const eventsModel        = require('../models/eventsModel');
 const usersModel         = require('../models/usersModel');
@@ -5,45 +6,60 @@ const usersModel         = require('../models/usersModel');
 const crea = async ({ event_id, seats = 1 }, user_id) => {
   const seatsRichiesti = parseInt(seats);
 
-  const user  = await usersModel.findById(user_id);
-  const event = await eventsModel.findById(event_id);
+  const client = await pool.connect();
 
-  if (!user.rows.length || !event.rows.length) {
-    const err = new Error('User o Evento non trovato');
-    err.statusCode = 404;
+  try {
+    await client.query('BEGIN');
+
+    const user  = await usersModel.findById(user_id, client);
+    const event = await eventsModel.findById(event_id, client);
+
+    if (!user.rows.length || !event.rows.length) {
+      const err = new Error('User o Evento non trovato');
+      err.statusCode = 404;
+      throw err;
+    }
+
+    const giaRegistrato = await registrationsModel.findByUserAndEvent(user_id, event_id, client);
+    if (giaRegistrato.rows.length) {
+      const err = new Error('Sei gia registrato a questo evento');
+      err.statusCode = 409;
+      throw err;
+    }
+
+    // Usa seats_available (colonna rinominata da max_seats)
+    if (event.rows[0].seats_available === 0 || !event.rows[0].available) {
+      const err = new Error('Evento non disponibile');
+      err.statusCode = 409;
+      throw err;
+    }
+
+    if (seatsRichiesti > event.rows[0].seats_available) {
+      const err = new Error('I posti richiesti superano quelli disponibili');
+      err.statusCode = 409;
+      throw err;
+    }
+
+    const eventAggiornato = await eventsModel.decrementa(event_id, seatsRichiesti, client);
+
+    if (!eventAggiornato.rows.length) {
+      const err = new Error('I posti richiesti non sono piu disponibili');
+      err.statusCode = 409;
+      throw err;
+    }
+
+    const registration = await registrationsModel.create({ user_id, event_id, seats: seatsRichiesti }, client);
+
+    await client.query('COMMIT');
+    return registration.rows[0];
+  } catch (err) {
+    try {
+      await client.query('ROLLBACK');
+    } catch (_) {}
     throw err;
+  } finally {
+    client.release();
   }
-
-  const giaRegistrato = await registrationsModel.findByUserAndEvent(user_id, event_id);
-  if (giaRegistrato.rows.length) {
-    const err = new Error('Sei gia registrato a questo evento');
-    err.statusCode = 409;
-    throw err;
-  }
-
-  // Usa seats_available (colonna rinominata da max_seats)
-  if (event.rows[0].seats_available === 0 || !event.rows[0].available) {
-    const err = new Error('Evento non disponibile');
-    err.statusCode = 409;
-    throw err;
-  }
-
-  if (seatsRichiesti > event.rows[0].seats_available) {
-    const err = new Error('I posti richiesti superano quelli disponibili');
-    err.statusCode = 409;
-    throw err;
-  }
-
-  const eventAggiornato = await eventsModel.decrementa(event_id, seatsRichiesti);
-
-  if (!eventAggiornato.rows.length) {
-    const err = new Error('I posti richiesti non sono piu disponibili');
-    err.statusCode = 409;
-    throw err;
-  }
-
-  const registration = await registrationsModel.create({ user_id, event_id, seats: seatsRichiesti });
-  return registration.rows[0];
 };
 
 const getAll = async () => {
@@ -86,9 +102,22 @@ const getPublicByEventId = async (id) => {
 
 const elimina = async (id) => {
   const registration = await getById(id);
-  await registrationsModel.remove(id);
-  await eventsModel.incrementa(registration.event_id, registration.seats);
-  return { message: 'Registrazione eliminata' };
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+    await registrationsModel.remove(id, client);
+    await eventsModel.incrementa(registration.event_id, registration.seats, client);
+    await client.query('COMMIT');
+    return { message: 'Registrazione eliminata' };
+  } catch (err) {
+    try {
+      await client.query('ROLLBACK');
+    } catch (_) {}
+    throw err;
+  } finally {
+    client.release();
+  }
 };
 
 module.exports = {
