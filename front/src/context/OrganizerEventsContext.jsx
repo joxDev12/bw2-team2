@@ -119,6 +119,9 @@ export function OrganizerEventsProvider({ children }) {
   };
 
   const chiudiModaleCreazione = () => {
+    if (anteprimaNuovaImmagine?.startsWith("blob:")) {
+      URL.revokeObjectURL(anteprimaNuovaImmagine);
+    }
     setMostraModaleCreazione(false);
     setDatiFormCreazione(datiEventoVuoti);
     setImmagineNuovoEvento(null);
@@ -134,6 +137,9 @@ export function OrganizerEventsProvider({ children }) {
   const gestisciCambioImmagineCreazione = (e) => {
     const file = e.target.files[0] || null;
     setImmagineNuovoEvento(file);
+    if (anteprimaNuovaImmagine?.startsWith("blob:")) {
+      URL.revokeObjectURL(anteprimaNuovaImmagine);
+    }
     setAnteprimaNuovaImmagine(
       file ? URL.createObjectURL(file) : eventsPlaceholder,
     );
@@ -180,6 +186,9 @@ export function OrganizerEventsProvider({ children }) {
   };
 
   const chiudiModaleModifica = () => {
+    if (anteprimaImmagine?.startsWith("blob:")) {
+      URL.revokeObjectURL(anteprimaImmagine);
+    }
     setMostraModaleModifica(false);
     setEventoInModifica(null);
     setErroreModaleModifica(null);
@@ -195,6 +204,9 @@ export function OrganizerEventsProvider({ children }) {
   const gestisciCambioImmagineModifica = (e) => {
     const file = e.target.files[0] || null;
     setImmagineEvento(file);
+    if (anteprimaImmagine?.startsWith("blob:")) {
+      URL.revokeObjectURL(anteprimaImmagine);
+    }
     setAnteprimaImmagine(
       file ? URL.createObjectURL(file) : getImmagineEvento(eventoInModifica),
     );

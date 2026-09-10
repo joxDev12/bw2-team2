@@ -72,6 +72,9 @@ export function ProfileProvider({ children }) {
   };
 
   const chiudiModale = () => {
+    if (anteprimaFoto?.startsWith("blob:")) {
+      URL.revokeObjectURL(anteprimaFoto);
+    }
     setMostraModale(false);
     setFotoProfilo(null);
     setAnteprimaFoto(null);
@@ -96,6 +99,9 @@ export function ProfileProvider({ children }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0] || null;
     setFotoProfilo(file);
+    if (anteprimaFoto?.startsWith("blob:")) {
+      URL.revokeObjectURL(anteprimaFoto);
+    }
     setAnteprimaFoto(file ? URL.createObjectURL(file) : immagineProfilo);
   };
 
