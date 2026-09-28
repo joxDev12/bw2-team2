@@ -80,8 +80,8 @@ const getAll = async () => {
     return result.rows;
 };
 
-const getById = async (id) => {
-    const result = await registrationsModel.findById(id);
+const getById = async (id, client = pool) => {
+    const result = await registrationsModel.findById(id, client);
     if (!result.rows.length) {
         const err = new Error("Registrazione non trovata");
         err.statusCode = 404;
@@ -114,17 +114,27 @@ const getPublicByEventId = async (id) => {
 };
 
 const elimina = async (id) => {
-    const registration = await getById(id);
     const client = await pool.connect();
 
     try {
         await client.query("BEGIN");
-        await registrationsModel.remove(id, client);
+
+        const deleteResult = await registrationsModel.remove(id, client);
+
+        if (!deleteResult.rows.length) {
+            const err = new Error("Registrazione non trovata");
+            err.statusCode = 404;
+            throw err;
+        }
+
+        const registration = deleteResult.rows[0];
+
         await eventsModel.incrementa(
             registration.event_id,
             registration.seats,
             client,
         );
+
         await client.query("COMMIT");
         return { message: "Registrazione eliminata" };
     } catch (err) {
