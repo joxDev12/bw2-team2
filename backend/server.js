@@ -102,8 +102,8 @@ const start = async () => {
         await registrationsModel.init();
 
         if (process.env.NODE_ENV === "development") {
-            await seedUsersPlaceholder();
             await seedAdmin();
+            await seedUsersPlaceholder();
             await seedEventsPlaceholder();
             await seedRegistrationsPlaceholder();
         }
