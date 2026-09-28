@@ -1,126 +1,148 @@
-const pool               = require('../config/db');
-const registrationsModel = require('../models/registrationsModel');
-const eventsModel        = require('../models/eventsModel');
-const usersModel         = require('../models/usersModel');
+const pool = require("../config/db");
+const registrationsModel = require("../models/registrationsModel");
+const eventsModel = require("../models/eventsModel");
+const usersModel = require("../models/usersModel");
 
 const crea = async ({ event_id, seats = 1 }, user_id) => {
-  const seatsRichiesti = parseInt(seats);
+    const seatsRichiesti = parseInt(seats, 10);
 
-  const client = await pool.connect();
+    const client = await pool.connect();
 
-  try {
-    await client.query('BEGIN');
-
-    const user  = await usersModel.findById(user_id, client);
-    const event = await eventsModel.findById(event_id, client);
-
-    if (!user.rows.length || !event.rows.length) {
-      const err = new Error('User o Evento non trovato');
-      err.statusCode = 404;
-      throw err;
-    }
-
-    const giaRegistrato = await registrationsModel.findByUserAndEvent(user_id, event_id, client);
-    if (giaRegistrato.rows.length) {
-      const err = new Error('Sei gia registrato a questo evento');
-      err.statusCode = 409;
-      throw err;
-    }
-
-    // Usa seats_available (colonna rinominata da max_seats)
-    if (event.rows[0].seats_available === 0 || !event.rows[0].available) {
-      const err = new Error('Evento non disponibile');
-      err.statusCode = 409;
-      throw err;
-    }
-
-    if (seatsRichiesti > event.rows[0].seats_available) {
-      const err = new Error('I posti richiesti superano quelli disponibili');
-      err.statusCode = 409;
-      throw err;
-    }
-
-    const eventAggiornato = await eventsModel.decrementa(event_id, seatsRichiesti, client);
-
-    if (!eventAggiornato.rows.length) {
-      const err = new Error('I posti richiesti non sono piu disponibili');
-      err.statusCode = 409;
-      throw err;
-    }
-
-    const registration = await registrationsModel.create({ user_id, event_id, seats: seatsRichiesti }, client);
-
-    await client.query('COMMIT');
-    return registration.rows[0];
-  } catch (err) {
     try {
-      await client.query('ROLLBACK');
-    } catch (_) {}
-    throw err;
-  } finally {
-    client.release();
-  }
+        await client.query("BEGIN");
+
+        const user = await usersModel.findById(user_id, client);
+        const event = await eventsModel.findById(event_id, client);
+
+        if (!user.rows.length || !event.rows.length) {
+            const err = new Error("User o Evento non trovato");
+            err.statusCode = 404;
+            throw err;
+        }
+
+        const giaRegistrato = await registrationsModel.findByUserAndEvent(
+            user_id,
+            event_id,
+            client,
+        );
+        if (giaRegistrato.rows.length) {
+            const err = new Error("Sei gia registrato a questo evento");
+            err.statusCode = 409;
+            throw err;
+        }
+
+        // Usa seats_available (colonna rinominata da max_seats)
+        if (event.rows[0].seats_available === 0 || !event.rows[0].available) {
+            const err = new Error("Evento non disponibile");
+            err.statusCode = 409;
+            throw err;
+        }
+
+        if (seatsRichiesti > event.rows[0].seats_available) {
+            const err = new Error(
+                "I posti richiesti superano quelli disponibili",
+            );
+            err.statusCode = 409;
+            throw err;
+        }
+
+        const eventAggiornato = await eventsModel.decrementa(
+            event_id,
+            seatsRichiesti,
+            client,
+        );
+
+        if (!eventAggiornato.rows.length) {
+            const err = new Error("I posti richiesti non sono piu disponibili");
+            err.statusCode = 409;
+            throw err;
+        }
+
+        const registration = await registrationsModel.create(
+            { user_id, event_id, seats: seatsRichiesti },
+            client,
+        );
+
+        await client.query("COMMIT");
+        return registration.rows[0];
+    } catch (err) {
+        try {
+            await client.query("ROLLBACK");
+        } catch (_) {}
+        throw err;
+    } finally {
+        client.release();
+    }
 };
 
 const getAll = async () => {
-  const result = await registrationsModel.findAll();
-  return result.rows;
+    const result = await registrationsModel.findAll();
+    return result.rows;
 };
 
 const getById = async (id) => {
-  const result = await registrationsModel.findById(id);
-  if (!result.rows.length) {
-    const err = new Error('Registrazione non trovata');
-    err.statusCode = 404;
-    throw err;
-  }
-  return result.rows[0];
+    const result = await registrationsModel.findById(id);
+    if (!result.rows.length) {
+        const err = new Error("Registrazione non trovata");
+        err.statusCode = 404;
+        throw err;
+    }
+    return result.rows[0];
 };
 
 const getAllByEventId = async (id) => {
-  const result = await registrationsModel.findByEventId(id);
-  // Restituisce array vuoto se l'evento non ha iscrizioni (non 404)
-  return result.rows;
+    const result = await registrationsModel.findByEventId(id);
+    // Restituisce array vuoto se l'evento non ha iscrizioni (non 404)
+    return result.rows;
 };
 
 const getAllByUserId = async (id) => {
-  const result = await registrationsModel.findByUserId(id);
-  // Restituisce array vuoto se l'utente non ha registrazioni (non 404)
-  return result.rows;
+    const result = await registrationsModel.findByUserId(id);
+    // Restituisce array vuoto se l'utente non ha registrazioni (non 404)
+    return result.rows;
 };
 
 const getPublicByEventId = async (id) => {
-  const event = await eventsModel.findById(id);
-  if (!event.rows.length) {
-    const err = new Error('Evento non trovato');
-    err.statusCode = 404;
-    throw err;
-  }
-  const result = await registrationsModel.findPublicByEventId(id);
-  return result.rows;
+    const event = await eventsModel.findById(id);
+    if (!event.rows.length) {
+        const err = new Error("Evento non trovato");
+        err.statusCode = 404;
+        throw err;
+    }
+    const result = await registrationsModel.findPublicByEventId(id);
+    return result.rows;
 };
 
 const elimina = async (id) => {
-  const registration = await getById(id);
-  const client = await pool.connect();
+    const registration = await getById(id);
+    const client = await pool.connect();
 
-  try {
-    await client.query('BEGIN');
-    await registrationsModel.remove(id, client);
-    await eventsModel.incrementa(registration.event_id, registration.seats, client);
-    await client.query('COMMIT');
-    return { message: 'Registrazione eliminata' };
-  } catch (err) {
     try {
-      await client.query('ROLLBACK');
-    } catch (_) {}
-    throw err;
-  } finally {
-    client.release();
-  }
+        await client.query("BEGIN");
+        await registrationsModel.remove(id, client);
+        await eventsModel.incrementa(
+            registration.event_id,
+            registration.seats,
+            client,
+        );
+        await client.query("COMMIT");
+        return { message: "Registrazione eliminata" };
+    } catch (err) {
+        try {
+            await client.query("ROLLBACK");
+        } catch (_) {}
+        throw err;
+    } finally {
+        client.release();
+    }
 };
 
 module.exports = {
-  getAll, getById, getAllByEventId, getAllByUserId,
-  getPublicByEventId, crea, elimina
+    getAll,
+    getById,
+    getAllByEventId,
+    getAllByUserId,
+    getPublicByEventId,
+    crea,
+    elimina,
 };
