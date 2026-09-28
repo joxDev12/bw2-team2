@@ -209,11 +209,12 @@ const soloPartecipantProprietarioRegistrazione = async (req, res, next) => {
                 .json({ successo: false, errore: "Registrazione non trovata" });
         }
 
+        const isAdmin = req.user?.role === "admin";
         const isPartecipant = req.user?.role === "partecipant";
         const isProprietarioRegistrazione =
             registration.user_id === req.user?.id;
 
-        if (!isPartecipant || !isProprietarioRegistrazione) {
+        if (!isAdmin && (!isPartecipant || !isProprietarioRegistrazione)) {
             return res.status(403).json({
                 successo: false,
                 errore: "Puoi cancellare solo le tue registrazioni da partecipante",
@@ -250,6 +251,7 @@ const soloPartecipantProprietarioRegistrazioneOOrganizerEvento = async (
                 .json({ successo: false, errore: "Registrazione non trovata" });
         }
 
+        const isAdmin = req.user?.role === "admin";
         const isPartecipant = req.user?.role === "partecipant";
         const isProprietarioRegistrazione =
             registration.user_id === req.user?.id;
@@ -258,6 +260,7 @@ const soloPartecipantProprietarioRegistrazioneOOrganizerEvento = async (
             registration.event_organizer === req.user?.id;
 
         if (
+            !isAdmin &&
             (!isPartecipant || !isProprietarioRegistrazione) &&
             !isOrganizerEvento
         ) {
