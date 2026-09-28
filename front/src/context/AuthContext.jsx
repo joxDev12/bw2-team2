@@ -29,16 +29,24 @@ function decodeJWT(token) {
     }
 }
 
+function getStoredAuth() {
+    const t = localStorage.getItem("token");
+    if (!t) return { token: null, utente: null };
+    const payload = decodeJWT(t);
+    if (!payload || (payload.exp && payload.exp * 1000 < Date.now())) {
+        localStorage.removeItem("token");
+        return { token: null, utente: null };
+    }
+    return { token: t, utente: payload };
+}
+
 // ── Provider ──────────────────────────────────────────────────
 export function AuthProvider({ children }) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [token, setToken] = useState(() => localStorage.getItem("token"));
-    const [utente, setUtente] = useState(() => {
-        const t = localStorage.getItem("token");
-        return t ? decodeJWT(t) : null;
-    });
+    const [token, setToken] = useState(() => getStoredAuth().token);
+    const [utente, setUtente] = useState(() => getStoredAuth().utente);
 
     const [loginForm, setLoginForm] = useState(initialLoginForm);
     const [registerForm, setRegisterForm] = useState(initialRegisterForm);
@@ -60,23 +68,10 @@ export function AuthProvider({ children }) {
     };
 
     useEffect(() => {
-        if (!token) {
-            setUtente(null);
-            return;
-        }
+        if (!token) return;
 
         const payload = decodeJWT(token);
-
-        if (!payload || payload.exp * 1000 < Date.now()) {
-            logout();
-            return;
-        }
-
-        setUtente(payload);
-
-        if (!payload.id) {
-            return;
-        }
+        if (!payload || !payload.id) return;
 
         let annullato = false;
 
