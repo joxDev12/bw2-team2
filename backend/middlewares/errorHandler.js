@@ -1,30 +1,39 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const errorHandler = (err, req, res, next) => {
+    const isUniqueError = err.code === "23505";
+    const status =
+        err.statusCode ||
+        (err.name === "MulterError" || isUniqueError ? 400 : 500);
 
-  const isUniqueError = err.code === '23505';
-  const status = err.statusCode || (err.name === 'MulterError' || isUniqueError ? 400 : 500);
+    let messaggio = err.message || "Errore interno del server";
 
-  let messaggio = err.message || 'Errore interno del server';
+    if (err.code === "LIMIT_FILE_SIZE") {
+        messaggio = "Il file non puo superare 5 MB";
+    }
 
-  if (err.code === 'LIMIT_FILE_SIZE') {
-    messaggio = 'Il file non puo superare 5 MB';
-  }
+    if (isUniqueError && err.constraint?.includes("email")) {
+        messaggio = "Email gia presente";
+    }
 
-  if (isUniqueError && err.constraint?.includes('email')) {
-    messaggio = 'Email gia presente';
-  }
+    if (isUniqueError && err.constraint?.includes("username")) {
+        messaggio = "Username gia presente";
+    }
 
-  if (isUniqueError && err.constraint?.includes('username')) {
-    messaggio = 'Username gia presente';
-  }
+    if (
+        isUniqueError &&
+        (err.constraint?.includes("user_event") ||
+            err.constraint?.includes("registrations"))
+    ) {
+        messaggio = "Sei gia registrato a questo evento";
+    }
 
-  if (process.env.NODE_ENV !== 'production') {
-    console.error(`[${new Date().toISOString()}] ${status} - ${messaggio}`);
-    if (status === 500) console.error(err.stack);
-  }
+    if (process.env.NODE_ENV !== "production") {
+        console.error(`[${new Date().toISOString()}] ${status} - ${messaggio}`);
+        if (status === 500) console.error(err.stack);
+    }
 
-  res.status(status).json({ successo: false, errore: messaggio });
+    res.status(status).json({ successo: false, errore: messaggio });
 };
 
 module.exports = errorHandler;

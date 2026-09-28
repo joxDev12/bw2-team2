@@ -69,6 +69,11 @@ const crea = async ({ event_id, seats = 1 }, user_id) => {
         try {
             await client.query("ROLLBACK");
         } catch (_) {}
+        if (err.code === "23505") {
+            const conflictErr = new Error("Sei gia registrato a questo evento");
+            conflictErr.statusCode = 409;
+            throw conflictErr;
+        }
         throw err;
     } finally {
         client.release();

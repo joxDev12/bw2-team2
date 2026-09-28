@@ -8,11 +8,24 @@ CREATE TABLE IF NOT EXISTS registrations (
     seats INTEGER NOT NULL DEFAULT 1 CHECK(seats > 0),
     registered_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE
+    FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE,
+    CONSTRAINT unique_user_event UNIQUE (user_id, event_id)
 );
 `;
 
-const init = () => pool.query(CREATE_TABLE);
+const init = async () => {
+    await pool.query(CREATE_TABLE);
+    await pool.query(`
+        DO $$
+        BEGIN
+            IF NOT EXISTS (
+                SELECT 1 FROM pg_constraint WHERE conname = 'unique_user_event'
+            ) THEN
+                ALTER TABLE registrations ADD CONSTRAINT unique_user_event UNIQUE (user_id, event_id);
+            END IF;
+        END $$;
+    `);
+};
 
 const findAll = () =>
     pool.query(
