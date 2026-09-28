@@ -118,4 +118,5 @@ module.exports = {
     aggiorna,
     elimina,
     eliminaImmagineEvento,
+    eliminaCartellaEvento,
 };
