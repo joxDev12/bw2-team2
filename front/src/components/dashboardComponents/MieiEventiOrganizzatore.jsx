@@ -7,57 +7,57 @@ import OrganizerEventsHeader from "./organizerEventsComponents/OrganizerEventsHe
 import OrganizerEventsList from "./organizerEventsComponents/OrganizerEventsList";
 import OrganizerEventsTable from "./organizerEventsComponents/OrganizerEventsTable";
 import {
-  OrganizerEventsProvider,
-  useOrganizerEventsContext,
+    OrganizerEventsProvider,
+    useOrganizerEventsContext,
 } from "../../context/OrganizerEventsContext.jsx";
 
 function MieiEventiOrganizzatore() {
-  return (
-    <OrganizerEventsProvider>
-      <OrganizerEventsPageContent />
-    </OrganizerEventsProvider>
-  );
+    return (
+        <OrganizerEventsProvider>
+            <OrganizerEventsPageContent />
+        </OrganizerEventsProvider>
+    );
 }
 
 function OrganizerEventsPageContent() {
-  const { caricamento, errore, eventi, toast, nascondiToast } =
-    useOrganizerEventsContext();
+    const { caricamento, errore, eventi, toast, nascondiToast } =
+        useOrganizerEventsContext();
 
-  if (caricamento) {
+    if (caricamento) {
+        return (
+            <div className="text-center py-5">
+                <div className="spinner-border text-primary"></div>
+            </div>
+        );
+    }
+
+    if (errore) {
+        return <div className="alert alert-danger m-4">{errore}</div>;
+    }
+
     return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary"></div>
-      </div>
+        <div className="miei-eventi-organizzatore">
+            <ProfiloToast toast={toast} onClose={nascondiToast} />
+            <OrganizerEventsHeader />
+
+            {eventi.length === 0 ? (
+                <OrganizerEventsEmptyState />
+            ) : (
+                <OrganizerEventsViews />
+            )}
+
+            <EventModals />
+        </div>
     );
-  }
-
-  if (errore) {
-    return <div className="alert alert-danger m-4">{errore}</div>;
-  }
-
-  return (
-    <div className="miei-eventi-organizzatore">
-      <ProfiloToast toast={toast} onClose={nascondiToast} />
-      <OrganizerEventsHeader />
-
-      {eventi.length === 0 ? (
-        <OrganizerEventsEmptyState />
-      ) : (
-        <OrganizerEventsViews />
-      )}
-
-      <EventModals />
-    </div>
-  );
 }
 
 function OrganizerEventsViews() {
-  return (
-    <>
-      <OrganizerEventsTable />
-      <OrganizerEventsList />
-    </>
-  );
+    return (
+        <>
+            <OrganizerEventsTable />
+            <OrganizerEventsList />
+        </>
+    );
 }
 
 export default MieiEventiOrganizzatore;

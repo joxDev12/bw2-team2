@@ -7,27 +7,28 @@ import BannerOrganizzatore from "../../components/homeComponents/BannerOrganizza
 import ListEvent from "../../components/homeComponents/ListEvent";
 import ListLocations from "../../components/homeComponents/ListLocation";
 import useSEO from "../../hooks/useSEO";
-import BannerStats from "../../components/homeComponents/BannerStats"
+import BannerStats from "../../components/homeComponents/BannerStats";
 
 const HomePage = () => {
-  useSEO({
-    title: "Home",
-    description: "EventHub è la piattaforma ideale per scoprire, creare e organizzare eventi indimenticabili."
-  });
+    useSEO({
+        title: "Home",
+        description:
+            "EventHub è la piattaforma ideale per scoprire, creare e organizzare eventi indimenticabili.",
+    });
 
-  return (
-    <div className="home-page text-light">
-      <Hero />
-      <BannerStats />
-      <ListEvent />
-      <ListLocations />
-      <ComeFunziona />
-      <BannerOrganizzatore />
-      <Feedback />
-      <Assistenza />
-      <Newsletter />
-    </div>
-  );
+    return (
+        <div className="home-page text-light">
+            <Hero />
+            <BannerStats />
+            <ListEvent />
+            <ListLocations />
+            <ComeFunziona />
+            <BannerOrganizzatore />
+            <Feedback />
+            <Assistenza />
+            <Newsletter />
+        </div>
+    );
 };
 
 export default HomePage;

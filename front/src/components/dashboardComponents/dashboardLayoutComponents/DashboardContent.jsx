@@ -7,20 +7,20 @@ import ProfiloPagina from "../ProfiloPagina";
 import RegistrazioniUtenti from "../RegistrazioniUtenti";
 
 function DashboardContent() {
-  const { activeTab, user } = useDashboardContext();
+    const { activeTab, user } = useDashboardContext();
 
-  return (
-    <div className="p-4">
-      {activeTab === "profilo" && <ProfiloPagina />}
-      {activeTab === "miei-eventi" &&
-        (user.role === "partecipant" ? (
-          <MieiEventiUtente />
-        ) : (
-          <MieiEventiOrganizzatore />
-        ))}
-      {activeTab === "registrazioni" && <RegistrazioniUtenti />}
-    </div>
-  );
+    return (
+        <div className="p-4">
+            {activeTab === "profilo" && <ProfiloPagina />}
+            {activeTab === "miei-eventi" &&
+                (user.role === "partecipant" ? (
+                    <MieiEventiUtente />
+                ) : (
+                    <MieiEventiOrganizzatore />
+                ))}
+            {activeTab === "registrazioni" && <RegistrazioniUtenti />}
+        </div>
+    );
 }
 
 export default DashboardContent;

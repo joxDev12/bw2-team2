@@ -6,20 +6,20 @@ import Footer from "./Footer";
 // import { useAuth } from "../context/useAuth";   // servirà più avanti
 
 function Layout() {
-  // const { user, logout } = useAuth();
-  //   togliere commento quando si implementa il contesto
+    // const { user, logout } = useAuth();
+    //   togliere commento quando si implementa il contesto
 
-  return (
-    <div className="layout d-flex flex-column min-vh-100">
-      <Navbar />
+    return (
+        <div className="layout d-flex flex-column min-vh-100">
+            <Navbar />
 
-      <main className="bg-dark flex-grow-1 d-flex flex-column">
-        <Outlet />
-      </main>
+            <main className="bg-dark flex-grow-1 d-flex flex-column">
+                <Outlet />
+            </main>
 
-      <Footer />
-    </div>
-  );
+            <Footer />
+        </div>
+    );
 }
 
 export default Layout;
