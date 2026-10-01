@@ -46,6 +46,25 @@ export function EventsProvider({ children }) {
         );
     };
 
+    const aggiornaPosti = (eventoId, postiAcquistati) => {
+        setEventi((eventiAttuali) =>
+            eventiAttuali.map((evento) => {
+                if (evento.id !== eventoId) return evento;
+
+                const postiRimasti = Math.max(
+                    0,
+                    Number(evento.seats_available) - Number(postiAcquistati),
+                );
+
+                return {
+                    ...evento,
+                    seats_available: postiRimasti,
+                    available: postiRimasti > 0,
+                };
+            }),
+        );
+    };
+
     useEffect(() => {
         let annullato = false;
 
@@ -76,7 +95,7 @@ export function EventsProvider({ children }) {
 
     return (
         <EventsContext.Provider
-            value={{ eventi, loading, errore, caricaEventi, rimuoviEvento }}
+            value={{ eventi, loading, errore, caricaEventi, rimuoviEvento, aggiornaPosti }}
         >
             {children}
         </EventsContext.Provider>

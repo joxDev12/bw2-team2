@@ -48,22 +48,42 @@ const create = ({ name, surname, email, username, location, indirizzo, img_profi
     [name, surname, email, username, location, indirizzo, img_profile, password_hash, role]
   );
 
-const update = (id, { name, surname, email, username, location, indirizzo, img_profile, role }, client = pool) =>
-  client.query(
-    `UPDATE users
-      SET name    = COALESCE($1, name),
-          surname = COALESCE($2, surname),
-          email   = COALESCE($3, email),
-          username  = COALESCE($4, username),
-          location = COALESCE($5, location),
-          indirizzo = COALESCE($6, indirizzo),
-          img_profile = COALESCE($7, img_profile),
-          role = COALESCE($8, role),
-          token_version = token_version + CASE WHEN $8 IS NULL THEN 0 ELSE 1 END
-      WHERE id = $9
-      RETURNING id, name, surname, email, username, location, indirizzo, img_profile, role, token_version`,
-    [name, surname, email, username, location, indirizzo, img_profile, role, id]
-  );
+const update = (id, dati, client = pool) => {
+  const allowedFields = ['name', 'surname', 'email', 'username', 'location', 'indirizzo', 'img_profile', 'role'];
+  const setClauses = [];
+  const values = [];
+  let paramIdx = 1;
+
+  for (const field of allowedFields) {
+    if (Object.prototype.hasOwnProperty.call(dati, field) && dati[field] !== undefined) {
+      let val = dati[field];
+      if (['location', 'indirizzo', 'img_profile'].includes(field) && (val === '' || val === null)) {
+        val = null;
+      }
+      setClauses.push(`${field} = $${paramIdx}`);
+      values.push(val);
+
+      if (field === 'role') {
+        setClauses.push(`token_version = token_version + CASE WHEN $${paramIdx} IS NOT NULL AND $${paramIdx} <> role THEN 1 ELSE 0 END`);
+      }
+      paramIdx++;
+    }
+  }
+
+  if (setClauses.length === 0) {
+    return findById(id, client);
+  }
+
+  values.push(id);
+  const query = `
+    UPDATE users
+    SET ${setClauses.join(', ')}
+    WHERE id = $${paramIdx}
+    RETURNING id, name, surname, email, username, location, indirizzo, img_profile, role, token_version
+  `;
+
+  return client.query(query, values);
+};
 
 
 const updatePassword = (id, hashedPassword, client = pool) =>

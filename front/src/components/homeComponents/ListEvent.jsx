@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CardListEvent from "./CardListEvent";
-import { eventsAPI } from "../../services/api";
+import { useEvents } from "../../context/EventsContext";
 
 function ListEvent() {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { eventi: events, loading, errore: error } = useEvents();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Calcoliamo quanti item mostrare in base alla larghezza
@@ -25,24 +23,6 @@ function ListEvent() {
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        setLoading(true);
-        const data = await eventsAPI.getAll();
-        setEvents(data);
-        setError(null);
-      } catch (err) {
-        console.error("Errore nel caricamento degli eventi:", err);
-        setError("Impossibile caricare gli eventi. Riprova più tardi.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEvents();
   }, []);
 
   // Il numero totale di item è events.length + 1 (la card "Vedi tutti")

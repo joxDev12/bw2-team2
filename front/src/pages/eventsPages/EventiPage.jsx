@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import useSEO from "../../hooks/useSEO";
 
 import CardPageEvent from "../../components/eventsComponents/CardPageEvent";
-import { eventsAPI } from "../../services/api";
+import { useEvents } from "../../context/EventsContext";
 
 import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalRegistrazioneEvento";
 import ProfiloToast from "../../components/dashboardComponents/ProfiloToast";
@@ -85,10 +85,17 @@ const EventiPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [eventoSelezionato, setEventoSelezionato] = useState(null);
   const [toast, setToast] = useState(null);
+  const toastTimerRef = useRef(null);
   const filtriRef = useRef(null);
   const [pannelloDataAperto, setPannelloDataAperto] = useState(false);
   const [pannelloLocationAperto, setPannelloLocationAperto] = useState(false);
   const [meseCalendario, setMeseCalendario] = useState(new Date());
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
+  }, []);
 
   function openModal(evento) {
     setEventoSelezionato(evento);
@@ -100,46 +107,36 @@ const EventiPage = () => {
   }
 
   function mostraToastRegistrazione() {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
     setToast({
       messaggio: "Registrazione completata!",
       tipo: "success",
     });
 
-    setTimeout(() => setToast(null), 3500);
+    toastTimerRef.current = setTimeout(() => setToast(null), 3500);
   }
 
+  const { eventi: eventiData, aggiornaPosti } = useEvents();
+
   function aggiornaPostiEvento(postiAcquistati) {
-    setEventiData((eventiAttuali) =>
-      eventiAttuali.map((evento) => {
-        if (evento.id !== eventoSelezionato?.id) return evento;
+    if (eventoSelezionato) {
+      aggiornaPosti(eventoSelezionato.id, postiAcquistati);
+
+      setEventoSelezionato((eventoPrecedente) => {
+        if (!eventoPrecedente) return eventoPrecedente;
 
         const postiRimasti = Math.max(
           0,
-          Number(evento.seats_available) - Number(postiAcquistati),
+          Number(eventoPrecedente.seats_available) - Number(postiAcquistati),
         );
 
         return {
-          ...evento,
+          ...eventoPrecedente,
           seats_available: postiRimasti,
           available: postiRimasti > 0,
         };
-      }),
-    );
-
-    setEventoSelezionato((eventoPrecedente) => {
-      if (!eventoPrecedente) return eventoPrecedente;
-
-      const postiRimasti = Math.max(
-        0,
-        Number(eventoPrecedente.seats_available) - Number(postiAcquistati),
-      );
-
-      return {
-        ...eventoPrecedente,
-        seats_available: postiRimasti,
-        available: postiRimasti > 0,
-      };
-    });
+      });
+    }
   }
 
   useSEO({
@@ -148,7 +145,6 @@ const EventiPage = () => {
       "Esplora la nostra vasta selezione di eventi. Usa i filtri per trovare l'evento perfetto per te in base a categoria, luogo o data.",
   });
 
-  const [eventiData, setEventiData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [categoriaAttiva, setCategoriaAttiva] = useState(searchParams.get("category") || "Tutti");
@@ -160,19 +156,6 @@ const EventiPage = () => {
     .filter(Boolean)
     .sort();
   const locations = [...new Set(eventiData.map((e) => e.location))].sort();
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const data = await eventsAPI.getAll();
-        setEventiData(data);
-      } catch (err) {
-        console.error("Errore caricamento eventi:", err);
-        setEventiData([]);
-      }
-    };
-    fetchEvents();
-  }, []);
 
   useEffect(() => {
     setCategoriaAttiva(searchParams.get("category") || "Tutti");
@@ -296,7 +279,13 @@ const EventiPage = () => {
 
   return (
     <div className="eventi-page">
-      <ProfiloToast toast={toast} onClose={() => setToast(null)} />
+      <ProfiloToast
+        toast={toast}
+        onClose={() => {
+          if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+          setToast(null);
+        }}
+      />
       <div className="container py-4 text-secondary">
         <h1 className="display-5 fw-bold">
           <i className="bi bi-calendar-event me-3"></i>

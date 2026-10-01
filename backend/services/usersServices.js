@@ -115,7 +115,7 @@ const registra = async ({
         location,
         indirizzo,
         img_profile,
-        role,
+        role: "partecipant",
         password_hash: hash,
     });
     return result.rows[0];
@@ -209,7 +209,21 @@ const aggiorna = async (id, dati) => {
 };
 
 const elimina = async (id) => {
-    await getById(id);
+    const utente = await getById(id);
+
+    if (utente.role === "admin") {
+        const result = await pool.query(
+            "SELECT COUNT(*)::int AS totale FROM users WHERE role = 'admin'",
+        );
+        if (result.rows[0].totale <= 1) {
+            const err = new Error(
+                "Impossibile eliminare l'ultimo admin del sistema",
+            );
+            err.statusCode = 403;
+            throw err;
+        }
+    }
+
     const eventiOrganizzatore = await eventsServices.getAllByOrganizerId(id);
     await usersModel.remove(id);
     eliminaCartellaProfilo(id);

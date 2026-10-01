@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useRef, useEffect } from "react";
 import profilePlaceholder from "../assets/img/profile_placeholder.webp";
 import { usersAPI } from "../services/api";
 import { useAuth } from "./AuthContext";
@@ -35,10 +35,17 @@ export function ProfileProvider({ children }) {
     const [fotoProfilo, setFotoProfilo] = useState(null);
     const [anteprimaFoto, setAnteprimaFoto] = useState(null);
     const [toast, setToast] = useState(null);
+    const toastTimerRef = useRef(null);
     const [erroreForm, setErroreForm] = useState(null);
     const [erroreElimina, setErroreElimina] = useState(null);
     const [caricamento, setCaricamento] = useState(false);
     const [caricamentoElimina, setCaricamentoElimina] = useState(false);
+
+    useEffect(() => {
+        return () => {
+            if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+        };
+    }, []);
 
     if (!utente) return null;
 
@@ -67,8 +74,9 @@ export function ProfileProvider({ children }) {
     ];
 
     const mostraToast = (messaggio, tipo = "success") => {
+        if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
         setToast({ messaggio, tipo });
-        setTimeout(() => setToast(null), 3500);
+        toastTimerRef.current = setTimeout(() => setToast(null), 3500);
     };
 
     const apriModale = () => {
@@ -156,33 +164,44 @@ export function ProfileProvider({ children }) {
             // 1. Aggiorna i campi testuali del profilo
             const rispostaTesto = await usersAPI.aggiorna(utente.id, dati);
 
-            // Se la chiamata restituisce un nuovo token (es. cambio password o dati profilo),
-            // aggiorniamo subito il localStorage affinché l'eventuale upload foto successivo usi il token valido
             if (rispostaTesto?.token) {
                 localStorage.setItem("token", rispostaTesto.token);
             }
 
-            // 2. Se è stata selezionata una nuova foto, esegui l'upload
-            const rispostaFoto = fotoProfilo
-                ? await usersAPI.aggiornaImmagineProfilo(utente.id, fotoProfilo)
-                : null;
-
-            // 3. Unifica coerentemente i dati testuali e l'immagine profilo
-            const utenteAggiornato = {
+            let utenteAggiornato = {
                 ...(utente || {}),
                 ...(dati || {}),
                 ...(rispostaTesto?.user ||
                     (rispostaTesto?.id ? rispostaTesto : {})),
-                ...(rispostaFoto?.user ||
-                    (rispostaFoto?.id ? rispostaFoto : {})),
             };
-
-            const tokenFinale = rispostaFoto?.token || rispostaTesto?.token;
 
             aggiornaUtente({
                 user: utenteAggiornato,
-                token: tokenFinale,
+                token: rispostaTesto?.token,
             });
+
+            // 2. Se è stata selezionata una nuova foto, esegui l'upload
+            if (fotoProfilo) {
+                try {
+                    const rispostaFoto = await usersAPI.aggiornaImmagineProfilo(utente.id, fotoProfilo);
+                    utenteAggiornato = {
+                        ...utenteAggiornato,
+                        ...(rispostaFoto?.user || (rispostaFoto?.id ? rispostaFoto : {})),
+                    };
+                    const tokenFinale = rispostaFoto?.token || rispostaTesto?.token;
+                    aggiornaUtente({
+                        user: utenteAggiornato,
+                        token: tokenFinale,
+                    });
+                } catch (errFoto) {
+                    chiudiModale();
+                    mostraToast(
+                        `Profilo salvato, ma errore caricamento immagine: ${errFoto.message}`,
+                        "warning",
+                    );
+                    return;
+                }
+            }
 
             chiudiModale();
             mostraToast("Profilo aggiornato con successo!");
@@ -237,7 +256,10 @@ export function ProfileProvider({ children }) {
                 handleFileChange,
                 handleSubmit,
                 handleEliminaProfilo,
-                chiudiToast: () => setToast(null),
+                chiudiToast: () => {
+                    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+                    setToast(null);
+                },
             }}
         >
             {children}

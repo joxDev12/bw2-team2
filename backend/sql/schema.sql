@@ -51,5 +51,6 @@ CREATE TABLE IF NOT EXISTS registrations (
     seats         INTEGER   NOT NULL DEFAULT 1 CHECK (seats > 0),
     registered_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id)  REFERENCES users  (id) ON DELETE CASCADE,
-    FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE
+    FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE,
+    CONSTRAINT unique_user_event UNIQUE (user_id, event_id)
 );

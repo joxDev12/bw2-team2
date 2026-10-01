@@ -100,22 +100,6 @@ function RegisterForm() {
           />
         </div>
 
-        <div className="mb-3">
-          <label htmlFor="role" className="form-label fw-medium">
-            Vuoi organizzare o partecipare?
-          </label>
-          <select
-            id="role"
-            name="role"
-            value={registerForm.role}
-            onChange={cambiaRegisterForm}
-            className="form-select"
-          >
-            <option value="partecipant">Voglio partecipare agli eventi</option>
-            <option value="organizer">Voglio organizzare eventi</option>
-          </select>
-        </div>
-
         <div className="row">
           <div className="col-md-6 mb-3">
             <label htmlFor="password" className="form-label fw-medium">

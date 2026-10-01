@@ -45,8 +45,9 @@ export function AuthProvider({ children }) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [token, setToken] = useState(() => getStoredAuth().token);
-    const [utente, setUtente] = useState(() => getStoredAuth().utente);
+    const [authIniziale] = useState(() => getStoredAuth());
+    const [token, setToken] = useState(authIniziale.token);
+    const [utente, setUtente] = useState(authIniziale.utente);
 
     const [loginForm, setLoginForm] = useState(initialLoginForm);
     const [registerForm, setRegisterForm] = useState(initialRegisterForm);

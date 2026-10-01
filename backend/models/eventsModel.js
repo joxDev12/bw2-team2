@@ -131,49 +131,61 @@ const create = (
 // e total_seats viene aggiornato al nuovo valore ($8).
 const update = (
     id,
-    {
-        title,
-        image,
-        description,
-        date,
-        location,
-        indirizzo,
-        price,
-        max_seats,
-        category,
-    },
-) =>
-    pool.query(
-        `UPDATE events
-    SET title           = COALESCE($1, title),
-        image           = COALESCE($2, image),
-        description     = COALESCE($3, description),
-        date            = COALESCE($4, date),
-        location        = COALESCE($5, location),
-        indirizzo       = COALESCE($6, indirizzo),
-        price           = COALESCE($7, price),
-        is_free         = CASE WHEN $7 IS NULL THEN is_free ELSE $7 = 0 END,
-        seats_available = CASE WHEN $8::INTEGER IS NULL THEN seats_available
-                                ELSE GREATEST(0, $8::INTEGER - (total_seats - seats_available)) END,
-        total_seats     = COALESCE($8::INTEGER, total_seats),
-        "available"     = CASE WHEN $8::INTEGER IS NULL THEN "available"
-                                ELSE ($8::INTEGER > (total_seats - seats_available)) END,
-        category        = COALESCE($9, category)
-    WHERE id = $10
-    RETURNING *`,
-        [
-            title,
-            image,
-            description,
-            date,
-            location,
-            indirizzo,
-            price,
-            max_seats,
-            category,
-            id,
-        ],
-    );
+    dati,
+    client = pool,
+) => {
+    const setClauses = [];
+    const values = [];
+    let paramIdx = 1;
+
+    const simpleFields = ['title', 'date', 'location', 'category'];
+    for (const field of simpleFields) {
+        if (Object.prototype.hasOwnProperty.call(dati, field) && dati[field] !== undefined) {
+            setClauses.push(`${field} = $${paramIdx}`);
+            values.push(dati[field]);
+            paramIdx++;
+        }
+    }
+
+    const nullableFields = ['image', 'description', 'indirizzo'];
+    for (const field of nullableFields) {
+        if (Object.prototype.hasOwnProperty.call(dati, field) && dati[field] !== undefined) {
+            const val = (dati[field] === '' || dati[field] === null) ? null : dati[field];
+            setClauses.push(`${field} = $${paramIdx}`);
+            values.push(val);
+            paramIdx++;
+        }
+    }
+
+    if (Object.prototype.hasOwnProperty.call(dati, 'price') && dati.price !== undefined) {
+        setClauses.push(`price = $${paramIdx}`);
+        setClauses.push(`is_free = ($${paramIdx} = 0)`);
+        values.push(dati.price);
+        paramIdx++;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(dati, 'max_seats') && dati.max_seats !== undefined && dati.max_seats !== null) {
+        setClauses.push(`seats_available = GREATEST(0, $${paramIdx}::INTEGER - (total_seats - seats_available))`);
+        setClauses.push(`total_seats = $${paramIdx}::INTEGER`);
+        setClauses.push(`"available" = ($${paramIdx}::INTEGER > (total_seats - seats_available))`);
+        values.push(dati.max_seats);
+        paramIdx++;
+    }
+
+    if (setClauses.length === 0) {
+        return findById(id, client);
+    }
+
+    values.push(id);
+    const query = `
+        UPDATE events
+        SET ${setClauses.join(', ')}
+        WHERE id = $${paramIdx}
+        RETURNING *
+    `;
+
+    return client.query(query, values);
+};
 
 const decrementa = (id, seats = 1, client = pool) =>
     client.query(

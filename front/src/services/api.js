@@ -32,7 +32,12 @@ async function request(method, path, body = null, baseUrl = BASE_URL) {
     throw new Error('Impossibile contattare il server. Controlla che il backend sia in esecuzione.')
   }
 
-  const data = await res.json()
+  let data
+  try {
+    data = await res.json()
+  } catch {
+    throw new Error('Il server ha restituito una risposta non valida')
+  }
 
   if (res.status === 401) {
     window.dispatchEvent(new Event('auth:unauthorized'))
@@ -66,7 +71,12 @@ async function uploadRequest(method, path, formData, baseUrl = BASE_URL) {
     throw new Error('Impossibile contattare il server. Controlla che il backend sia in esecuzione.')
   }
 
-  const data = await res.json()
+  let data
+  try {
+    data = await res.json()
+  } catch {
+    throw new Error('Il server ha restituito una risposta non valida')
+  }
 
   if (res.status === 401) {
     window.dispatchEvent(new Event('auth:unauthorized'))

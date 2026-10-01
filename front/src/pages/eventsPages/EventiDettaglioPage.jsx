@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useEvents } from "../../context/EventsContext";
 import eventsPlaceholder from "../../assets/img/events_placeholder.webp";
 import ModalRegistrazioneEvento from "../../components/eventsComponents/ModalRegistrazioneEvento";
 import { Link, useParams } from "react-router-dom";
@@ -10,6 +11,7 @@ import ProfiloToast from "../../components/dashboardComponents/ProfiloToast";
 
 const EventiDettaglioPage = () => {
   const { utente } = useAuth();
+  const { aggiornaPosti } = useEvents();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -19,6 +21,13 @@ const EventiDettaglioPage = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [toast, setToast] = useState(null);
+  const toastTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
+  }, []);
 
   function openModal() {
     setShowModal(true);
@@ -29,15 +38,20 @@ const EventiDettaglioPage = () => {
   }
 
   function mostraToastRegistrazione() {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
     setToast({
       messaggio: "Registrazione completata!",
       tipo: "success",
     });
 
-    setTimeout(() => setToast(null), 3500);
+    toastTimerRef.current = setTimeout(() => setToast(null), 3500);
   }
 
   function aggiornaPostiEvento(postiAcquistati) {
+    if (evento?.id) {
+      aggiornaPosti(evento.id, postiAcquistati);
+    }
+
     setEvento((eventoPrecedente) => {
       if (!eventoPrecedente) return eventoPrecedente;
 
@@ -61,19 +75,31 @@ const EventiDettaglioPage = () => {
   });
 
   useEffect(() => {
+    let annullato = false;
+
     const fetchEvento = async () => {
       try {
         setLoading(true);
         const data = await eventsAPI.getById(id);
-        setEvento(data);
+        if (!annullato) {
+          setEvento(data);
+        }
       } catch (error) {
-        setErrore(error.message);
+        if (!annullato) {
+          setErrore(error.message);
+        }
       } finally {
-        setLoading(false);
+        if (!annullato) {
+          setLoading(false);
+        }
       }
     };
 
     fetchEvento();
+
+    return () => {
+      annullato = true;
+    };
   }, [id]);
 
   if (loading) {
@@ -99,7 +125,13 @@ const EventiDettaglioPage = () => {
   }
   return (
     <div className="container py-5">
-      <ProfiloToast toast={toast} onClose={() => setToast(null)} />
+      <ProfiloToast
+        toast={toast}
+        onClose={() => {
+          if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+          setToast(null);
+        }}
+      />
       <div className="card border-0 shadow-lg overflow-hidden event-card">
         <img
           src={evento.image || eventsPlaceholder}

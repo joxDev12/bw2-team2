@@ -3,7 +3,7 @@ const express = require("express");
 const errorHandler = require("./middlewares/errorHandler");
 const helmet = require("helmet");
 const path = require("path");
-/* const rateLimit    = require('express-rate-limit'); */
+const rateLimit    = require('express-rate-limit');
 
 // Seeders usati solo in sviluppo locale.
 // In produzione non devono partire, altrimenti possono sporcare o resettare dati reali.
@@ -39,13 +39,13 @@ const allowedOrigins = [
         .filter(Boolean),
 ];
 
-/* const limiterGlobale = rateLimit({
+const limiterGlobale = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
     message: { successo: false, errore: 'Troppe richieste, riprova tra qualche minuto' }
-}); */
+});
 
-app.use(express.json());
+app.use(express.json({ limit: "100kb" }));
 
 app.use(
     helmet({
@@ -76,7 +76,7 @@ app.use(
     }),
 );
 
-/* app.use(limiterGlobale); */
+app.use(limiterGlobale);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

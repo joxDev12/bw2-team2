@@ -8,49 +8,77 @@ const eventsDir = path.join(__dirname, '..', 'uploads', 'events');
 fs.mkdirSync(profilesDir, { recursive: true });
 fs.mkdirSync(eventsDir, { recursive: true });
 
+const getSafeDir = (baseDir, rawId) => {
+    const id = parseInt(rawId, 10);
+    if (Number.isNaN(id) || id <= 0) {
+        throw new Error('ID non valido');
+    }
+    const targetDir = path.resolve(baseDir, String(id));
+    if (!targetDir.startsWith(baseDir)) {
+        throw new Error('Percorso non valido');
+    }
+    return { id, dir: targetDir };
+};
+
 const profileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const userDir = path.join(profilesDir, req.params.id);
-        fs.mkdirSync(userDir, { recursive: true });
-        cb(null, userDir);
+        try {
+            const { dir } = getSafeDir(profilesDir, req.params.id);
+            fs.mkdirSync(dir, { recursive: true });
+            cb(null, dir);
+        } catch (err) {
+            cb(err);
+        }
     },
     filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname).toLowerCase();
-        const userDir = path.join(profilesDir, req.params.id);
-        const oldFiles = fs.readdirSync(userDir)
-            .filter(name => name.startsWith(`${req.params.id}-profilepic.`));
+        try {
+            const { id, dir } = getSafeDir(profilesDir, req.params.id);
+            const ext = path.extname(file.originalname).toLowerCase();
+            const oldFiles = fs.readdirSync(dir)
+                .filter(name => name.startsWith(`${id}-profilepic.`));
 
-        oldFiles.forEach(name => {
-            try {
-                fs.unlinkSync(path.join(userDir, name));
-            } catch {}
-        });
+            oldFiles.forEach(name => {
+                try {
+                    fs.unlinkSync(path.join(dir, name));
+                } catch {}
+            });
 
-        const filename = `${req.params.id}-profilepic${ext}`;
-        cb(null, filename);
+            const filename = `${id}-profilepic${ext}`;
+            cb(null, filename);
+        } catch (err) {
+            cb(err);
+        }
     }
 });
 
 const eventStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const eventDir = path.join(eventsDir, req.params.id);
-        fs.mkdirSync(eventDir, { recursive: true });
-        cb(null, eventDir);
+        try {
+            const { dir } = getSafeDir(eventsDir, req.params.id);
+            fs.mkdirSync(dir, { recursive: true });
+            cb(null, dir);
+        } catch (err) {
+            cb(err);
+        }
     },
     filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname).toLowerCase();
-        const eventDir = path.join(eventsDir, req.params.id);
-        const oldFiles = fs.readdirSync(eventDir)
-            .filter(name => name.startsWith(`${req.params.id}-image.`));
+        try {
+            const { id, dir } = getSafeDir(eventsDir, req.params.id);
+            const ext = path.extname(file.originalname).toLowerCase();
+            const oldFiles = fs.readdirSync(dir)
+                .filter(name => name.startsWith(`${id}-image.`));
 
-        oldFiles.forEach(name => {
-            try {
-                fs.unlinkSync(path.join(eventDir, name));
-            } catch {}
-        });
+            oldFiles.forEach(name => {
+                try {
+                    fs.unlinkSync(path.join(dir, name));
+                } catch {}
+            });
 
-        const filename = `${req.params.id}-image${ext}`;
-        cb(null, filename);
+            const filename = `${id}-image${ext}`;
+            cb(null, filename);
+        } catch (err) {
+            cb(err);
+        }
     }
 });
 

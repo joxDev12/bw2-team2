@@ -1,30 +1,15 @@
 // Sezione hero della homepage con titolo e barra di ricerca.
 // Delega tutta la logica della ricerca al componente HeroSearchForm.
-import { useState, useEffect } from "react";
 import HeroSearchForm from "./heroComponents/HeroSearchForm";
 import ListCategories from "./ListCategories";
 import { SearchProvider } from "../../context/SearchContext";
-import { eventsAPI } from "../../services/api";
+import { useEvents } from "../../context/EventsContext";
 import logo from "../../assets/img/logo.png";
 function Hero() {
-  const [categorie, setCategorie] = useState([]);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const data = await eventsAPI.getAll();
-        const categorieEventi = [...new Set(data.map((evento) => evento.category))]
-          .filter(Boolean)
-          .sort();
-
-        setCategorie(categorieEventi);
-      } catch (err) {
-        console.error("Errore nel caricamento delle categorie:", err);
-      }
-    };
-
-    fetchEvents();
-  }, []);
+  const { eventi } = useEvents();
+  const categorie = [...new Set(eventi.map((evento) => evento.category))]
+    .filter(Boolean)
+    .sort();
 
   return (
     <section className="hero-section text-center py-5 d-flex align-items-center justify-content-center flex-column gap-3">

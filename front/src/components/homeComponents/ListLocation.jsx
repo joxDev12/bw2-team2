@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CardListLocation from "./CardListLocation";
-import { eventsAPI } from "../../services/api";
+import { useEvents } from "../../context/EventsContext";
 import Roma from "../../assets/img/Citta/Roma.webp";
 import Napoli from "../../assets/img/Citta/Napoli.webp";
 import Milano from "../../assets/img/Citta/Milano.webp";
@@ -18,37 +18,18 @@ const imgLocations = {
 
 
 function ListLocations() {
-    const [locations, setLocations] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { eventi, loading, errore: error } = useEvents();
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Calcoliamo quanti item mostrare in base alla larghezza
-    const [itemsToShow, setItemsToShow] = useState(5);
+    const locationsEventi = [...new Set(eventi.map((evento) => evento.location))]
+        .filter(Boolean)
+        .sort();
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const data = await eventsAPI.getAll();
-                const locationsEventi = [...new Set(data.map((evento) => evento.location))]
-                    .filter(Boolean)
-                    .sort();
-
-                setLocations(locationsEventi.map((location, index) => ({
-                    id: index + 1,
-                    nome: location,
-                    img: imgLocations[location],
-                })));
-            } catch (err) {
-                console.error("Errore nel caricamento delle locations:", err);
-                setError("Impossibile caricare le locations. Riprova più tardi.");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchEvents();
-    }, []);
+    const locations = locationsEventi.map((location, index) => ({
+        id: index + 1,
+        nome: location,
+        img: imgLocations[location],
+    }));
 
     useEffect(() => {
         const handleResize = () => {

@@ -55,8 +55,8 @@ const regolaRegistra = [
     .isLength({ max: 500 }).withMessage('L\'immagine profilo non puo superare 500 caratteri'),
 
   body('role')
-    .notEmpty().withMessage('Il ruolo e obbligatorio')
-    .isIn(['partecipant', 'organizer']).withMessage('Il ruolo deve essere partecipant o organizer'),
+    .optional()
+    .isIn(['partecipant']).withMessage('Il ruolo iniziale può essere solo partecipant'),
 
   body('password')
     .notEmpty().withMessage('La password e obbligatoria')

@@ -1,6 +1,6 @@
 // Context per la gestione eventi organizzatore nella dashboard.
 // Usa EventsContext per lista eventi e helper, qui restano solo modali e azioni CRUD.
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useRef, useEffect } from "react";
 import eventsPlaceholder from "../assets/img/events_placeholder.webp";
 import { eventsAPI } from "../services/api";
 import { useAuth } from "./AuthContext";
@@ -76,6 +76,13 @@ export function OrganizerEventsProvider({ children }) {
     rimuoviEvento,
   } = useEvents();
   const [toast, setToast] = useState(null);
+  const toastTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
+  }, []);
 
   const [mostraModaleCreazione, setMostraModaleCreazione] = useState(false);
   const [datiFormCreazione, setDatiFormCreazione] = useState(datiEventoVuoti);
@@ -106,8 +113,9 @@ export function OrganizerEventsProvider({ children }) {
         );
 
   const mostraToast = (messaggio, tipo = "success") => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
     setToast({ messaggio, tipo });
-    setTimeout(() => setToast(null), 3500);
+    toastTimerRef.current = setTimeout(() => setToast(null), 3500);
   };
 
   const apriModaleCreazione = () => {
@@ -274,7 +282,10 @@ export function OrganizerEventsProvider({ children }) {
     utente,
     eventi,
     toast,
-    nascondiToast: () => setToast(null),
+    nascondiToast: () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+      setToast(null);
+    },
     apriModaleCreazione,
     apriModaleModifica,
     apriModaleElimina,

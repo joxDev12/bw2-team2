@@ -7,6 +7,7 @@ const RegistrationsContext = createContext(null)
 export function RegistrationsProvider({ children }) {
 
   const [registrazioni, setRegistrazioni] = useState([])
+  const [registrazioniEvento, setRegistrazioniEvento] = useState([])
   const [loading, setLoading] = useState(false)
   const [errore, setErrore] = useState(null)
 
@@ -30,7 +31,7 @@ export function RegistrationsProvider({ children }) {
 
     try {
       const datiRegistrazioni = await registrationsAPI.getPublicByEventId(id)
-      setRegistrazioni(datiRegistrazioni)
+      setRegistrazioniEvento(datiRegistrazioni)
     } catch (err) {
       setErrore(err.message)
     } finally {
@@ -39,7 +40,7 @@ export function RegistrationsProvider({ children }) {
   }
 
   return (
-    <RegistrationsContext.Provider value={{ registrazioni, loading, errore, caricaRegistrazioni, caricaRegistrazioniEvento }}>
+    <RegistrationsContext.Provider value={{ registrazioni, registrazioniEvento, loading, errore, caricaRegistrazioni, caricaRegistrazioniEvento }}>
       {children}
     </RegistrationsContext.Provider>
   )
