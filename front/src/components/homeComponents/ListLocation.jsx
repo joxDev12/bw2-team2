@@ -20,6 +20,7 @@ const imgLocations = {
 function ListLocations() {
     const { eventi, loading, errore: error } = useEvents();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [itemsToShow, setItemsToShow] = useState(5);
 
     const locationsEventi = [...new Set(eventi.map((evento) => evento.location))]
         .filter(Boolean)

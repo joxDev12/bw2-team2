@@ -4,16 +4,19 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { AuthProvider } from "./context/AuthContext";
 import { EventsProvider } from "./context/EventsContext";
 import { RegistrationsProvider } from "./context/RegistrationsContext";
+import ErrorBoundary from "./components/sharedComponents/ErrorBoundary";
 import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(
     <BrowserRouter>
-        <AuthProvider>
-            <EventsProvider>
-                <RegistrationsProvider>
-                    <App />
-                </RegistrationsProvider>
-            </EventsProvider>
-        </AuthProvider>
+        <ErrorBoundary>
+            <AuthProvider>
+                <EventsProvider>
+                    <RegistrationsProvider>
+                        <App />
+                    </RegistrationsProvider>
+                </EventsProvider>
+            </AuthProvider>
+        </ErrorBoundary>
     </BrowserRouter>,
 );
